@@ -62,7 +62,12 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtime.compose)
 
             // General
+            implementation(libs.kotlinx.serialization.json)
+
+            // ViewModel
             implementation(libs.lifecycle.viewmodel)
+
+            // Navigation
             implementation(libs.navigation.compose)
 
             // DI
