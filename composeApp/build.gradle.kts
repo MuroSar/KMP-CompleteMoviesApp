@@ -66,6 +66,7 @@ kotlin {
 
             // ViewModel
             implementation(libs.lifecycle.viewmodel)
+            implementation(libs.kotlinx.coroutines.core)
 
             // Navigation
             implementation(libs.navigation.compose)

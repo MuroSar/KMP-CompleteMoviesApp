@@ -10,10 +10,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.annotation.KoinExperimentalAPI
 
+@OptIn(KoinExperimentalAPI::class)
 @Composable
 fun MainScreen(
-    viewModel: MainViewModel = viewModel { MainViewModel() },
+    viewModel: MainViewModel = koinViewModel<MainViewModel>(),
     navigateToMovieList: () -> Unit,
     navigateToCharacterList: () -> Unit,
 ) {

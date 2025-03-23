@@ -5,10 +5,10 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.murosar.kmp.completemoviesapp.domain.model.Movie
-import com.murosar.kmp.completemoviesapp.ui.screens.characterlist.CharacterListScreen
 import com.murosar.kmp.completemoviesapp.ui.screens.main.MainScreen
 import com.murosar.kmp.completemoviesapp.ui.screens.moviedetail.MovieDetailScreen
 import com.murosar.kmp.completemoviesapp.ui.screens.movielist.MovieListScreen
+import com.murosar.kmp.completemoviesapp.ui.screens.popularpersonlist.PopularPersonListScreen
 import kotlinx.serialization.json.Json
 
 fun NavGraphBuilder.addMoviesScreenGraph(navController: NavController) {
@@ -26,7 +26,7 @@ fun NavGraphBuilder.addMoviesScreenGraph(navController: NavController) {
         )
     }
     composable<NavRoutes.CharacterListNavScreen> {
-        CharacterListScreen(
+        PopularPersonListScreen(
             navigateToMovieDetail = { movieId -> navController.navigate(NavRoutes.MovieDetailNavScreen(movieId = movieId)) },
         )
     }

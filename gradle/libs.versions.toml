@@ -17,9 +17,14 @@ kotlin = "2.1.0"
 kotlinx-coroutines = "1.10.1"
 
 # General
-navigationCompose = "2.8.0-alpha10"
-lifecycleViewModel = "2.8.7"
 serialization = "1.6.3"
+
+# ViewModel
+lifecycleViewModel = "2.8.7"
+coroutinesCore = "1.7.3"
+
+# Navigation
+navigationCompose = "2.8.0-alpha10"
 
 # DI
 koin = "3.6.0-Beta4"
@@ -53,6 +58,7 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 
 # ViewModel
 lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel", version.ref = "lifecycleViewModel" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutinesCore" }
 
 # Navigation
 navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
