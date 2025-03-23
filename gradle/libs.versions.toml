@@ -19,6 +19,7 @@ kotlinx-coroutines = "1.10.1"
 # General
 navigationCompose = "2.8.0-alpha10"
 lifecycleViewModel = "2.8.7"
+serialization = "1.6.3"
 
 # DI
 koin = "3.6.0-Beta4"
@@ -48,7 +49,12 @@ androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle
 kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
 
 # General
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization"}
+
+# ViewModel
 lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel", version.ref = "lifecycleViewModel" }
+
+# Navigation
 navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 
 # DI
