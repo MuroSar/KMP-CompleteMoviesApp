@@ -72,7 +72,7 @@ class MovieListViewModel(
                     _uiState.update { MovieListState.Error(commonError) }
                 } else {
                     _uiState.update {
-                        MovieListState.Success(
+                        MovieListState.ShowMovieLists(
                             popularMovieList = popularMovies,
                             topRatedMovieList = topRatedMovies,
                             upcomingMovieList = upcomingMovies
@@ -90,7 +90,7 @@ class MovieListViewModel(
     sealed class MovieListState {
         data object Idle : MovieListState()
         data object Loading : MovieListState()
-        data class Success(
+        data class ShowMovieLists(
             val popularMovieList: List<Movie>,
             val topRatedMovieList: List<Movie>,
             val upcomingMovieList: List<Movie>,

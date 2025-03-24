@@ -3,6 +3,7 @@ package com.murosar.kmp.completemoviesapp.data.repository
 import com.murosar.kmp.completemoviesapp.domain.database.TheMovieDBDatabase
 import com.murosar.kmp.completemoviesapp.domain.datasource.TheMovieDBDataSource
 import com.murosar.kmp.completemoviesapp.domain.model.Movie
+import com.murosar.kmp.completemoviesapp.domain.model.MovieDetail
 import com.murosar.kmp.completemoviesapp.domain.repository.MovieRepository
 import com.murosar.kmp.completemoviesapp.domain.utils.CoroutineResult
 
@@ -70,19 +71,18 @@ class MovieRepositoryImpl(
         }
     }
 
-    override suspend fun getMovieDetail(movieId: Int): CoroutineResult<Movie> {
-        return theMovieDBDataSource.getMovieDetail(movieId)
-//        return when (val serviceResult = theMovieDBDataSource.getMovieDetail(movieId)) {
-//            is CoroutineResult.Success -> {
-//                println("✅ getMovieDetail SUCCESS, inserting into database")
-//                theMovieDBDatabase.insertMovieDetail(movieId, serviceResult.data)
-//                serviceResult
-//            }
-//
-//            is CoroutineResult.Failure -> {
-//                println("⚠️ getMovieDetail FAILS, trying to get from database")
-//                theMovieDBDatabase.getMovieDetailById(movieId)
-//            }
-//        }
+    override suspend fun getMovieDetail(movieId: Int): CoroutineResult<MovieDetail> {
+        return when (val serviceResult = theMovieDBDataSource.getMovieDetail(movieId)) {
+            is CoroutineResult.Success -> {
+                println("✅ getMovieDetail SUCCESS, inserting into database")
+                theMovieDBDatabase.insertMovieDetail(serviceResult.data)
+                serviceResult
+            }
+
+            is CoroutineResult.Failure -> {
+                println("⚠️ getMovieDetail FAILS, trying to get from database")
+                theMovieDBDatabase.getMovieDetailById(movieId)
+            }
+        }
     }
 }

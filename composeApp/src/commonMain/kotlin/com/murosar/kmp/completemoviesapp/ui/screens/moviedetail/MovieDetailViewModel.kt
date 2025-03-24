@@ -3,6 +3,7 @@ package com.murosar.kmp.completemoviesapp.ui.screens.moviedetail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.murosar.kmp.completemoviesapp.domain.model.Movie
+import com.murosar.kmp.completemoviesapp.domain.model.MovieDetail
 import com.murosar.kmp.completemoviesapp.domain.model.MovieError
 import com.murosar.kmp.completemoviesapp.domain.usecase.GetMovieDetailUseCase
 import com.murosar.kmp.completemoviesapp.domain.usecase.GetRecommendedMoviesListByIdUseCase
@@ -24,6 +25,10 @@ class MovieDetailViewModel(
 
     private val _uiState = MutableStateFlow<MovieDetailState>(MovieDetailState.Idle)
     val uiState: StateFlow<MovieDetailState> = _uiState
+
+    fun showInitialInfo(movie: Movie?, movieId: Int?) {
+        _uiState.update { MovieDetailState.ShowInitialInfo(movie = movie, movieId = movieId) }
+    }
 
     fun fetchMovieDetail(movieId: Int) = viewModelScope.launch {
         withContext(dispatcher) {
@@ -58,7 +63,7 @@ class MovieDetailViewModel(
                     _uiState.update { MovieDetailState.Error(commonError) }
                 } else {
                     _uiState.update {
-                        MovieDetailState.Success(
+                        MovieDetailState.ShowMovieDetail(
                             movieDetail = movieDetail,
                             recommendedMovieList = recommendedMovies,
                         )
@@ -74,9 +79,14 @@ class MovieDetailViewModel(
 
     sealed class MovieDetailState {
         data object Idle : MovieDetailState()
+        data class ShowInitialInfo(
+            val movie: Movie?,
+            val movieId: Int?,
+        ) : MovieDetailState()
+
         data object Loading : MovieDetailState()
-        data class Success(
-            val movieDetail: Movie?,
+        data class ShowMovieDetail(
+            val movieDetail: MovieDetail?,
             val recommendedMovieList: List<Movie>,
         ) : MovieDetailState()
 
