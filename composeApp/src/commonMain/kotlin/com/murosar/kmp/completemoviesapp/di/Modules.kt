@@ -1,8 +1,11 @@
 package com.murosar.kmp.completemoviesapp.di
 
+import com.murosar.kmp.completemoviesapp.data.database.TheMovieDBDB
+import com.murosar.kmp.completemoviesapp.data.database.TheMovieDBDatabaseImpl
 import com.murosar.kmp.completemoviesapp.data.datasource.TheMovieDBDataSourceImpl
 import com.murosar.kmp.completemoviesapp.data.repository.MovieRepositoryImpl
 import com.murosar.kmp.completemoviesapp.data.repository.PersonRepositoryImpl
+import com.murosar.kmp.completemoviesapp.domain.database.TheMovieDBDatabase
 import com.murosar.kmp.completemoviesapp.domain.datasource.TheMovieDBDataSource
 import com.murosar.kmp.completemoviesapp.domain.repository.MovieRepository
 import com.murosar.kmp.completemoviesapp.domain.repository.PersonRepository
@@ -23,6 +26,7 @@ import com.murosar.kmp.completemoviesapp.ui.screens.moviedetail.MovieDetailViewM
 import com.murosar.kmp.completemoviesapp.ui.screens.movielist.MovieListViewModel
 import com.murosar.kmp.completemoviesapp.ui.screens.popularpersonlist.PopularPersonListViewModel
 import io.ktor.client.HttpClient
+import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.plugins.DefaultRequest
 import io.ktor.client.plugins.HttpCallValidator
 import io.ktor.client.plugins.HttpTimeout
@@ -81,7 +85,7 @@ val apiModule = module {
         }
     }
     single {
-        HttpClient(get()) {
+        HttpClient(get<HttpClientEngine>()) {
             // Default config for each request
             install(DefaultRequest) {
                 url("https://api.themoviedb.org/3/")
@@ -95,7 +99,7 @@ val apiModule = module {
             // Serialization with Kotlinx
             install(ContentNegotiation) {
                 json(
-                    json = get(),
+                    json = get<Json>(),
                     contentType = ContentType.Any
                 )
             }
@@ -124,4 +128,15 @@ val apiModule = module {
             expectSuccess = true  // Throw an exception if there were HTTP error (400+)
         }
     }
+}
+
+val databaseModule = module {
+    singleOf(::TheMovieDBDatabaseImpl).bind<TheMovieDBDatabase>()
+
+    single { get<TheMovieDBDB>().popularPersonDao() }
+    single { get<TheMovieDBDB>().knownForDao() }
+    single { get<TheMovieDBDB>().popularMovieDao() }
+    single { get<TheMovieDBDB>().topRatedMovieDao() }
+    single { get<TheMovieDBDB>().upcomingMovieDao() }
+    single { get<TheMovieDBDB>().recommendedMovieDao() }
 }
