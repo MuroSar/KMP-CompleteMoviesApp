@@ -2,7 +2,6 @@ package com.murosar.kmp.completemoviesapp.data.database.entity
 
 import androidx.room.Embedded
 import androidx.room.Entity
-import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import androidx.room.Relation
 

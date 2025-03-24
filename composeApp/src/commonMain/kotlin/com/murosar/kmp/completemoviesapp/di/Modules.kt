@@ -139,4 +139,9 @@ val databaseModule = module {
     single { get<TheMovieDBDB>().topRatedMovieDao() }
     single { get<TheMovieDBDB>().upcomingMovieDao() }
     single { get<TheMovieDBDB>().recommendedMovieDao() }
+    single { get<TheMovieDBDB>().movieDetailDao() }
+    single { get<TheMovieDBDB>().movieDetailGenreDao() }
+    single { get<TheMovieDBDB>().movieDetailProductionCompanyDao() }
+    single { get<TheMovieDBDB>().movieDetailProductionCountryDao() }
+    single { get<TheMovieDBDB>().movieDetailSpokenLanguageDao() }
 }

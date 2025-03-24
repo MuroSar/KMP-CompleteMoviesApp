@@ -1,14 +1,15 @@
 package com.murosar.kmp.completemoviesapp.data.datasource
 
+import com.murosar.kmp.completemoviesapp.data.datasource.model.MovieDetailResponse
 import com.murosar.kmp.completemoviesapp.data.datasource.model.MoviePagingResponse
-import com.murosar.kmp.completemoviesapp.data.datasource.model.MovieResponse
 import com.murosar.kmp.completemoviesapp.data.datasource.model.PersonPagingResponse
-import com.murosar.kmp.completemoviesapp.data.mapper.mapToLocalMovie
+import com.murosar.kmp.completemoviesapp.data.mapper.mapToLocalMovieDetail
 import com.murosar.kmp.completemoviesapp.data.mapper.mapToLocalMovieList
 import com.murosar.kmp.completemoviesapp.data.mapper.mapToLocalPopularPersonList
 import com.murosar.kmp.completemoviesapp.data.util.ErrorHandler
 import com.murosar.kmp.completemoviesapp.domain.datasource.TheMovieDBDataSource
 import com.murosar.kmp.completemoviesapp.domain.model.Movie
+import com.murosar.kmp.completemoviesapp.domain.model.MovieDetail
 import com.murosar.kmp.completemoviesapp.domain.model.PopularPerson
 import com.murosar.kmp.completemoviesapp.domain.utils.CoroutineResult
 import io.ktor.client.HttpClient
@@ -86,14 +87,14 @@ class TheMovieDBDataSourceImpl(
         }
     }
 
-    override suspend fun getMovieDetail(movieId: Int): CoroutineResult<Movie> {
+    override suspend fun getMovieDetail(movieId: Int): CoroutineResult<MovieDetail> {
         return try {
             val response = httpClient.get(urlString = "movie/$movieId")
 
             when (response.status.value) {
                 in 200..299 -> {
-                    val movieResponse = response.body<MovieResponse>()
-                    CoroutineResult.Success(movieResponse.mapToLocalMovie())
+                    val movieResponse = response.body<MovieDetailResponse>()
+                    CoroutineResult.Success(movieResponse.mapToLocalMovieDetail())
                 }
 
                 else -> ErrorHandler.getError(response)
