@@ -77,6 +77,8 @@ sealed class MovieError(
         errorBody = errorBody
     )
 
+    data object DataBaseError : MovieError()
+
     companion object {
         private const val ERROR_CODE_UNKNOWN = -1
         private const val ERROR_MESSAGE_UNKNOWN = "UNKNOWN ERROR"
