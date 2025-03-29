@@ -21,7 +21,6 @@ import com.murosar.kmp.completemoviesapp.domain.usecase.GetTopRatedMovieListUseC
 import com.murosar.kmp.completemoviesapp.domain.usecase.GetTopRatedMovieListUseCaseImpl
 import com.murosar.kmp.completemoviesapp.domain.usecase.GetUpcomingMovieListUseCase
 import com.murosar.kmp.completemoviesapp.domain.usecase.GetUpcomingMovieListUseCaseImpl
-import com.murosar.kmp.completemoviesapp.ui.screens.main.MainViewModel
 import com.murosar.kmp.completemoviesapp.ui.screens.moviedetail.MovieDetailViewModel
 import com.murosar.kmp.completemoviesapp.ui.screens.movielist.MovieListViewModel
 import com.murosar.kmp.completemoviesapp.ui.screens.popularpersonlist.PopularPersonListViewModel
@@ -51,7 +50,6 @@ expect val platformModule: Module
 
 val sharedModule = module {
     factory { Dispatchers.IO }
-    viewModelOf(::MainViewModel)
     viewModelOf(::PopularPersonListViewModel)
     viewModelOf(::MovieDetailViewModel)
     viewModelOf(::MovieListViewModel)

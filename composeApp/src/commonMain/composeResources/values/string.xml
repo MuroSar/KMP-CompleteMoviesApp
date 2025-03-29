@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+  <string name="main_screen_title">Movie App</string>
+  <string name="main_screen_button_movies">Ver películas</string>
+  <string name="main_screen_button_characters">Ver actores populares</string>
+</resources>
