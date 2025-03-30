@@ -12,12 +12,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
 import coil3.compose.AsyncImage
 import com.murosar.kmp.completemoviesapp.ui.theme.burnt_sienna
-import com.murosar.kmp.completemoviesapp.ui.theme.elevation_4
-import com.murosar.kmp.completemoviesapp.ui.theme.golden_amber
 import com.murosar.kmp.completemoviesapp.ui.theme.height_140
 import com.murosar.kmp.completemoviesapp.ui.theme.movieCardTextStyle
 import com.murosar.kmp.completemoviesapp.ui.theme.padding_8
@@ -52,7 +49,7 @@ fun MostPopularMovieCard(
                 ),
             contentScale = ContentScale.FillBounds,
             model = "https://image.tmdb.org/t/p/w500$posterUrl",
-            contentDescription = null,
+            contentDescription = movieTitle,
             placeholder = painterResource(resource = Res.drawable.movie_placeholder),
             error = painterResource(resource = Res.drawable.movie_error),
         )

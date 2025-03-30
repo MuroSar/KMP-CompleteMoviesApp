@@ -56,3 +56,9 @@ val emptyTextStyle = TextStyle(
     color = steel_gray,
     textAlign = TextAlign.Center,
 )
+
+val infoTextStyle = TextStyle(
+    fontSize = font_size_14,
+    fontWeight = FontWeight.Medium,
+    color = steel_gray
+)

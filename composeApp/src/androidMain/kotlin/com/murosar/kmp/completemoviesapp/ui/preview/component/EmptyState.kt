@@ -7,8 +7,20 @@ import com.murosar.kmp.completemoviesapp.ui.component.EmptyState
 
 @Preview
 @Composable
-fun EmptyStatePreview() {
+fun MovieEmptyStatePreview() {
     MaterialTheme {
-        EmptyState()
+        EmptyState(
+            isMovieEmptyState = true
+        )
+    }
+}
+
+@Preview
+@Composable
+fun PopularPersonEmptyStatePreview() {
+    MaterialTheme {
+        EmptyState(
+            isMovieEmptyState = false
+        )
     }
 }
