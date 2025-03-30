@@ -2,8 +2,8 @@ package com.murosar.kmp.completemoviesapp.ui.screens.moviedetail
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -19,6 +19,7 @@ fun MovieDetailScreen(
     viewModel: MovieDetailViewModel = koinViewModel<MovieDetailViewModel>(),
     movie: Movie?,
     movieId: Int,
+    navigateBack: () -> Unit,
 ) {
 
     LaunchedEffect(Unit) {
@@ -59,6 +60,7 @@ fun MovieDetailScreenPreview() {
                 voteCount = 1580
             ),
             movieId = 1,
+            navigateBack = { }
         )
     }
 }

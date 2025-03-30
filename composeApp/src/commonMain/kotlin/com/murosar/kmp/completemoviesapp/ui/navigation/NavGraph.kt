@@ -23,11 +23,13 @@ fun NavGraphBuilder.addMoviesScreenGraph(navController: NavController) {
             navigateToMovieDetail = { movie: Movie ->
                 navController.navigate(NavRoutes.MovieDetailNavScreen(movie = Json.encodeToString(Movie.serializer(), movie)))
             },
+            navigateBack = { navController.popBackStack() },
         )
     }
     composable<NavRoutes.CharacterListNavScreen> {
         PopularPersonListScreen(
             navigateToMovieDetail = { movieId -> navController.navigate(NavRoutes.MovieDetailNavScreen(movieId = movieId)) },
+            navigateBack = { navController.popBackStack() },
         )
     }
     /**
@@ -40,7 +42,8 @@ fun NavGraphBuilder.addMoviesScreenGraph(navController: NavController) {
             movie = it.toRoute<NavRoutes.MovieDetailNavScreen>().movie
                 .takeIf { movieJson -> movieJson.isNotEmpty() }
                 ?.let { movieJson -> Json.decodeFromString(Movie.serializer(), movieJson) },
-            movieId = it.toRoute<NavRoutes.MovieDetailNavScreen>().movieId
+            movieId = it.toRoute<NavRoutes.MovieDetailNavScreen>().movieId,
+            navigateBack = { navController.popBackStack() },
         )
     }
 }

@@ -48,13 +48,13 @@ kotlin {
             implementation(libs.koin.android)
             implementation(libs.koin.androidx.compose)
 
-            // Ktor
+            // Ktor and Coil
             implementation(libs.ktor.client.okhttp)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
-            implementation(compose.material)
+            implementation(compose.material3)
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
@@ -76,6 +76,10 @@ kotlin {
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
 
+            // Coil
+            implementation(libs.coil.compose)
+            implementation(libs.coil.network.ktor)
+
             // Ktor
             implementation(libs.bundles.ktor)
 
@@ -84,14 +88,14 @@ kotlin {
             implementation(libs.sqlite.bundled)
         }
         nativeMain.dependencies {
-            // Ktor
+            // Ktor and Coil
             implementation(libs.ktor.client.darwin)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutines.swing)
 
-            // Ktor
+            // Ktor and Coil
             implementation(libs.ktor.client.okhttp)
         }
         // Room-2

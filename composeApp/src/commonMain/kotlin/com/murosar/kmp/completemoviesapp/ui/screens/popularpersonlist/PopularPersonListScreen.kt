@@ -2,9 +2,9 @@ package com.murosar.kmp.completemoviesapp.ui.screens.popularpersonlist
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -18,6 +18,7 @@ import org.koin.core.annotation.KoinExperimentalAPI
 fun PopularPersonListScreen(
     viewModel: PopularPersonListViewModel = koinViewModel<PopularPersonListViewModel>(),
     navigateToMovieDetail: (movieId: Int) -> Unit,
+    navigateBack: () -> Unit,
 ) {
 
     LaunchedEffect(Unit) {
@@ -46,7 +47,8 @@ fun PopularPersonListScreen(
 fun PopularPersonListScreenPreview() {
     MaterialTheme {
         PopularPersonListScreen(
-            navigateToMovieDetail = { _ -> }
+            navigateToMovieDetail = { _ -> },
+            navigateBack = { },
         )
     }
 }

@@ -4,10 +4,9 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -27,7 +26,7 @@ import com.murosar.kmp.completemoviesapp.ui.theme.scale_095
 import com.murosar.kmp.completemoviesapp.ui.theme.scale_1
 
 @Composable
-fun AppButton(
+fun CustomButton(
     modifier: Modifier = Modifier,
     text: String,
     usePrimaryColor: Boolean = true,
@@ -50,7 +49,7 @@ fun AppButton(
                 )
             },
         colors = ButtonDefaults.buttonColors(
-            backgroundColor = if (usePrimaryColor) burnt_sienna else antique_gold,
+            containerColor = if (usePrimaryColor) burnt_sienna else antique_gold,
             contentColor = pure_white
         ),
         shape = RoundedCornerShape(rounded_corners_12),

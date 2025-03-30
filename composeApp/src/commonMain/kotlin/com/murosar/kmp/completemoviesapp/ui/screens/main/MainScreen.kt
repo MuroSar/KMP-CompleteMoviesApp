@@ -6,16 +6,14 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
-import com.murosar.kmp.completemoviesapp.ui.component.AppButton
-import com.murosar.kmp.completemoviesapp.ui.theme.charcoal_black
+import com.murosar.kmp.completemoviesapp.ui.component.CustomButton
+import com.murosar.kmp.completemoviesapp.ui.theme.backgroundBrush
 import com.murosar.kmp.completemoviesapp.ui.theme.padding_16
-import com.murosar.kmp.completemoviesapp.ui.theme.titleStyle
+import com.murosar.kmp.completemoviesapp.ui.theme.titleStyleWithGradient
 import com.murosar.kmp.completemoviesapp.ui.theme.weight_02
 import com.murosar.kmp.completemoviesapp.ui.theme.weight_03
 import com.murosar.kmp.completemoviesapp.ui.theme.weight_05
@@ -30,10 +28,6 @@ fun MainScreen(
     navigateToMovieList: () -> Unit,
     navigateToCharacterList: () -> Unit,
 ) {
-    val backgroundBrush = Brush.verticalGradient(
-        colors = listOf(charcoal_black, Color.Black)
-    )
-
     Column(
         modifier = Modifier
             .background(backgroundBrush)
@@ -45,17 +39,17 @@ fun MainScreen(
         Spacer(modifier = Modifier.weight(weight_02))
         Text(
             text = stringResource(Res.string.main_screen_title),
-            style = titleStyle
+            style = titleStyleWithGradient
         )
         Spacer(modifier = Modifier.weight(weight_03))
         Column(
             verticalArrangement = Arrangement.Center
         ) {
-            AppButton(
+            CustomButton(
                 text = stringResource(Res.string.main_screen_button_movies),
                 onClick = navigateToMovieList
             )
-            AppButton(
+            CustomButton(
                 modifier = Modifier.padding(top = padding_16),
                 text = stringResource(Res.string.main_screen_button_characters),
                 usePrimaryColor = false,
