@@ -11,3 +11,4 @@ val antique_gold = Color(0xFFCCAE8B) //Secondary buttons
 val warm_beige = Color(0xFFDEC5A5) //Key text elements
 val soft_pearl_gray = Color(0xFFEDEDEE) //Secondary text
 val pure_white = Color(0xFFFFFFFF) //Text backgrounds, contrast
+val error_red = Color(0xFFCC3052) //Error text
