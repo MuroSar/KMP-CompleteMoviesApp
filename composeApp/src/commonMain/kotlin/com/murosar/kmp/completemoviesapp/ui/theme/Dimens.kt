@@ -8,6 +8,7 @@ val elevation_4 = 4.dp
 
 // Font size
 val font_size_12 = 12.sp
+val font_size_14 = 14.sp
 val font_size_16 = 16.sp
 val font_size_18 = 18.sp
 val font_size_20 = 20.sp

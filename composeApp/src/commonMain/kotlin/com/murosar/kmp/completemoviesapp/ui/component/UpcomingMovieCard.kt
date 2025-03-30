@@ -21,6 +21,7 @@ import com.murosar.kmp.completemoviesapp.ui.theme.size_100
 import com.murosar.kmp.completemoviesapp.ui.theme.width_100
 import com.murosar.kmp.completemoviesapp.ui.theme.width_2
 import completemoviesapp.composeapp.generated.resources.Res
+import completemoviesapp.composeapp.generated.resources.movie_error
 import completemoviesapp.composeapp.generated.resources.movie_placeholder
 import org.jetbrains.compose.resources.painterResource
 
@@ -45,9 +46,10 @@ fun UpcomingMovieCard(
                 )
                 .padding(padding_8),
             model = "https://image.tmdb.org/t/p/w500$posterUrl",
-            contentDescription = null,
+            contentDescription = movieTitle,
             contentScale = ContentScale.Crop,
             placeholder = painterResource(resource = Res.drawable.movie_placeholder),
+            error = painterResource(resource = Res.drawable.movie_error),
         )
         Text(
             modifier = Modifier

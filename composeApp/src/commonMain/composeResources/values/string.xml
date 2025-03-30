@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <resources>
   <string name="main_screen_title">Movie App</string>
-  <string name="main_screen_button_movies">Ver películas</string>
-  <string name="main_screen_button_characters">Ver actores populares</string>
+  <string name="main_screen_button_movies">See movie lists</string>
+  <string name="main_screen_button_characters">See popular people</string>
 
   <string name="back_content_description">Back</string>
 
-  <string name="movie_list_title">Movie list</string>
+  <string name="movie_list_title">Movie lists</string>
   <string name="movie_list_section_title_upcoming">Upcoming</string>
   <string name="movie_list_section_title_top_rated">Top rated</string>
   <string name="movie_list_section_title_most_popular">Most popular</string>
@@ -16,6 +16,14 @@
 
   <string name="loading_state_message">Loading...</string>
 
-  <string name="empty_state_content_description">No movies to display</string>
-  <string name="empty_state_message">There are no movies in this category. Please try again later.</string>
+  <string name="movie_empty_state_content_description">No movies to display</string>
+  <string name="movie_empty_state_message">There are no movies in this category. Please try again later.</string>
+  <string name="popular_person_empty_state_content_description">No popular persons to display</string>
+  <string name="popular_person_empty_state_message">There are no popular people available. Please try again later.</string>
+
+  <string name="popular_person_title">Popular people</string>
+  <string name="popular_person_popularity">Popularity: %1$s</string>
+  <string name="popular_person_department">Department: %1$s</string>
+  <string name="popular_person_id">ID: %1$s</string>
+  <string name="popular_person_known_for">Known for:</string>
 </resources>

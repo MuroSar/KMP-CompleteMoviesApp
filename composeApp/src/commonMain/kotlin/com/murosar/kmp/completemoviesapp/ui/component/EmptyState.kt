@@ -16,14 +16,17 @@ import com.murosar.kmp.completemoviesapp.ui.theme.padding_8
 import com.murosar.kmp.completemoviesapp.ui.theme.size_100
 import completemoviesapp.composeapp.generated.resources.Res
 import completemoviesapp.composeapp.generated.resources.empty
-import completemoviesapp.composeapp.generated.resources.empty_state_content_description
-import completemoviesapp.composeapp.generated.resources.empty_state_message
-import completemoviesapp.composeapp.generated.resources.movie_error
+import completemoviesapp.composeapp.generated.resources.movie_empty_state_content_description
+import completemoviesapp.composeapp.generated.resources.movie_empty_state_message
+import completemoviesapp.composeapp.generated.resources.popular_person_empty_state_content_description
+import completemoviesapp.composeapp.generated.resources.popular_person_empty_state_message
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun EmptyState() {
+fun EmptyState(
+    isMovieEmptyState: Boolean = true,
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -33,13 +36,15 @@ fun EmptyState() {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Image(
                 painter = painterResource(resource = Res.drawable.empty),
-                contentDescription = stringResource(Res.string.empty_state_content_description),
+                contentDescription = if (isMovieEmptyState) stringResource(Res.string.movie_empty_state_content_description) else
+                    stringResource(Res.string.popular_person_empty_state_content_description),
                 modifier = Modifier
                     .size(size_100)
                     .padding(bottom = padding_8)
             )
             Text(
-                text = stringResource(Res.string.empty_state_message),
+                text = if (isMovieEmptyState) stringResource(Res.string.movie_empty_state_message) else
+                    stringResource(Res.string.popular_person_empty_state_message),
                 style = emptyTextStyle,
                 modifier = Modifier.padding(top = padding_8)
             )
