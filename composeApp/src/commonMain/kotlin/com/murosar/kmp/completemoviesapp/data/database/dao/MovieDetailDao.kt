@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
+import com.murosar.kmp.completemoviesapp.data.database.entity.MovieDetailBelongsToCollectionEntity
 import com.murosar.kmp.completemoviesapp.data.database.entity.MovieDetailEntity
 import com.murosar.kmp.completemoviesapp.data.database.entity.MovieDetailGenreEntity
 import com.murosar.kmp.completemoviesapp.data.database.entity.MovieDetailProductionCompanyEntity
@@ -18,8 +19,14 @@ interface MovieDetailDao {
     suspend fun insertMovieDetail(movieDetailEntity: MovieDetailEntity)
 
     @Transaction
-    @Query("SELECT * FROM movie_detail")
-    suspend fun getMovieDetail(): MovieDetailWithRelations
+    @Query("SELECT * FROM movie_detail WHERE id = :movieId")
+    suspend fun getMovieDetailById(movieId: Int): MovieDetailWithRelations?
+}
+
+@Dao
+fun interface MovieDetailBelongsToCollectionDao {
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertMovieDetailBelongsToCollection(movieDetailBelongsToCollectionEntity: MovieDetailBelongsToCollectionEntity)
 }
 
 @Dao

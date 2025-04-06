@@ -4,12 +4,12 @@ import com.murosar.kmp.completemoviesapp.domain.model.MovieDetail
 import com.murosar.kmp.completemoviesapp.domain.repository.MovieRepository
 import com.murosar.kmp.completemoviesapp.domain.utils.CoroutineResult
 
-fun interface GetMovieDetailUseCase {
+fun interface GetMovieDetailByIdUseCase {
     suspend operator fun invoke(movieId: Int): CoroutineResult<MovieDetail>
 }
 
-class GetMovieDetailUseCaseImpl(
+class GetMovieDetailByIdUseCaseImpl(
     private val movieRepository: MovieRepository,
-) : GetMovieDetailUseCase {
-    override suspend operator fun invoke(movieId: Int): CoroutineResult<MovieDetail> = movieRepository.getMovieDetail(movieId)
+) : GetMovieDetailByIdUseCase {
+    override suspend operator fun invoke(movieId: Int): CoroutineResult<MovieDetail> = movieRepository.getMovieDetailById(movieId)
 }

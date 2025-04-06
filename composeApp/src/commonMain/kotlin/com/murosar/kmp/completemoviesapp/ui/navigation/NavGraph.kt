@@ -43,6 +43,7 @@ fun NavGraphBuilder.addMoviesScreenGraph(navController: NavController) {
                 .takeIf { movieJson -> movieJson.isNotEmpty() }
                 ?.let { movieJson -> Json.decodeFromString(Movie.serializer(), movieJson) },
             movieId = it.toRoute<NavRoutes.MovieDetailNavScreen>().movieId,
+            navigateToMovieDetail = { movieId -> navController.navigate(NavRoutes.MovieDetailNavScreen(movieId = movieId)) },
             navigateBack = { navController.popBackStack() },
         )
     }

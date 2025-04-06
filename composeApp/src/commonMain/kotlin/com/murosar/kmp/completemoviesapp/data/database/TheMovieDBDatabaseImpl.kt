@@ -1,6 +1,8 @@
 package com.murosar.kmp.completemoviesapp.data.database
 
 import com.murosar.kmp.completemoviesapp.data.database.dao.KnownForDao
+import com.murosar.kmp.completemoviesapp.data.database.dao.MovieCollectionDao
+import com.murosar.kmp.completemoviesapp.data.database.dao.MovieDetailBelongsToCollectionDao
 import com.murosar.kmp.completemoviesapp.data.database.dao.MovieDetailDao
 import com.murosar.kmp.completemoviesapp.data.database.dao.MovieDetailGenreDao
 import com.murosar.kmp.completemoviesapp.data.database.dao.MovieDetailProductionCompanyDao
@@ -12,7 +14,9 @@ import com.murosar.kmp.completemoviesapp.data.database.dao.RecommendedMovieDao
 import com.murosar.kmp.completemoviesapp.data.database.dao.TopRatedMovieDao
 import com.murosar.kmp.completemoviesapp.data.database.dao.UpcomingMovieDao
 import com.murosar.kmp.completemoviesapp.data.mapper.mapToDataBaseKnownFor
+import com.murosar.kmp.completemoviesapp.data.mapper.mapToDataBaseMovieCollection
 import com.murosar.kmp.completemoviesapp.data.mapper.mapToDataBaseMovieDetail
+import com.murosar.kmp.completemoviesapp.data.mapper.mapToDataBaseMovieDetailBelongsToCollection
 import com.murosar.kmp.completemoviesapp.data.mapper.mapToDataBaseMovieDetailGenre
 import com.murosar.kmp.completemoviesapp.data.mapper.mapToDataBaseMovieDetailProductionCompany
 import com.murosar.kmp.completemoviesapp.data.mapper.mapToDataBaseMovieDetailProductionCountry
@@ -22,6 +26,7 @@ import com.murosar.kmp.completemoviesapp.data.mapper.mapToDataBasePopularPerson
 import com.murosar.kmp.completemoviesapp.data.mapper.mapToDataBaseRecommendedMovie
 import com.murosar.kmp.completemoviesapp.data.mapper.mapToDataBaseTopRatedMovie
 import com.murosar.kmp.completemoviesapp.data.mapper.mapToDataBaseUpcomingMovie
+import com.murosar.kmp.completemoviesapp.data.mapper.mapToLocalMovieCollection
 import com.murosar.kmp.completemoviesapp.data.mapper.mapToLocalMovieDetail
 import com.murosar.kmp.completemoviesapp.data.mapper.mapToLocalPopularMovieList
 import com.murosar.kmp.completemoviesapp.data.mapper.mapToLocalPopularPersonList
@@ -30,6 +35,7 @@ import com.murosar.kmp.completemoviesapp.data.mapper.mapToLocalTopRatedMovieList
 import com.murosar.kmp.completemoviesapp.data.mapper.mapToLocalUpcomingMovieList
 import com.murosar.kmp.completemoviesapp.domain.database.TheMovieDBDatabase
 import com.murosar.kmp.completemoviesapp.domain.model.Movie
+import com.murosar.kmp.completemoviesapp.domain.model.MovieCollection
 import com.murosar.kmp.completemoviesapp.domain.model.MovieDetail
 import com.murosar.kmp.completemoviesapp.domain.model.MovieError
 import com.murosar.kmp.completemoviesapp.domain.model.PopularPerson
@@ -43,10 +49,12 @@ class TheMovieDBDatabaseImpl(
     private val upcomingMovieDao: UpcomingMovieDao,
     private val recommendedMovieDao: RecommendedMovieDao,
     private val movieDetailDao: MovieDetailDao,
+    private val movieDetailBelongsToCollectionDao: MovieDetailBelongsToCollectionDao,
     private val movieDetailGenreDao: MovieDetailGenreDao,
     private val movieDetailProductionCompanyDao: MovieDetailProductionCompanyDao,
     private val movieDetailProductionCountryDao: MovieDetailProductionCountryDao,
     private val movieDetailSpokenLanguageDao: MovieDetailSpokenLanguageDao,
+    private val movieCollectionDao: MovieCollectionDao,
 ) : TheMovieDBDatabase {
 
     override suspend fun insertPopularPersons(popularPersons: List<PopularPerson>) {
@@ -82,7 +90,7 @@ class TheMovieDBDatabaseImpl(
     override suspend fun getPopularMovie(): CoroutineResult<List<Movie>> =
         popularMovieDao.getPopularMovies().let {
             if (it.isNotEmpty()) {
-                println("✅ getPopularPersons from DB, SUCCESS")
+                println("✅ getPopularMovie from DB, SUCCESS")
                 CoroutineResult.Success(it.mapToLocalPopularMovieList())
             } else {
                 println("⚠️ getPopularMovie from DB is empty")
@@ -100,7 +108,7 @@ class TheMovieDBDatabaseImpl(
     override suspend fun getTopRatedMovie(): CoroutineResult<List<Movie>> =
         topRatedMovieDao.getTopRatedMovies().let {
             if (it.isNotEmpty()) {
-                println("✅ getPopularPersons from DB, SUCCESS")
+                println("✅ getTopRatedMovie from DB, SUCCESS")
                 CoroutineResult.Success(it.mapToLocalTopRatedMovieList())
             } else {
                 println("⚠️ getTopRatedMovie from DB is empty")
@@ -118,7 +126,7 @@ class TheMovieDBDatabaseImpl(
     override suspend fun getUpcomingMovie(): CoroutineResult<List<Movie>> =
         upcomingMovieDao.getUpcomingMovies().let {
             if (it.isNotEmpty()) {
-                println("✅ getPopularPersons from DB, SUCCESS")
+                println("✅ getUpcomingMovie from DB, SUCCESS")
                 CoroutineResult.Success(it.mapToLocalUpcomingMovieList())
             } else {
                 println("⚠️ getUpcomingMovie from DB is empty")
@@ -136,7 +144,7 @@ class TheMovieDBDatabaseImpl(
     override suspend fun getRecommendedMoviesById(movieId: Int): CoroutineResult<List<Movie>> =
         recommendedMovieDao.getRecommendedMoviesById(movieId).let {
             if (it.isNotEmpty()) {
-                println("✅ getPopularPersons from DB, SUCCESS")
+                println("✅ getRecommendedMoviesById from DB, SUCCESS")
                 CoroutineResult.Success(it.mapToLocalRecommendedMovieList())
             } else {
                 println("⚠️ getRecommendedMoviesById from DB is empty")
@@ -147,6 +155,12 @@ class TheMovieDBDatabaseImpl(
     override suspend fun insertMovieDetail(movieDetail: MovieDetail) {
         movieDetailDao.insertMovieDetail(movieDetail.mapToDataBaseMovieDetail())
 
+        movieDetail.belongsToCollection?.mapToDataBaseMovieDetailBelongsToCollection(movieDetail.id)
+            .takeIf { belongsToCollectionEntity -> belongsToCollectionEntity != null }
+            ?.let { belongsToCollectionEntity ->
+                movieDetailBelongsToCollectionDao.insertMovieDetailBelongsToCollection(belongsToCollectionEntity)
+                println("✅ insertMovieDetailBelongsToCollection into DB, SUCCESS")
+            }
         movieDetail.genres.forEach {
             movieDetailGenreDao.insertMovieDetailGenre(it.mapToDataBaseMovieDetailGenre(movieDetail.id))
         }
@@ -171,12 +185,29 @@ class TheMovieDBDatabaseImpl(
     }
 
     override suspend fun getMovieDetailById(movieId: Int): CoroutineResult<MovieDetail> =
-        movieDetailDao.getMovieDetail().let {
-            try {
+        movieDetailDao.getMovieDetailById(movieId).let {
+            if (it != null) {
                 println("✅ getMovieDetailById from DB, SUCCESS")
                 CoroutineResult.Success(it.mapToLocalMovieDetail())
-            } catch (e: Exception) {
+            } else {
                 println("⚠️ getMovieDetailById from DB is empty")
+                CoroutineResult.Failure(MovieError.DataBaseError)
+            }
+        }
+
+    override suspend fun insertMovieCollection(movieCollection: MovieCollection) {
+        movieCollectionDao.insertMovieCollection(movieCollection.mapToDataBaseMovieCollection())
+
+        println("✅ insertMovieCollection into DB, SUCCESS")
+    }
+
+    override suspend fun getMovieCollectionByName(collectionName: String): CoroutineResult<MovieCollection> =
+        movieCollectionDao.getMovieCollectionByName(collectionName).let {
+            if (it != null) {
+                println("✅ getMovieCollectionByName from DB, SUCCESS")
+                CoroutineResult.Success(it.mapToLocalMovieCollection())
+            } else {
+                println("⚠️ getMovieCollectionByName from DB is empty")
                 CoroutineResult.Failure(MovieError.DataBaseError)
             }
         }

@@ -18,14 +18,17 @@ val font_size_32 = 32.sp
 // Height
 val height_50 = 50.dp
 val height_140 = 140.dp
+val height_200 = 200.dp
 
 // Padding
+val padding_4 = 4.dp
 val padding_8 = 8.dp
 val padding_16 = 16.dp
 val padding_32 = 32.dp
 
 // Rounded corners
 val rounded_corners_12 = 12.dp
+val rounded_corners_16 = 16.dp
 
 // Size
 val size_100 = 100.dp
@@ -38,6 +41,7 @@ const val scale_1 = 1f
 const val weight_02 = 0.2f
 const val weight_03 = 0.3f
 const val weight_05 = 0.5f
+const val weight_1 = 1f
 
 // Width
 val width_2 = 2.dp

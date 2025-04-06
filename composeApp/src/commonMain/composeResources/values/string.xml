@@ -26,4 +26,17 @@
   <string name="popular_person_department">Department: %1$s</string>
   <string name="popular_person_id">ID: %1$s</string>
   <string name="popular_person_known_for">Known for:</string>
+
+  <string name="movie_detail_title">Movie detail</string>
+  <string name="movie_detail_header_id">#%1$s</string>
+  <string name="movie_detail_header_vote_average">%1$s/10</string>
+  <string name="movie_detail_general_info_title">General info</string>
+  <string name="movie_detail_homepage">Homepage: %1$s</string>
+  <string name="movie_detail_release_date">Release date: %1$s</string>
+  <string name="movie_detail_popularity">Popularity: %1$s</string>
+  <string name="movie_detail_runtime">Runtime: %1$s min</string>
+  <string name="movie_detail_budget">Budget: $%1$s</string>
+  <string name="movie_detail_revenue">Revenue: $%1$s</string>
+  <string name="movie_detail_overview_title">Overview</string>
+  <string name="movie_detail_recommended_title">Recommended</string>
 </resources>

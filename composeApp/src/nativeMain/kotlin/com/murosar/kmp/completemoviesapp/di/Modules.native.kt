@@ -1,6 +1,7 @@
 package com.murosar.kmp.completemoviesapp.di
 
 import androidx.room.Room
+import androidx.room.migration.AutoMigrationSpec
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import com.murosar.kmp.completemoviesapp.data.database.DATABASE_NAME
 import com.murosar.kmp.completemoviesapp.data.database.TheMovieDBDB
@@ -21,6 +22,7 @@ actual val platformModule = module {
         )
             .setDriver(BundledSQLiteDriver())
             .setQueryCoroutineContext(Dispatchers.IO)
+//            .fallbackToDestructiveMigration(true)
             .build()
     }
 }

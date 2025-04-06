@@ -1,6 +1,7 @@
 package com.murosar.kmp.completemoviesapp.domain.database
 
 import com.murosar.kmp.completemoviesapp.domain.model.Movie
+import com.murosar.kmp.completemoviesapp.domain.model.MovieCollection
 import com.murosar.kmp.completemoviesapp.domain.model.MovieDetail
 import com.murosar.kmp.completemoviesapp.domain.model.PopularPerson
 import com.murosar.kmp.completemoviesapp.domain.utils.CoroutineResult
@@ -23,4 +24,7 @@ interface TheMovieDBDatabase {
 
     suspend fun insertMovieDetail(movieDetail: MovieDetail)
     suspend fun getMovieDetailById(movieId: Int): CoroutineResult<MovieDetail>
+
+    suspend fun insertMovieCollection(movieCollection: MovieCollection)
+    suspend fun getMovieCollectionByName(collectionName: String): CoroutineResult<MovieCollection>
 }
