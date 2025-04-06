@@ -3,9 +3,11 @@ package com.murosar.kmp.completemoviesapp.ui.screens.moviedetail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.murosar.kmp.completemoviesapp.domain.model.Movie
+import com.murosar.kmp.completemoviesapp.domain.model.MovieCollection
 import com.murosar.kmp.completemoviesapp.domain.model.MovieDetail
 import com.murosar.kmp.completemoviesapp.domain.model.MovieError
-import com.murosar.kmp.completemoviesapp.domain.usecase.GetMovieDetailUseCase
+import com.murosar.kmp.completemoviesapp.domain.usecase.GetMovieCollectionByNameUseCase
+import com.murosar.kmp.completemoviesapp.domain.usecase.GetMovieDetailByIdUseCase
 import com.murosar.kmp.completemoviesapp.domain.usecase.GetRecommendedMoviesListByIdUseCase
 import com.murosar.kmp.completemoviesapp.domain.utils.CoroutineResult
 import kotlinx.coroutines.CoroutineDispatcher
@@ -19,22 +21,19 @@ import kotlinx.coroutines.withContext
 
 class MovieDetailViewModel(
     private val dispatcher: CoroutineDispatcher,
-    private val getMovieDetailUseCase: GetMovieDetailUseCase,
+    private val getMovieDetailByIdUseCase: GetMovieDetailByIdUseCase,
     private val getRecommendedMoviesListByIdUseCase: GetRecommendedMoviesListByIdUseCase,
+    private val getMovieCollectionByNameUseCase: GetMovieCollectionByNameUseCase,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<MovieDetailState>(MovieDetailState.Idle)
     val uiState: StateFlow<MovieDetailState> = _uiState
 
-    fun showInitialInfo(movie: Movie?, movieId: Int?) {
-        _uiState.update { MovieDetailState.ShowInitialInfo(movie = movie, movieId = movieId) }
-    }
-
     fun fetchMovieDetail(movieId: Int) = viewModelScope.launch {
         withContext(dispatcher) {
             _uiState.update { MovieDetailState.Loading }
             coroutineScope {
-                val movieDetailDeferred = async { getMovieDetailUseCase(movieId) }
+                val movieDetailDeferred = async { getMovieDetailByIdUseCase(movieId) }
                 val recommendedMoviesDeferred = async { getRecommendedMoviesListByIdUseCase(movieId) }
 
                 val errors = mutableListOf<MovieError>()
@@ -61,12 +60,27 @@ class MovieDetailViewModel(
                 val commonError = errors.distinct().singleOrNull()
                 if (commonError != null) {
                     _uiState.update { MovieDetailState.Error(commonError) }
+                } else if (movieDetail == null) {
+                    _uiState.update { MovieDetailState.Error(MovieError.UnknownError()) }
                 } else {
-                    _uiState.update {
-                        MovieDetailState.ShowMovieDetail(
-                            movieDetail = movieDetail,
-                            recommendedMovieList = recommendedMovies,
-                        )
+                    when(val collectionResponse = getMovieCollectionByNameUseCase(movieDetail.belongsToCollection?.name.orEmpty())) {
+                        is CoroutineResult.Success -> {
+                            _uiState.update {
+                                MovieDetailState.ShowMovieDetail(
+                                    movieDetail = movieDetail,
+                                    movieCollection = collectionResponse.data,
+                                    recommendedMovieList = recommendedMovies,
+                                )
+                            }
+                        }
+                        is CoroutineResult.Failure -> {
+                            _uiState.update {
+                                MovieDetailState.ShowMovieDetail(
+                                    movieDetail = movieDetail,
+                                    recommendedMovieList = recommendedMovies,
+                                )
+                            }
+                        }
                     }
                 }
             }
@@ -79,14 +93,10 @@ class MovieDetailViewModel(
 
     sealed class MovieDetailState {
         data object Idle : MovieDetailState()
-        data class ShowInitialInfo(
-            val movie: Movie?,
-            val movieId: Int?,
-        ) : MovieDetailState()
-
         data object Loading : MovieDetailState()
         data class ShowMovieDetail(
-            val movieDetail: MovieDetail?,
+            val movieDetail: MovieDetail,
+            val movieCollection: MovieCollection? = null,
             val recommendedMovieList: List<Movie>,
         ) : MovieDetailState()
 

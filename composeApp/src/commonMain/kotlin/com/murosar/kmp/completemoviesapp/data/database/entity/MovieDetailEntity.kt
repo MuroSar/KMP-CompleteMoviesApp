@@ -10,7 +10,6 @@ data class MovieDetailEntity(
     @PrimaryKey val id: Int,
     val adult: Boolean,
     val backdropPath: String,
-    val belongsToCollection: String,
     val budget: Int,
     val homepage: String,
     val imdbId: String,
@@ -29,6 +28,15 @@ data class MovieDetailEntity(
     val video: Boolean,
     val voteAverage: Double,
     val voteCount: Int,
+)
+
+@Entity(tableName = "movie_detail_belongs_to_collection")
+data class MovieDetailBelongsToCollectionEntity(
+    @PrimaryKey val id: Int,
+    val movieId: Int,
+    val name: String,
+    val posterPath: String,
+    val backdropPath: String,
 )
 
 @Entity(tableName = "movie_detail_genre")
@@ -66,6 +74,11 @@ data class MovieDetailSpokenLanguageEntity(
 
 data class MovieDetailWithRelations(
     @Embedded val movieDetail: MovieDetailEntity,
+    @Relation(
+        parentColumn = "id",
+        entityColumn = "movieId"
+    )
+    val belongsToCollection: MovieDetailBelongsToCollectionEntity,
     @Relation(
         parentColumn = "id",
         entityColumn = "movieId"

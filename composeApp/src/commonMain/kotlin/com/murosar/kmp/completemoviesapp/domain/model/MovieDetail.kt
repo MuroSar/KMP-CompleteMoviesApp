@@ -4,7 +4,7 @@ data class MovieDetail(
     val id: Int,
     val adult: Boolean,
     val backdropPath: String,
-    val belongsToCollection: String,
+    val belongsToCollection: BelongsToCollection?,
     val budget: Int,
     val genres: List<Genre>,
     val homepage: String,
@@ -27,6 +27,13 @@ data class MovieDetail(
     val video: Boolean,
     val voteAverage: Double,
     val voteCount: Int
+)
+
+data class BelongsToCollection(
+    val id: Int,
+    val name: String,
+    val posterPath: String,
+    val backdropPath: String,
 )
 
 data class Genre(

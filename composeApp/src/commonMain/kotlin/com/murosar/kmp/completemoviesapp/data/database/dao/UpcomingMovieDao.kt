@@ -14,6 +14,6 @@ interface UpcomingMovieDao {
     suspend fun insertUpcomingMovie(upcomingMovieEntity: UpcomingMovieEntity)
 
     @Transaction
-    @Query("SELECT * FROM top_rated_movie")
+    @Query("SELECT * FROM upcoming_movie")
     suspend fun getUpcomingMovies(): List<UpcomingMovieEntityComplete>
 }

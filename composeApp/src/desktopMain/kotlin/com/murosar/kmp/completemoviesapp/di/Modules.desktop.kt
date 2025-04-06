@@ -20,6 +20,7 @@ actual val platformModule = module {
         )
             .setDriver(BundledSQLiteDriver())
             .setQueryCoroutineContext(Dispatchers.IO)
+//            .fallbackToDestructiveMigration(true)
             .build()
     }
 }

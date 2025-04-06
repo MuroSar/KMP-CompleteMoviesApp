@@ -1,16 +1,19 @@
 package com.murosar.kmp.completemoviesapp.data.mapper
 
+import com.murosar.kmp.completemoviesapp.data.database.entity.MovieDetailBelongsToCollectionEntity
 import com.murosar.kmp.completemoviesapp.data.database.entity.MovieDetailEntity
 import com.murosar.kmp.completemoviesapp.data.database.entity.MovieDetailGenreEntity
 import com.murosar.kmp.completemoviesapp.data.database.entity.MovieDetailProductionCompanyEntity
 import com.murosar.kmp.completemoviesapp.data.database.entity.MovieDetailProductionCountryEntity
 import com.murosar.kmp.completemoviesapp.data.database.entity.MovieDetailSpokenLanguageEntity
 import com.murosar.kmp.completemoviesapp.data.database.entity.MovieDetailWithRelations
+import com.murosar.kmp.completemoviesapp.data.datasource.model.BelongsToCollectionResponse
 import com.murosar.kmp.completemoviesapp.data.datasource.model.GenreResponse
 import com.murosar.kmp.completemoviesapp.data.datasource.model.MovieDetailResponse
 import com.murosar.kmp.completemoviesapp.data.datasource.model.ProductionCompanyResponse
 import com.murosar.kmp.completemoviesapp.data.datasource.model.ProductionCountryResponse
 import com.murosar.kmp.completemoviesapp.data.datasource.model.SpokenLanguageResponse
+import com.murosar.kmp.completemoviesapp.domain.model.BelongsToCollection
 import com.murosar.kmp.completemoviesapp.domain.model.Genre
 import com.murosar.kmp.completemoviesapp.domain.model.MovieDetail
 import com.murosar.kmp.completemoviesapp.domain.model.ProductionCompany
@@ -22,7 +25,7 @@ fun MovieDetailResponse.mapToLocalMovieDetail() =
     MovieDetail(
         adult = adult,
         backdropPath = backdropPath,
-        belongsToCollection = belongsToCollection,
+        belongsToCollection = belongsToCollection?.mapToLocalBelongsToCollection(),
         budget = budget,
         genres = genres.mapToLocalGenreList(),
         homepage = homepage,
@@ -46,6 +49,14 @@ fun MovieDetailResponse.mapToLocalMovieDetail() =
         video = video,
         voteAverage = voteAverage,
         voteCount = voteCount
+    )
+
+private fun BelongsToCollectionResponse.mapToLocalBelongsToCollection() =
+    BelongsToCollection(
+        id = id,
+        name = name,
+        posterPath = posterPath,
+        backdropPath = backdropPath,
     )
 
 private fun List<GenreResponse>.mapToLocalGenreList(): List<Genre> = map { Genre(id = it.id, name = it.name) }
@@ -74,7 +85,6 @@ fun MovieDetail.mapToDataBaseMovieDetail() =
     MovieDetailEntity(
         adult = adult,
         backdropPath = backdropPath,
-        belongsToCollection = belongsToCollection,
         budget = budget,
         homepage = homepage,
         id = id,
@@ -94,6 +104,15 @@ fun MovieDetail.mapToDataBaseMovieDetail() =
         video = video,
         voteAverage = voteAverage,
         voteCount = voteCount
+    )
+
+fun BelongsToCollection.mapToDataBaseMovieDetailBelongsToCollection(movieDetailId: Int): MovieDetailBelongsToCollectionEntity =
+    MovieDetailBelongsToCollectionEntity(
+        id = id,
+        movieId = movieDetailId,
+        name = name,
+        posterPath = posterPath,
+        backdropPath = backdropPath,
     )
 
 fun Genre.mapToDataBaseMovieDetailGenre(movieDetailId: Int): MovieDetailGenreEntity =
@@ -133,7 +152,12 @@ fun MovieDetailWithRelations.mapToLocalMovieDetail() =
         id = movieDetail.id,
         adult = movieDetail.adult,
         backdropPath = movieDetail.backdropPath,
-        belongsToCollection = movieDetail.belongsToCollection,
+        belongsToCollection = BelongsToCollection(
+            id = belongsToCollection.id,
+            name = belongsToCollection.name,
+            posterPath = belongsToCollection.posterPath,
+            backdropPath = belongsToCollection.backdropPath,
+        ),
         budget = movieDetail.budget,
         genres = genres.map { Genre(id = it.id, name = it.name) },
         homepage = movieDetail.homepage,

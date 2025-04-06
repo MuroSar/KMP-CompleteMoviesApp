@@ -9,8 +9,10 @@ import com.murosar.kmp.completemoviesapp.domain.database.TheMovieDBDatabase
 import com.murosar.kmp.completemoviesapp.domain.datasource.TheMovieDBDataSource
 import com.murosar.kmp.completemoviesapp.domain.repository.MovieRepository
 import com.murosar.kmp.completemoviesapp.domain.repository.PersonRepository
-import com.murosar.kmp.completemoviesapp.domain.usecase.GetMovieDetailUseCase
-import com.murosar.kmp.completemoviesapp.domain.usecase.GetMovieDetailUseCaseImpl
+import com.murosar.kmp.completemoviesapp.domain.usecase.GetMovieCollectionByNameUseCase
+import com.murosar.kmp.completemoviesapp.domain.usecase.GetMovieCollectionByNameUseCaseImpl
+import com.murosar.kmp.completemoviesapp.domain.usecase.GetMovieDetailByIdUseCase
+import com.murosar.kmp.completemoviesapp.domain.usecase.GetMovieDetailByIdUseCaseImpl
 import com.murosar.kmp.completemoviesapp.domain.usecase.GetPopularMovieListUseCase
 import com.murosar.kmp.completemoviesapp.domain.usecase.GetPopularMovieListUseCaseImpl
 import com.murosar.kmp.completemoviesapp.domain.usecase.GetPopularPersonListUseCase
@@ -60,7 +62,8 @@ val useCaseModule = module {
     singleOf(::GetTopRatedMovieListUseCaseImpl).bind<GetTopRatedMovieListUseCase>()
     singleOf(::GetRecommendedMoviesListByIdUseCaseImpl).bind<GetRecommendedMoviesListByIdUseCase>()
     singleOf(::GetPopularPersonListUseCaseImpl).bind<GetPopularPersonListUseCase>()
-    singleOf(::GetMovieDetailUseCaseImpl).bind<GetMovieDetailUseCase>()
+    singleOf(::GetMovieDetailByIdUseCaseImpl).bind<GetMovieDetailByIdUseCase>()
+    singleOf(::GetMovieCollectionByNameUseCaseImpl).bind<GetMovieCollectionByNameUseCase>()
     singleOf(::GetUpcomingMovieListUseCaseImpl).bind<GetUpcomingMovieListUseCase>()
 }
 
@@ -138,8 +141,10 @@ val databaseModule = module {
     single { get<TheMovieDBDB>().upcomingMovieDao() }
     single { get<TheMovieDBDB>().recommendedMovieDao() }
     single { get<TheMovieDBDB>().movieDetailDao() }
+    single { get<TheMovieDBDB>().movieDetailBelongsToCollectionDao() }
     single { get<TheMovieDBDB>().movieDetailGenreDao() }
     single { get<TheMovieDBDB>().movieDetailProductionCompanyDao() }
     single { get<TheMovieDBDB>().movieDetailProductionCountryDao() }
     single { get<TheMovieDBDB>().movieDetailSpokenLanguageDao() }
+    single { get<TheMovieDBDB>().movieCollectionDao() }
 }

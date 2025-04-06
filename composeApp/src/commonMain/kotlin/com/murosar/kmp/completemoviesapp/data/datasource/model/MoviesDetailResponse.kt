@@ -11,7 +11,7 @@ data class MovieDetailResponse(
     @SerialName("id") val id: Int,
     @SerialName("adult") val adult: Boolean = false,
     @SerialName("backdrop_path") val backdropPath: String = EMPTY_STRING,
-    @SerialName("belongs_to_collection") val belongsToCollection: String = EMPTY_STRING,
+    @SerialName("belongs_to_collection") val belongsToCollection: BelongsToCollectionResponse? = null,
     @SerialName("budget") val budget: Int = ZERO_INT,
     @SerialName("genres") val genres: List<GenreResponse> = emptyList(),
     @SerialName("homepage") val homepage: String = EMPTY_STRING,
@@ -34,6 +34,14 @@ data class MovieDetailResponse(
     @SerialName("video") val video: Boolean = false,
     @SerialName("vote_average") val voteAverage: Double = ZERO_DOUBLE,
     @SerialName("vote_count") val voteCount: Int = ZERO_INT,
+)
+
+@Serializable
+data class BelongsToCollectionResponse(
+    @SerialName("id") val id: Int,
+    @SerialName("name") val name: String = EMPTY_STRING,
+    @SerialName("poster_path") val posterPath: String = EMPTY_STRING,
+    @SerialName("backdrop_path") val backdropPath: String = EMPTY_STRING,
 )
 
 @Serializable

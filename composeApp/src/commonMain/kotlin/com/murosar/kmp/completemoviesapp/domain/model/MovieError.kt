@@ -68,9 +68,9 @@ sealed class MovieError(
 
     data object SerializationError : MovieError()
     data class UnknownError(
-        override val code: Int,
-        override val message: String,
-        override val errorBody: String?,
+        override val code: Int = ERROR_CODE_UNKNOWN,
+        override val message: String = ERROR_MESSAGE_UNKNOWN,
+        override val errorBody: String? = null,
     ) : MovieError(
         code = code,
         message = message,
