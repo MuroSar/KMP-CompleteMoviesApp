@@ -1,3 +1,4 @@
+import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
@@ -14,6 +15,9 @@ plugins {
     // Room
     alias(libs.plugins.ksp)
     alias(libs.plugins.room)
+
+    // Unit testing
+    alias(libs.plugins.mockative)
 }
 
 kotlin {
@@ -87,6 +91,18 @@ kotlin {
             implementation(libs.room.runtime)
             implementation(libs.sqlite.bundled)
         }
+        commonTest.dependencies {
+            // Unit testing
+            implementation(libs.kotlin.test)
+            implementation(kotlin("test-annotations-common"))
+            implementation(libs.assertk)
+            implementation(libs.mockative)
+            implementation(libs.turbine)
+
+            // UI testing
+            @OptIn(ExperimentalComposeLibrary::class)
+            implementation(compose.uiTest)
+        }
         nativeMain.dependencies {
             // Ktor and Coil
             implementation(libs.ktor.client.darwin)
@@ -101,6 +117,14 @@ kotlin {
         // Room-2
         commonMain {
             kotlin.srcDir("build/generated/ksp/metadata")
+        }
+    }
+    // Unit testing
+    mockative {
+        sourceSets {
+            commonMain {
+
+            }
         }
     }
 }
