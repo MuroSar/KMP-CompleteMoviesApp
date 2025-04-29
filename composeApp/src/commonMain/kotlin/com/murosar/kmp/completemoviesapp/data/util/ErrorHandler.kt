@@ -5,8 +5,10 @@ import com.murosar.kmp.completemoviesapp.domain.utils.CoroutineResult
 import io.ktor.client.call.body
 import io.ktor.client.statement.HttpResponse
 import io.ktor.util.network.UnresolvedAddressException
+import io.mockative.Mockable
 import kotlinx.serialization.SerializationException
 
+@Mockable(HttpResponse::class)
 object ErrorHandler {
     suspend fun getError(response: HttpResponse): CoroutineResult.Failure {
         val statusCode = response.status.value
