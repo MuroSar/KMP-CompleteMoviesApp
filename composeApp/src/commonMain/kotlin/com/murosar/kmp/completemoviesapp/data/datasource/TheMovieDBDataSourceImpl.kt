@@ -1,7 +1,6 @@
 package com.murosar.kmp.completemoviesapp.data.datasource
 
 import com.murosar.kmp.completemoviesapp.data.datasource.model.MovieCollectionPagingResponse
-import com.murosar.kmp.completemoviesapp.data.datasource.model.MovieCollectionResponse
 import com.murosar.kmp.completemoviesapp.data.datasource.model.MovieDetailResponse
 import com.murosar.kmp.completemoviesapp.data.datasource.model.MoviePagingResponse
 import com.murosar.kmp.completemoviesapp.data.datasource.model.PersonPagingResponse
@@ -20,7 +19,6 @@ import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
-import io.ktor.http.encodeURLParameter
 
 class TheMovieDBDataSourceImpl(
     private val httpClient: HttpClient,
