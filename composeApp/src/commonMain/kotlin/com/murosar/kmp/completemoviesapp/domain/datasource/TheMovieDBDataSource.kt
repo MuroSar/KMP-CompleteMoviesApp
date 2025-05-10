@@ -5,7 +5,9 @@ import com.murosar.kmp.completemoviesapp.domain.model.MovieCollection
 import com.murosar.kmp.completemoviesapp.domain.model.MovieDetail
 import com.murosar.kmp.completemoviesapp.domain.model.PopularPerson
 import com.murosar.kmp.completemoviesapp.domain.utils.CoroutineResult
+import io.mockative.Mockable
 
+@Mockable
 interface TheMovieDBDataSource {
     suspend fun getPopularPersonList(): CoroutineResult<List<PopularPerson>>
 

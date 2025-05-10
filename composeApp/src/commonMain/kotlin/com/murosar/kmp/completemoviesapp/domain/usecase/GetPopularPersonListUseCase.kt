@@ -3,7 +3,9 @@ package com.murosar.kmp.completemoviesapp.domain.usecase
 import com.murosar.kmp.completemoviesapp.domain.model.PopularPerson
 import com.murosar.kmp.completemoviesapp.domain.repository.PersonRepository
 import com.murosar.kmp.completemoviesapp.domain.utils.CoroutineResult
+import io.mockative.Mockable
 
+@Mockable
 fun interface GetPopularPersonListUseCase {
     suspend operator fun invoke(): CoroutineResult<List<PopularPerson>>
 }

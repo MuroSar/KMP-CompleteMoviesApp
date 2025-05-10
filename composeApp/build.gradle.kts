@@ -1,3 +1,4 @@
+import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
@@ -14,6 +15,12 @@ plugins {
     // Room
     alias(libs.plugins.ksp)
     alias(libs.plugins.room)
+
+    // Unit testing
+    alias(libs.plugins.mockative)
+
+    // ktlint
+    alias(libs.plugins.ktlint)
 }
 
 kotlin {
@@ -23,23 +30,23 @@ kotlin {
             jvmTarget.set(JvmTarget.JVM_11)
         }
     }
-    
+
     listOf(
         iosX64(),
         iosArm64(),
-        iosSimulatorArm64()
+        iosSimulatorArm64(),
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
         }
     }
-    
+
     jvm("desktop")
-    
+
     sourceSets {
         val desktopMain by getting
-        
+
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
@@ -87,6 +94,18 @@ kotlin {
             implementation(libs.room.runtime)
             implementation(libs.sqlite.bundled)
         }
+        commonTest.dependencies {
+            // Unit testing
+            implementation(libs.kotlin.test)
+            implementation(kotlin("test-annotations-common"))
+            implementation(libs.assertk)
+            implementation(libs.mockative)
+            implementation(libs.turbine)
+
+            // UI testing
+            @OptIn(ExperimentalComposeLibrary::class)
+            implementation(compose.uiTest)
+        }
         nativeMain.dependencies {
             // Ktor and Coil
             implementation(libs.ktor.client.darwin)
@@ -103,16 +122,32 @@ kotlin {
             kotlin.srcDir("build/generated/ksp/metadata")
         }
     }
+    // Unit testing
+    mockative {
+        sourceSets {
+            commonMain {
+            }
+        }
+    }
 }
 
 android {
     namespace = "com.murosar.kmp.completemoviesapp"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
+    compileSdk =
+        libs.versions.android.compileSdk
+            .get()
+            .toInt()
 
     defaultConfig {
         applicationId = "com.murosar.kmp.completemoviesapp"
-        minSdk = libs.versions.android.minSdk.get().toInt()
-        targetSdk = libs.versions.android.targetSdk.get().toInt()
+        minSdk =
+            libs.versions.android.minSdk
+                .get()
+                .toInt()
+        targetSdk =
+            libs.versions.android.targetSdk
+                .get()
+                .toInt()
         versionCode = 1
         versionName = "1.0"
     }
@@ -159,4 +194,24 @@ compose.desktop {
 // Room
 room {
     schemaDirectory("$projectDir/schemas")
+}
+
+ktlint {
+    version.set("1.5.0") // ktlint (Pinterest) core version
+    android.set(true) // Android-specific rules
+    outputToConsole.set(true) // Shows errors in console
+    ignoreFailures.set(false) // The build fails if issues are found
+
+    reporters {
+        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.PLAIN)
+        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE)
+    }
+
+    filter {
+        exclude("**/build/**") // Exclude build folder
+    }
+
+    // To execute ktlint you can run:
+    // ./gradlew :app:ktlintCheck
+    // ./gradlew :app:ktlintFormat
 }

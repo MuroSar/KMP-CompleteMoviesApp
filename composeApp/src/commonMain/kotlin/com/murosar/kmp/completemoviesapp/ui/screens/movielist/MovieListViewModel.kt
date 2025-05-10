@@ -67,7 +67,7 @@ class MovieListViewModel(
                 }
 
                 // If all errors are of the same type (i.e. No Internet), we return the error
-                val commonError = errors.distinct().singleOrNull()
+                val commonError = errors.takeIf { it.size == 3 }?.distinct()?.singleOrNull()
                 if (commonError != null) {
                     _uiState.update { MovieListState.Error(commonError) }
                 } else {
