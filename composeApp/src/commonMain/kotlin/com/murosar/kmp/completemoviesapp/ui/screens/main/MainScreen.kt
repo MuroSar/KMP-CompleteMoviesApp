@@ -29,31 +29,32 @@ fun MainScreen(
     navigateToCharacterList: () -> Unit,
 ) {
     Column(
-        modifier = Modifier
-            .background(backgroundBrush)
-            .fillMaxSize()
-            .padding(padding_16),
+        modifier =
+            Modifier
+                .background(backgroundBrush)
+                .fillMaxSize()
+                .padding(padding_16),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween,
     ) {
         Spacer(modifier = Modifier.weight(weight_02))
         Text(
             text = stringResource(Res.string.main_screen_title),
-            style = titleStyleWithGradient
+            style = titleStyleWithGradient,
         )
         Spacer(modifier = Modifier.weight(weight_03))
         Column(
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.Center,
         ) {
             CustomButton(
                 text = stringResource(Res.string.main_screen_button_movies),
-                onClick = navigateToMovieList
+                onClick = navigateToMovieList,
             )
             CustomButton(
                 modifier = Modifier.padding(top = padding_16),
                 text = stringResource(Res.string.main_screen_button_characters),
                 usePrimaryColor = false,
-                onClick = navigateToCharacterList
+                onClick = navigateToCharacterList,
             )
         }
         Spacer(modifier = Modifier.weight(weight_05))

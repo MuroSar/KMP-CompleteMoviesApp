@@ -10,12 +10,11 @@ import com.murosar.kmp.completemoviesapp.domain.utils.CoroutineResult
 import io.mockative.coEvery
 import io.mockative.coVerify
 import io.mockative.mock
+import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
-import kotlinx.coroutines.test.runTest
 
 class GetUpcomingMovieListUseCaseTest {
-
     private val repository = mock(MovieRepository::class)
 
     private lateinit var getUpcomingMovieListUseCase: GetUpcomingMovieListUseCase
@@ -26,28 +25,30 @@ class GetUpcomingMovieListUseCaseTest {
     }
 
     @Test
-    fun `should return upcomingMovies from repository`() = runTest {
-        val upcomingMovies = listOf<Movie>()
+    fun `should return upcomingMovies from repository`() =
+        runTest {
+            val upcomingMovies = listOf<Movie>()
 
-        coEvery { repository.getUpcomingMovieList() }.returns(CoroutineResult.Success(upcomingMovies))
+            coEvery { repository.getUpcomingMovieList() }.returns(CoroutineResult.Success(upcomingMovies))
 
-        val result = getUpcomingMovieListUseCase()
+            val result = getUpcomingMovieListUseCase()
 
-        assertThat(result).isInstanceOf<CoroutineResult.Success<List<Movie>>>()
-        assertThat((result as CoroutineResult.Success<List<Movie>>).data).isEqualTo(upcomingMovies)
+            assertThat(result).isInstanceOf<CoroutineResult.Success<List<Movie>>>()
+            assertThat((result as CoroutineResult.Success<List<Movie>>).data).isEqualTo(upcomingMovies)
 
-        coVerify { repository.getUpcomingMovieList() }.wasInvoked(exactly = 1)
-    }
+            coVerify { repository.getUpcomingMovieList() }.wasInvoked(exactly = 1)
+        }
 
     @Test
-    fun `should return SerializationError from repository`() = runTest {
-        coEvery { repository.getUpcomingMovieList() }.returns(CoroutineResult.Failure(MovieError.SerializationError))
+    fun `should return SerializationError from repository`() =
+        runTest {
+            coEvery { repository.getUpcomingMovieList() }.returns(CoroutineResult.Failure(MovieError.SerializationError))
 
-        val result = getUpcomingMovieListUseCase()
+            val result = getUpcomingMovieListUseCase()
 
-        assertThat(result).isInstanceOf<CoroutineResult.Failure>()
-        assertThat((result as CoroutineResult.Failure).error).isEqualTo(MovieError.SerializationError)
+            assertThat(result).isInstanceOf<CoroutineResult.Failure>()
+            assertThat((result as CoroutineResult.Failure).error).isEqualTo(MovieError.SerializationError)
 
-        coVerify { repository.getUpcomingMovieList() }.wasInvoked(exactly = 1)
-    }
+            coVerify { repository.getUpcomingMovieList() }.wasInvoked(exactly = 1)
+        }
 }

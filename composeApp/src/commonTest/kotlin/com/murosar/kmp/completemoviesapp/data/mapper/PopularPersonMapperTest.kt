@@ -14,46 +14,48 @@ import com.murosar.kmp.completemoviesapp.domain.model.PopularPerson
 import kotlin.test.Test
 
 class PopularPersonMapperTest {
-
     @Test
     fun `map PersonPagingResponse to PopularPerson list correctly`() {
-        val knownForResponse = KnownForResponse(
-            id = 1,
-            adult = false,
-            backdropPath = "backdrop_path",
-            firstAirDate = "2021-01-01",
-            mediaType = "movie",
-            name = "Known For Name",
-            originalLanguage = "en",
-            originalName = "Original Name",
-            originalTitle = "Original Title",
-            overview = "Overview",
-            popularity = 99.9,
-            posterPath = "poster_path",
-            releaseDate = "2021-01-01",
-            title = "Title",
-            video = false,
-            voteAverage = 8.5,
-            voteCount = 1200
-        )
+        val knownForResponse =
+            KnownForResponse(
+                id = 1,
+                adult = false,
+                backdropPath = "backdrop_path",
+                firstAirDate = "2021-01-01",
+                mediaType = "movie",
+                name = "Known For Name",
+                originalLanguage = "en",
+                originalName = "Original Name",
+                originalTitle = "Original Title",
+                overview = "Overview",
+                popularity = 99.9,
+                posterPath = "poster_path",
+                releaseDate = "2021-01-01",
+                title = "Title",
+                video = false,
+                voteAverage = 8.5,
+                voteCount = 1200,
+            )
 
-        val popularPersonResponse = PopularPersonResponse(
-            id = 123,
-            adult = false,
-            gender = 1,
-            knownFor = listOf(knownForResponse),
-            knownForDepartment = "Acting",
-            name = "Person Name",
-            popularity = 100.0,
-            profilePath = "profile_path"
-        )
+        val popularPersonResponse =
+            PopularPersonResponse(
+                id = 123,
+                adult = false,
+                gender = 1,
+                knownFor = listOf(knownForResponse),
+                knownForDepartment = "Acting",
+                name = "Person Name",
+                popularity = 100.0,
+                profilePath = "profile_path",
+            )
 
-        val response = PersonPagingResponse(
-            page = 1,
-            results = listOf(popularPersonResponse),
-            totalPages = 1,
-            totalResults = 1
-        )
+        val response =
+            PersonPagingResponse(
+                page = 1,
+                results = listOf(popularPersonResponse),
+                totalPages = 1,
+                totalResults = 1,
+            )
 
         val result = response.mapToLocalPopularPersonList()
 
@@ -90,16 +92,17 @@ class PopularPersonMapperTest {
 
     @Test
     fun `map PopularPerson to PopularPersonEntity correctly`() {
-        val popularPerson = PopularPerson(
-            id = 123,
-            adult = false,
-            gender = 1,
-            knownFor = emptyList(),
-            knownForDepartment = "Acting",
-            name = "Person Name",
-            popularity = 100.0,
-            profilePath = "profile_path"
-        )
+        val popularPerson =
+            PopularPerson(
+                id = 123,
+                adult = false,
+                gender = 1,
+                knownFor = emptyList(),
+                knownForDepartment = "Acting",
+                name = "Person Name",
+                popularity = 100.0,
+                profilePath = "profile_path",
+            )
 
         val entity = popularPerson.mapToDataBasePopularPerson()
 
@@ -114,25 +117,26 @@ class PopularPersonMapperTest {
 
     @Test
     fun `map KnownFor to KnownForEntity correctly`() {
-        val knownFor = KnownFor(
-            id = 1,
-            adult = false,
-            backdropPath = "backdrop_path",
-            firstAirDate = "2021-01-01",
-            mediaType = "movie",
-            name = "Known For Name",
-            originalLanguage = "en",
-            originalName = "Original Name",
-            originalTitle = "Original Title",
-            overview = "Overview",
-            popularity = 99.9,
-            posterPath = "poster_path",
-            releaseDate = "2021-01-01",
-            title = "Title",
-            video = false,
-            voteAverage = 8.5,
-            voteCount = 1200
-        )
+        val knownFor =
+            KnownFor(
+                id = 1,
+                adult = false,
+                backdropPath = "backdrop_path",
+                firstAirDate = "2021-01-01",
+                mediaType = "movie",
+                name = "Known For Name",
+                originalLanguage = "en",
+                originalName = "Original Name",
+                originalTitle = "Original Title",
+                overview = "Overview",
+                popularity = 99.9,
+                posterPath = "poster_path",
+                releaseDate = "2021-01-01",
+                title = "Title",
+                video = false,
+                voteAverage = 8.5,
+                voteCount = 1200,
+            )
 
         val userId = 123
 
@@ -160,41 +164,44 @@ class PopularPersonMapperTest {
 
     @Test
     fun `map List of PopularPersonEntityWithKnownForEntity to PopularPerson list correctly`() {
-        val knownForEntity = KnownForEntity(
-            id = 1,
-            userId = 123,
-            adult = false,
-            backdropPath = "backdrop_path",
-            firstAirDate = "2021-01-01",
-            mediaType = "movie",
-            name = "Known For Name",
-            originalLanguage = "en",
-            originalName = "Original Name",
-            originalTitle = "Original Title",
-            overview = "Overview",
-            popularity = 99.9,
-            posterPath = "poster_path",
-            releaseDate = "2021-01-01",
-            title = "Title",
-            video = false,
-            voteAverage = 8.5,
-            voteCount = 1200
-        )
+        val knownForEntity =
+            KnownForEntity(
+                id = 1,
+                userId = 123,
+                adult = false,
+                backdropPath = "backdrop_path",
+                firstAirDate = "2021-01-01",
+                mediaType = "movie",
+                name = "Known For Name",
+                originalLanguage = "en",
+                originalName = "Original Name",
+                originalTitle = "Original Title",
+                overview = "Overview",
+                popularity = 99.9,
+                posterPath = "poster_path",
+                releaseDate = "2021-01-01",
+                title = "Title",
+                video = false,
+                voteAverage = 8.5,
+                voteCount = 1200,
+            )
 
-        val popularPersonEntity = PopularPersonEntity(
-            id = 123,
-            adult = false,
-            gender = 1,
-            knownForDepartment = "Acting",
-            name = "Person Name",
-            popularity = 100.0,
-            profilePath = "profile_path"
-        )
+        val popularPersonEntity =
+            PopularPersonEntity(
+                id = 123,
+                adult = false,
+                gender = 1,
+                knownForDepartment = "Acting",
+                name = "Person Name",
+                popularity = 100.0,
+                profilePath = "profile_path",
+            )
 
-        val entityWithKnownFor = PopularPersonEntityWithKnownForEntity(
-            popularPersonEntity = popularPersonEntity,
-            knownForEntity = listOf(knownForEntity)
-        )
+        val entityWithKnownFor =
+            PopularPersonEntityWithKnownForEntity(
+                popularPersonEntity = popularPersonEntity,
+                knownForEntity = listOf(knownForEntity),
+            )
 
         val result = listOf(entityWithKnownFor).mapToLocalPopularPersonList()
 

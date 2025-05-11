@@ -8,7 +8,7 @@ data class PopularPerson(
     val knownForDepartment: String,
     val name: String,
     val popularity: Double,
-    val profilePath: String
+    val profilePath: String,
 )
 
 data class KnownFor(
@@ -28,5 +28,5 @@ data class KnownFor(
     val title: String,
     val video: Boolean,
     val voteAverage: Double,
-    val voteCount: Int
+    val voteCount: Int,
 )

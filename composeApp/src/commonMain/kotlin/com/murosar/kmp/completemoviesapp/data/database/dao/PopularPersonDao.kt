@@ -8,7 +8,9 @@ import androidx.room.Transaction
 import com.murosar.kmp.completemoviesapp.data.database.entity.KnownForEntity
 import com.murosar.kmp.completemoviesapp.data.database.entity.PopularPersonEntity
 import com.murosar.kmp.completemoviesapp.data.database.entity.PopularPersonEntityWithKnownForEntity
+import io.mockative.Mockable
 
+@Mockable
 @Dao
 interface PopularPersonDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -19,6 +21,7 @@ interface PopularPersonDao {
     suspend fun getPopularPersons(): List<PopularPersonEntityWithKnownForEntity>
 }
 
+@Mockable
 @Dao
 fun interface KnownForDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)

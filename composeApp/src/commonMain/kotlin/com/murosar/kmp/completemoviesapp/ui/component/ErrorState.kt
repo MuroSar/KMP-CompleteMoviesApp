@@ -24,23 +24,25 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun ErrorState() {
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(padding_16),
-        contentAlignment = Alignment.Center
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .padding(padding_16),
+        contentAlignment = Alignment.Center,
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Image(
                 painter = painterResource(resource = Res.drawable.movie_error),
                 contentDescription = stringResource(Res.string.error_state_content_description),
-                modifier = Modifier
-                    .size(size_100)
-                    .padding(bottom = padding_8)
+                modifier =
+                    Modifier
+                        .size(size_100)
+                        .padding(bottom = padding_8),
             )
             Text(
                 text = stringResource(Res.string.error_state_message),
                 style = errorTextStyle,
-                modifier = Modifier.padding(top = padding_8)
+                modifier = Modifier.padding(top = padding_8),
             )
         }
     }

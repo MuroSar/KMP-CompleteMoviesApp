@@ -19,17 +19,18 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun LoadingState() {
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(padding_16),
-        contentAlignment = Alignment.Center
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .padding(padding_16),
+        contentAlignment = Alignment.Center,
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             CircularProgressIndicator()
             Text(
                 text = stringResource(Res.string.loading_state_message),
                 style = loadingTextStyle,
-                modifier = Modifier.padding(top = padding_8)
+                modifier = Modifier.padding(top = padding_8),
             )
         }
     }

@@ -10,12 +10,11 @@ import com.murosar.kmp.completemoviesapp.domain.utils.CoroutineResult
 import io.mockative.coEvery
 import io.mockative.coVerify
 import io.mockative.mock
+import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
-import kotlinx.coroutines.test.runTest
 
 class GetPopularRecommendedListUseCaseTest {
-
     private val repository = mock(MovieRepository::class)
 
     private lateinit var getRecommendedMoviesListByIdUseCase: GetRecommendedMoviesListByIdUseCase
@@ -26,30 +25,32 @@ class GetPopularRecommendedListUseCaseTest {
     }
 
     @Test
-    fun `should return recommendedMovies from repository`() = runTest {
-        val recommendedMovies = listOf<Movie>()
+    fun `should return recommendedMovies from repository`() =
+        runTest {
+            val recommendedMovies = listOf<Movie>()
 
-        coEvery { repository.getRecommendedMoviesListById(MOVIE_ID) }.returns(CoroutineResult.Success(recommendedMovies))
+            coEvery { repository.getRecommendedMoviesListById(MOVIE_ID) }.returns(CoroutineResult.Success(recommendedMovies))
 
-        val result = getRecommendedMoviesListByIdUseCase(MOVIE_ID)
+            val result = getRecommendedMoviesListByIdUseCase(MOVIE_ID)
 
-        assertThat(result).isInstanceOf<CoroutineResult.Success<List<Movie>>>()
-        assertThat((result as CoroutineResult.Success<List<Movie>>).data).isEqualTo(recommendedMovies)
+            assertThat(result).isInstanceOf<CoroutineResult.Success<List<Movie>>>()
+            assertThat((result as CoroutineResult.Success<List<Movie>>).data).isEqualTo(recommendedMovies)
 
-        coVerify { repository.getRecommendedMoviesListById(MOVIE_ID) }.wasInvoked(exactly = 1)
-    }
+            coVerify { repository.getRecommendedMoviesListById(MOVIE_ID) }.wasInvoked(exactly = 1)
+        }
 
     @Test
-    fun `should return SerializationError from repository`() = runTest {
-        coEvery { repository.getRecommendedMoviesListById(MOVIE_ID) }.returns(CoroutineResult.Failure(MovieError.SerializationError))
+    fun `should return SerializationError from repository`() =
+        runTest {
+            coEvery { repository.getRecommendedMoviesListById(MOVIE_ID) }.returns(CoroutineResult.Failure(MovieError.SerializationError))
 
-        val result = getRecommendedMoviesListByIdUseCase(MOVIE_ID)
+            val result = getRecommendedMoviesListByIdUseCase(MOVIE_ID)
 
-        assertThat(result).isInstanceOf<CoroutineResult.Failure>()
-        assertThat((result as CoroutineResult.Failure).error).isEqualTo(MovieError.SerializationError)
+            assertThat(result).isInstanceOf<CoroutineResult.Failure>()
+            assertThat((result as CoroutineResult.Failure).error).isEqualTo(MovieError.SerializationError)
 
-        coVerify { repository.getRecommendedMoviesListById(MOVIE_ID) }.wasInvoked(exactly = 1)
-    }
+            coVerify { repository.getRecommendedMoviesListById(MOVIE_ID) }.wasInvoked(exactly = 1)
+        }
 
     companion object {
         private const val MOVIE_ID = 9292

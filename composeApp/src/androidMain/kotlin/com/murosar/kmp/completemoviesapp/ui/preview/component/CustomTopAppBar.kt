@@ -11,7 +11,7 @@ fun CustomTopAppBarPreview() {
     MaterialTheme {
         CustomTopAppBar(
             title = "Title",
-            onBackClick = { }
+            onBackClick = { },
         )
     }
 }

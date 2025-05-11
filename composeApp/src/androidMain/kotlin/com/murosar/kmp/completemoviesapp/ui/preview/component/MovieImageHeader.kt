@@ -12,39 +12,41 @@ import com.murosar.kmp.completemoviesapp.ui.component.MovieImageHeader
 fun MovieImageHeaderPreview() {
     MaterialTheme {
         MovieImageHeader(
-            movieDetail = MovieDetail(
-                id = 1868,
-                adult = false,
-                backdropPath = "lorem",
-                belongsToCollection = BelongsToCollection(
-                    id = 1191,
-                    name = "Bonnie Avila",
-                    posterPath = "potenti",
-                    backdropPath = "ipsum"
+            movieDetail =
+                MovieDetail(
+                    id = 1868,
+                    adult = false,
+                    backdropPath = "lorem",
+                    belongsToCollection =
+                        BelongsToCollection(
+                            id = 1191,
+                            name = "Bonnie Avila",
+                            posterPath = "potenti",
+                            backdropPath = "ipsum",
+                        ),
+                    budget = 8372,
+                    genres = listOf(),
+                    homepage = "urna",
+                    imdbId = "fringilla",
+                    originCountry = "China",
+                    originalLanguage = "alia",
+                    originalTitle = "ponderum",
+                    overview = "natoque",
+                    popularity = 4.5,
+                    posterPath = "ad",
+                    productionCompanies = listOf(),
+                    productionCountries = listOf(),
+                    releaseDate = "explicari",
+                    revenue = 3970,
+                    runtime = 6550,
+                    spokenLanguages = listOf(),
+                    status = "appareat",
+                    tagline = "neglegentur",
+                    title = "ignota",
+                    video = false,
+                    voteAverage = 6.7,
+                    voteCount = 5389,
                 ),
-                budget = 8372,
-                genres = listOf(),
-                homepage = "urna",
-                imdbId = "fringilla",
-                originCountry = "China",
-                originalLanguage = "alia",
-                originalTitle = "ponderum",
-                overview = "natoque",
-                popularity = 4.5,
-                posterPath = "ad",
-                productionCompanies = listOf(),
-                productionCountries = listOf(),
-                releaseDate = "explicari",
-                revenue = 3970,
-                runtime = 6550,
-                spokenLanguages = listOf(),
-                status = "appareat",
-                tagline = "neglegentur",
-                title = "ignota",
-                video = false,
-                voteAverage = 6.7,
-                voteCount = 5389
-            )
         )
     }
 }

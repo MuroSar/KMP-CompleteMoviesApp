@@ -12,8 +12,8 @@ class MovieRepositoryImpl(
     private val theMovieDBDataSource: TheMovieDBDataSource,
     private val theMovieDBDatabase: TheMovieDBDatabase,
 ) : MovieRepository {
-    override suspend fun getPopularMovieList(): CoroutineResult<List<Movie>> {
-        return when (val serviceResult = theMovieDBDataSource.getPopularMovieList()) {
+    override suspend fun getPopularMovieList(): CoroutineResult<List<Movie>> =
+        when (val serviceResult = theMovieDBDataSource.getPopularMovieList()) {
             is CoroutineResult.Success -> {
                 println("✅ getPopularMovieList SUCCESS, inserting into database")
                 theMovieDBDatabase.insertPopularMovie(serviceResult.data)
@@ -25,10 +25,9 @@ class MovieRepositoryImpl(
                 theMovieDBDatabase.getPopularMovie()
             }
         }
-    }
 
-    override suspend fun getTopRatedMovieList(): CoroutineResult<List<Movie>> {
-        return when (val serviceResult = theMovieDBDataSource.getTopRatedMovieList()) {
+    override suspend fun getTopRatedMovieList(): CoroutineResult<List<Movie>> =
+        when (val serviceResult = theMovieDBDataSource.getTopRatedMovieList()) {
             is CoroutineResult.Success -> {
                 println("✅ getTopRatedMovieList SUCCESS, inserting into database")
                 theMovieDBDatabase.insertTopRatedMovie(serviceResult.data)
@@ -40,10 +39,9 @@ class MovieRepositoryImpl(
                 theMovieDBDatabase.getTopRatedMovie()
             }
         }
-    }
 
-    override suspend fun getUpcomingMovieList(): CoroutineResult<List<Movie>> {
-        return when (val serviceResult = theMovieDBDataSource.getUpcomingMovieList()) {
+    override suspend fun getUpcomingMovieList(): CoroutineResult<List<Movie>> =
+        when (val serviceResult = theMovieDBDataSource.getUpcomingMovieList()) {
             is CoroutineResult.Success -> {
                 println("✅ getUpcomingMovieList SUCCESS, inserting into database")
                 theMovieDBDatabase.insertUpcomingMovie(serviceResult.data)
@@ -55,10 +53,9 @@ class MovieRepositoryImpl(
                 theMovieDBDatabase.getUpcomingMovie()
             }
         }
-    }
 
-    override suspend fun getRecommendedMoviesListById(movieId: Int): CoroutineResult<List<Movie>> {
-        return when (val serviceResult = theMovieDBDataSource.getRecommendedMoviesListById(movieId)) {
+    override suspend fun getRecommendedMoviesListById(movieId: Int): CoroutineResult<List<Movie>> =
+        when (val serviceResult = theMovieDBDataSource.getRecommendedMoviesListById(movieId)) {
             is CoroutineResult.Success -> {
                 println("✅ getRecommendedMoviesListById SUCCESS, inserting into database")
                 theMovieDBDatabase.insertRecommendedMovies(movieId, serviceResult.data)
@@ -70,10 +67,9 @@ class MovieRepositoryImpl(
                 theMovieDBDatabase.getRecommendedMoviesById(movieId)
             }
         }
-    }
 
-    override suspend fun getMovieDetailById(movieId: Int): CoroutineResult<MovieDetail> {
-        return when (val serviceResult = theMovieDBDataSource.getMovieDetailById(movieId)) {
+    override suspend fun getMovieDetailById(movieId: Int): CoroutineResult<MovieDetail> =
+        when (val serviceResult = theMovieDBDataSource.getMovieDetailById(movieId)) {
             is CoroutineResult.Success -> {
                 println("✅ getMovieDetailById SUCCESS, inserting into database")
                 theMovieDBDatabase.insertMovieDetail(serviceResult.data)
@@ -85,10 +81,9 @@ class MovieRepositoryImpl(
                 theMovieDBDatabase.getMovieDetailById(movieId)
             }
         }
-    }
 
-    override suspend fun getMovieCollectionByName(collectionName: String): CoroutineResult<MovieCollection> {
-        return when (val serviceResult = theMovieDBDataSource.getMovieCollectionByName(collectionName)) {
+    override suspend fun getMovieCollectionByName(collectionName: String): CoroutineResult<MovieCollection> =
+        when (val serviceResult = theMovieDBDataSource.getMovieCollectionByName(collectionName)) {
             is CoroutineResult.Success -> {
                 println("✅ getMovieCollectionByName SUCCESS, inserting into database")
                 theMovieDBDatabase.insertMovieCollection(serviceResult.data)
@@ -100,5 +95,4 @@ class MovieRepositoryImpl(
                 theMovieDBDatabase.getMovieCollectionByName(collectionName)
             }
         }
-    }
 }

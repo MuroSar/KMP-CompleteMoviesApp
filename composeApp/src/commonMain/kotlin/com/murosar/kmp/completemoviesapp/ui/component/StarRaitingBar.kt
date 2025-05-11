@@ -35,7 +35,7 @@ fun StarRatingBar(
 
     Row(
         modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         for (i in 0 until maxStars) {
             Box(modifier = Modifier.size(starSize)) {
@@ -44,7 +44,7 @@ fun StarRatingBar(
                     imageVector = Icons.Outlined.Star,
                     contentDescription = null,
                     tint = steel_gray,
-                    modifier = Modifier.matchParentSize()
+                    modifier = Modifier.matchParentSize(),
                 )
 
                 // Star fill (only if needed)
@@ -54,7 +54,7 @@ fun StarRatingBar(
                             imageVector = Icons.Filled.Star,
                             contentDescription = null,
                             tint = burnt_sienna,
-                            modifier = Modifier.matchParentSize()
+                            modifier = Modifier.matchParentSize(),
                         )
                     }
 
@@ -63,19 +63,19 @@ fun StarRatingBar(
                             imageVector = Icons.Filled.Star,
                             contentDescription = null,
                             tint = burnt_sienna,
-                            modifier = Modifier
-                                .matchParentSize()
-                                .clip(RectangleShape)
-                                .graphicsLayer {
-                                    clip = true
-                                    shape = RectangleShape
-                                }
-                                .drawWithContent {
-                                    val width = size.width * partial.toFloat()
-                                    clipRect(right = width) {
-                                        this@drawWithContent.drawContent()
-                                    }
-                                }
+                            modifier =
+                                Modifier
+                                    .matchParentSize()
+                                    .clip(RectangleShape)
+                                    .graphicsLayer {
+                                        clip = true
+                                        shape = RectangleShape
+                                    }.drawWithContent {
+                                        val width = size.width * partial.toFloat()
+                                        clipRect(right = width) {
+                                            this@drawWithContent.drawContent()
+                                        }
+                                    },
                         )
                     }
                 }
@@ -87,4 +87,3 @@ fun StarRatingBar(
         }
     }
 }
-

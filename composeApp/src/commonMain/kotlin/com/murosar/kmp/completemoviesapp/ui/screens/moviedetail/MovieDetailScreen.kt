@@ -2,8 +2,6 @@ package com.murosar.kmp.completemoviesapp.ui.screens.moviedetail
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -83,17 +81,16 @@ fun MovieDetailScreen(
         topBar = {
             CustomTopAppBar(
                 title = stringResource(Res.string.movie_detail_title),
-                onBackClick = navigateBack
+                onBackClick = navigateBack,
             )
         },
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
     ) { paddingValues ->
         MovieDetailContent(
             modifier = Modifier.padding(paddingValues),
             uiState = viewModel.uiState.collectAsStateWithLifecycle().value,
             navigateToMovieDetail = { movieId -> navigateToMovieDetail(movieId) },
         )
-
     }
 }
 
@@ -106,9 +103,10 @@ fun MovieDetailContent(
     val scrollState = rememberScrollState()
 
     Column(
-        modifier = modifier
-            .fillMaxSize()
-            .background(backgroundBrush)
+        modifier =
+            modifier
+                .fillMaxSize()
+                .background(backgroundBrush),
     ) {
         when (uiState) {
             MovieDetailViewModel.MovieDetailState.Idle -> {}
@@ -116,14 +114,15 @@ fun MovieDetailContent(
             is MovieDetailViewModel.MovieDetailState.Error -> ErrorState()
             is MovieDetailViewModel.MovieDetailState.ShowMovieDetail -> {
                 Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .verticalScroll(scrollState)
+                    modifier =
+                        Modifier
+                            .fillMaxSize()
+                            .verticalScroll(scrollState),
                 ) {
                     MovieImageHeader(uiState.movieDetail)
 
                     Column(
-                        modifier = Modifier.padding(padding_16)
+                        modifier = Modifier.padding(padding_16),
                     ) {
                         if (uiState.movieDetail.genres.isNotEmpty()) {
                             GenrePills(genres = uiState.movieDetail.genres)
@@ -131,9 +130,9 @@ fun MovieDetailContent(
                         Text(
                             modifier = Modifier.padding(top = padding_16, bottom = padding_8),
                             text = stringResource(Res.string.movie_detail_general_info_title),
-                            style = movieListSectionTextStyle
+                            style = movieListSectionTextStyle,
                         )
-                        if (uiState.movieDetail.homepage.isNotEmpty()){
+                        if (uiState.movieDetail.homepage.isNotEmpty()) {
                             Text(
                                 text = stringResource(Res.string.movie_detail_homepage, uiState.movieDetail.homepage),
                                 style = infoTextStyle,
@@ -163,19 +162,20 @@ fun MovieDetailContent(
                             Text(
                                 text = uiState.movieCollection.name,
                                 style = movieListSectionTextStyle,
-                                modifier = Modifier.padding(top = padding_16, bottom = padding_8)
+                                modifier = Modifier.padding(top = padding_16, bottom = padding_8),
                             )
                             Row {
                                 AsyncImage(
-                                    modifier = Modifier
-                                        .width(width_100)
-                                        .height(height_140)
-                                        .clip(RoundedCornerShape(rounded_corners_12))
-                                        .border(
-                                            width = width_2,
-                                            color = burnt_sienna,
-                                            shape = RoundedCornerShape(rounded_corners_12)
-                                        ),
+                                    modifier =
+                                        Modifier
+                                            .width(width_100)
+                                            .height(height_140)
+                                            .clip(RoundedCornerShape(rounded_corners_12))
+                                            .border(
+                                                width = width_2,
+                                                color = burnt_sienna,
+                                                shape = RoundedCornerShape(rounded_corners_12),
+                                            ),
                                     contentScale = ContentScale.FillBounds,
                                     model = "https://image.tmdb.org/t/p/w500${uiState.movieCollection.posterPath}",
                                     contentDescription = uiState.movieCollection.name,
@@ -183,10 +183,11 @@ fun MovieDetailContent(
                                     error = painterResource(resource = Res.drawable.movie_error),
                                 )
                                 Text(
-                                    modifier = Modifier
-                                        .padding(start = padding_8)
-                                        .height(height_140)
-                                        .verticalScroll(rememberScrollState()),
+                                    modifier =
+                                        Modifier
+                                            .padding(start = padding_8)
+                                            .height(height_140)
+                                            .verticalScroll(rememberScrollState()),
                                     text = uiState.movieCollection.overview,
                                     style = infoTextStyle,
                                 )
@@ -196,7 +197,7 @@ fun MovieDetailContent(
                         Text(
                             text = stringResource(Res.string.movie_detail_overview_title),
                             style = movieListSectionTextStyle,
-                            modifier = Modifier.padding(top = padding_16, bottom = padding_8)
+                            modifier = Modifier.padding(top = padding_16, bottom = padding_8),
                         )
                         Text(
                             text = uiState.movieDetail.overview,
@@ -207,12 +208,12 @@ fun MovieDetailContent(
                             Text(
                                 text = stringResource(Res.string.movie_detail_recommended_title),
                                 style = movieListSectionTextStyle,
-                                modifier = Modifier.padding(top = padding_32, bottom = padding_8)
+                                modifier = Modifier.padding(top = padding_32, bottom = padding_8),
                             )
 
                             LazyRow(
                                 horizontalArrangement = Arrangement.spacedBy(padding_16),
-                                contentPadding = PaddingValues(horizontal = padding_8)
+                                contentPadding = PaddingValues(horizontal = padding_8),
                             ) {
                                 items(uiState.recommendedMovieList) { recommended ->
                                     MostPopularMovieCard(

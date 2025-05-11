@@ -19,66 +19,66 @@ class MovieEntity(
     val title: String,
     val video: Boolean,
     val voteAverage: Double,
-    val voteCount: Int
+    val voteCount: Int,
 )
 
 @Entity(tableName = "popular_movie")
 class PopularMovieEntity(
     @PrimaryKey val popularMovieId: Int,
-    @Embedded val movieEntity: MovieEntity
+    @Embedded val movieEntity: MovieEntity,
 )
 
 @Entity(tableName = "top_rated_movie")
 class TopRatedMovieEntity(
     @PrimaryKey val topRatedMovieId: Int,
-    @Embedded val movieEntity: MovieEntity
+    @Embedded val movieEntity: MovieEntity,
 )
 
 @Entity(tableName = "upcoming_movie")
 class UpcomingMovieEntity(
     @PrimaryKey val upcomingMovieId: Int,
-    @Embedded val movieEntity: MovieEntity
+    @Embedded val movieEntity: MovieEntity,
 )
 
 @Entity(tableName = "recommended_movie")
 class RecommendedMovieEntity(
     @PrimaryKey val recommendedMovieId: Int,
     val originalMovieId: Int,
-    @Embedded val movieEntity: MovieEntity
+    @Embedded val movieEntity: MovieEntity,
 )
 
 data class PopularMovieEntityComplete(
     @Embedded val movieEntity: MovieEntity,
     @Relation(
         parentColumn = "id",
-        entityColumn = "popularMovieId"
+        entityColumn = "popularMovieId",
     )
-    val popularMovieEntity: PopularMovieEntity
+    val popularMovieEntity: PopularMovieEntity,
 )
 
 data class TopRatedMovieEntityComplete(
     @Embedded val movieEntity: MovieEntity,
     @Relation(
         parentColumn = "id",
-        entityColumn = "topRatedMovieId"
+        entityColumn = "topRatedMovieId",
     )
-    val topRatedMovieEntity: TopRatedMovieEntity
+    val topRatedMovieEntity: TopRatedMovieEntity,
 )
 
 data class UpcomingMovieEntityComplete(
     @Embedded val movieEntity: MovieEntity,
     @Relation(
         parentColumn = "id",
-        entityColumn = "upcomingMovieId"
+        entityColumn = "upcomingMovieId",
     )
-    val upcomingMovieEntity: UpcomingMovieEntity
+    val upcomingMovieEntity: UpcomingMovieEntity,
 )
 
 data class RecommendedMovieEntityComplete(
     @Embedded val movieEntity: MovieEntity,
     @Relation(
         parentColumn = "id",
-        entityColumn = "recommendedMovieId"
+        entityColumn = "recommendedMovieId",
     )
-    val recommendedMovieEntity: RecommendedMovieEntity
+    val recommendedMovieEntity: RecommendedMovieEntity,
 )

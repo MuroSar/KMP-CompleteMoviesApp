@@ -13,6 +13,5 @@ fun interface GetRecommendedMoviesListByIdUseCase {
 class GetRecommendedMoviesListByIdUseCaseImpl(
     private val movieRepository: MovieRepository,
 ) : GetRecommendedMoviesListByIdUseCase {
-    override suspend operator fun invoke(movieId: Int): CoroutineResult<List<Movie>> =
-        movieRepository.getRecommendedMoviesListById(movieId)
+    override suspend operator fun invoke(movieId: Int): CoroutineResult<List<Movie>> = movieRepository.getRecommendedMoviesListById(movieId)
 }

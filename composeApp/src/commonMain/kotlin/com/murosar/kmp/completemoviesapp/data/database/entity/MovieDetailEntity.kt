@@ -76,28 +76,27 @@ data class MovieDetailWithRelations(
     @Embedded val movieDetail: MovieDetailEntity,
     @Relation(
         parentColumn = "id",
-        entityColumn = "movieId"
+        entityColumn = "movieId",
     )
     val belongsToCollection: MovieDetailBelongsToCollectionEntity,
     @Relation(
         parentColumn = "id",
-        entityColumn = "movieId"
+        entityColumn = "movieId",
     )
     val genres: List<MovieDetailGenreEntity>,
     @Relation(
         parentColumn = "id",
-        entityColumn = "movieId"
+        entityColumn = "movieId",
     )
     val productionCompanies: List<MovieDetailProductionCompanyEntity>,
     @Relation(
         parentColumn = "id",
-        entityColumn = "movieId"
+        entityColumn = "movieId",
     )
     val productionCountries: List<MovieDetailProductionCountryEntity>,
     @Relation(
         parentColumn = "id",
-        entityColumn = "movieId"
+        entityColumn = "movieId",
     )
     val spokenLanguages: List<MovieDetailSpokenLanguageEntity>,
 )
-
