@@ -50,101 +50,108 @@ import org.koin.dsl.module
 
 expect val platformModule: Module
 
-val sharedModule = module {
-    factory { Dispatchers.IO }
-    viewModelOf(::PopularPersonListViewModel)
-    viewModelOf(::MovieDetailViewModel)
-    viewModelOf(::MovieListViewModel)
-}
-
-val useCaseModule = module {
-    singleOf(::GetPopularMovieListUseCaseImpl).bind<GetPopularMovieListUseCase>()
-    singleOf(::GetTopRatedMovieListUseCaseImpl).bind<GetTopRatedMovieListUseCase>()
-    singleOf(::GetRecommendedMoviesListByIdUseCaseImpl).bind<GetRecommendedMoviesListByIdUseCase>()
-    singleOf(::GetPopularPersonListUseCaseImpl).bind<GetPopularPersonListUseCase>()
-    singleOf(::GetMovieDetailByIdUseCaseImpl).bind<GetMovieDetailByIdUseCase>()
-    singleOf(::GetMovieCollectionByNameUseCaseImpl).bind<GetMovieCollectionByNameUseCase>()
-    singleOf(::GetUpcomingMovieListUseCaseImpl).bind<GetUpcomingMovieListUseCase>()
-}
-
-val repositoryModule = module {
-    singleOf(::MovieRepositoryImpl).bind<MovieRepository>()
-    singleOf(::PersonRepositoryImpl).bind<PersonRepository>()
-}
-
-val datasourceModule = module {
-    singleOf(::TheMovieDBDataSourceImpl).bind<TheMovieDBDataSource>()
-}
-
-val apiModule = module {
-    single {
-        Json {
-            prettyPrint = true
-            ignoreUnknownKeys = true
-            coerceInputValues = true // Force missing or null values to use the data class's default value
-            isLenient = true  // Allows more flexibility when parsing JSON
-        }
+val sharedModule =
+    module {
+        factory { Dispatchers.IO }
+        viewModelOf(::PopularPersonListViewModel)
+        viewModelOf(::MovieDetailViewModel)
+        viewModelOf(::MovieListViewModel)
     }
-    single {
-        HttpClient(get<HttpClientEngine>()) {
-            // Default config for each request
-            install(DefaultRequest) {
-                url("https://api.themoviedb.org/3/")
-                header(HttpHeaders.ContentType, ContentType.Application.Json)
-                header(HttpHeaders.Accept, ContentType.Application.Json)
-                header(
-                    HttpHeaders.Authorization,
-                    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2NGIyMzg3NDdkNzU2YjM2YzU0MjQ1YjQ5YWUxNWFmZCIsInN1YiI6IjVkZDFlMjdhZmQ2ZmExMDAxMjgwMDQzNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ._pCVHHGwuR2hDlguJ8Gph6lITx65cQNPMmzJOO6LksA"
-                )
+
+val useCaseModule =
+    module {
+        singleOf(::GetPopularMovieListUseCaseImpl).bind<GetPopularMovieListUseCase>()
+        singleOf(::GetTopRatedMovieListUseCaseImpl).bind<GetTopRatedMovieListUseCase>()
+        singleOf(::GetRecommendedMoviesListByIdUseCaseImpl).bind<GetRecommendedMoviesListByIdUseCase>()
+        singleOf(::GetPopularPersonListUseCaseImpl).bind<GetPopularPersonListUseCase>()
+        singleOf(::GetMovieDetailByIdUseCaseImpl).bind<GetMovieDetailByIdUseCase>()
+        singleOf(::GetMovieCollectionByNameUseCaseImpl).bind<GetMovieCollectionByNameUseCase>()
+        singleOf(::GetUpcomingMovieListUseCaseImpl).bind<GetUpcomingMovieListUseCase>()
+    }
+
+val repositoryModule =
+    module {
+        singleOf(::MovieRepositoryImpl).bind<MovieRepository>()
+        singleOf(::PersonRepositoryImpl).bind<PersonRepository>()
+    }
+
+val datasourceModule =
+    module {
+        singleOf(::TheMovieDBDataSourceImpl).bind<TheMovieDBDataSource>()
+    }
+
+val apiModule =
+    module {
+        single {
+            Json {
+                prettyPrint = true
+                ignoreUnknownKeys = true
+                coerceInputValues = true // Force missing or null values to use the data class's default value
+                isLenient = true // Allows more flexibility when parsing JSON
             }
-            // Serialization with Kotlinx
-            install(ContentNegotiation) {
-                json(
-                    json = get<Json>(),
-                    contentType = ContentType.Any
-                )
-            }
-            // Logging
-            install(Logging) {
-                logger = object : Logger {
-                    override fun log(message: String) {
-                        println("Ktor Log: $message")
+        }
+        single {
+            HttpClient(get<HttpClientEngine>()) {
+                // Default config for each request
+                install(DefaultRequest) {
+                    url("https://api.themoviedb.org/3/")
+                    header(HttpHeaders.ContentType, ContentType.Application.Json)
+                    header(HttpHeaders.Accept, ContentType.Application.Json)
+                    header(
+                        HttpHeaders.Authorization,
+                        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2NGIyMzg3NDdkNzU2YjM2YzU0MjQ1YjQ5YWUxNWFmZCIsInN1YiI6IjVkZDFlMjdhZmQ2ZmExMDAxMjgwMDQzNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ._pCVHHGwuR2hDlguJ8Gph6lITx65cQNPMmzJOO6LksA",
+                    )
+                }
+                // Serialization with Kotlinx
+                install(ContentNegotiation) {
+                    json(
+                        json = get<Json>(),
+                        contentType = ContentType.Any,
+                    )
+                }
+                // Logging
+                install(Logging) {
+                    logger =
+                        object : Logger {
+                            override fun log(message: String) {
+                                println("Ktor Log: $message")
+                            }
+                        }
+                    level = LogLevel.ALL
+                }
+                // Error management
+                install(HttpCallValidator) {
+                    handleResponseExceptionWithRequest { exception, request ->
+                        println("Request to ${request.url} failed: ${exception.message}")
                     }
                 }
-                level = LogLevel.ALL
-            }
-            // Error management
-            install(HttpCallValidator) {
-                handleResponseExceptionWithRequest { exception, request ->
-                    println("Request to ${request.url} failed: ${exception.message}")
+                // Timeouts
+                install(HttpTimeout) {
+                    requestTimeoutMillis = 15_000
+                    connectTimeoutMillis = 10_000
+                    socketTimeoutMillis = 15_000
                 }
+                // Error management
+                expectSuccess = true // Throw an exception if there were HTTP error (400+)
             }
-            // Timeouts
-            install(HttpTimeout) {
-                requestTimeoutMillis = 15_000
-                connectTimeoutMillis = 10_000
-                socketTimeoutMillis = 15_000
-            }
-            // Error management
-            expectSuccess = true  // Throw an exception if there were HTTP error (400+)
         }
     }
-}
 
-val databaseModule = module {
-    singleOf(::TheMovieDBDatabaseImpl).bind<TheMovieDBDatabase>()
+val databaseModule =
+    module {
+        singleOf(::TheMovieDBDatabaseImpl).bind<TheMovieDBDatabase>()
 
-    single { get<TheMovieDBDB>().popularPersonDao() }
-    single { get<TheMovieDBDB>().knownForDao() }
-    single { get<TheMovieDBDB>().popularMovieDao() }
-    single { get<TheMovieDBDB>().topRatedMovieDao() }
-    single { get<TheMovieDBDB>().upcomingMovieDao() }
-    single { get<TheMovieDBDB>().recommendedMovieDao() }
-    single { get<TheMovieDBDB>().movieDetailDao() }
-    single { get<TheMovieDBDB>().movieDetailBelongsToCollectionDao() }
-    single { get<TheMovieDBDB>().movieDetailGenreDao() }
-    single { get<TheMovieDBDB>().movieDetailProductionCompanyDao() }
-    single { get<TheMovieDBDB>().movieDetailProductionCountryDao() }
-    single { get<TheMovieDBDB>().movieDetailSpokenLanguageDao() }
-    single { get<TheMovieDBDB>().movieCollectionDao() }
-}
+        single { get<TheMovieDBDB>().popularPersonDao() }
+        single { get<TheMovieDBDB>().knownForDao() }
+        single { get<TheMovieDBDB>().popularMovieDao() }
+        single { get<TheMovieDBDB>().topRatedMovieDao() }
+        single { get<TheMovieDBDB>().upcomingMovieDao() }
+        single { get<TheMovieDBDB>().recommendedMovieDao() }
+        single { get<TheMovieDBDB>().movieDetailDao() }
+        single { get<TheMovieDBDB>().movieDetailBelongsToCollectionDao() }
+        single { get<TheMovieDBDB>().movieDetailGenreDao() }
+        single { get<TheMovieDBDB>().movieDetailProductionCompanyDao() }
+        single { get<TheMovieDBDB>().movieDetailProductionCountryDao() }
+        single { get<TheMovieDBDB>().movieDetailSpokenLanguageDao() }
+        single { get<TheMovieDBDB>().movieCollectionDao() }
+    }

@@ -13,5 +13,6 @@ fun interface GetMovieCollectionByNameUseCase {
 class GetMovieCollectionByNameUseCaseImpl(
     private val movieRepository: MovieRepository,
 ) : GetMovieCollectionByNameUseCase {
-    override suspend operator fun invoke(collectionName: String): CoroutineResult<MovieCollection> = movieRepository.getMovieCollectionByName(collectionName)
+    override suspend operator fun invoke(collectionName: String): CoroutineResult<MovieCollection> =
+        movieRepository.getMovieCollectionByName(collectionName)
 }

@@ -30,35 +30,37 @@ fun CustomButton(
     modifier: Modifier = Modifier,
     text: String,
     usePrimaryColor: Boolean = true,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     var isPressed by remember { mutableStateOf(false) }
 
     Button(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(height_50)
-            .scale(if (isPressed) scale_095 else scale_1)
-            .pointerInput(Unit) {
-                detectTapGestures(
-                    onPress = {
-                        isPressed = true
-                        awaitRelease()
-                        isPressed = false
-                    }
-                )
-            },
-        colors = ButtonDefaults.buttonColors(
-            containerColor = if (usePrimaryColor) burnt_sienna else antique_gold,
-            contentColor = pure_white
-        ),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .height(height_50)
+                .scale(if (isPressed) scale_095 else scale_1)
+                .pointerInput(Unit) {
+                    detectTapGestures(
+                        onPress = {
+                            isPressed = true
+                            awaitRelease()
+                            isPressed = false
+                        },
+                    )
+                },
+        colors =
+            ButtonDefaults.buttonColors(
+                containerColor = if (usePrimaryColor) burnt_sienna else antique_gold,
+                contentColor = pure_white,
+            ),
         shape = RoundedCornerShape(rounded_corners_12),
-        onClick = onClick
+        onClick = onClick,
     ) {
         Text(
             text = text,
             fontSize = font_size_18,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
         )
     }
 }

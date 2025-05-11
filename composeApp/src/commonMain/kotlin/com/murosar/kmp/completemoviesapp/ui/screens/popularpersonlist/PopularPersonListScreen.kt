@@ -35,7 +35,6 @@ fun PopularPersonListScreen(
     navigateToMovieDetail: (movieId: Int) -> Unit,
     navigateBack: () -> Unit,
 ) {
-
     LaunchedEffect(Unit) {
         viewModel.getPopularPeople()
     }
@@ -44,10 +43,10 @@ fun PopularPersonListScreen(
         topBar = {
             CustomTopAppBar(
                 title = stringResource(Res.string.popular_person_title),
-                onBackClick = { navigateBack() }
+                onBackClick = { navigateBack() },
             )
         },
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
     ) { paddingValues ->
         PopularPeopleContent(
             modifier = Modifier.padding(paddingValues),
@@ -64,10 +63,11 @@ fun PopularPeopleContent(
     navigateToMovieDetail: (movieId: Int) -> Unit,
 ) {
     Column(
-        modifier = modifier
-            .fillMaxSize()
-            .background(backgroundBrush)
-            .padding(padding_16)
+        modifier =
+            modifier
+                .fillMaxSize()
+                .background(backgroundBrush)
+                .padding(padding_16),
     ) {
         when (uiState) {
             PopularPersonListViewModel.PopularPersonListState.Idle -> {}
@@ -82,7 +82,7 @@ fun PopularPeopleContent(
 
                     LazyColumn(
                         verticalArrangement = Arrangement.spacedBy(padding_16),
-                        contentPadding = PaddingValues(bottom = padding_16)
+                        contentPadding = PaddingValues(bottom = padding_16),
                     ) {
                         items(uiState.popularPersonList) { person ->
                             val isExpanded = expandedStates[person.id] ?: false

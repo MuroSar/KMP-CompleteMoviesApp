@@ -48,7 +48,7 @@ fun MovieDetailResponse.mapToLocalMovieDetail() =
         title = title,
         video = video,
         voteAverage = voteAverage,
-        voteCount = voteCount
+        voteCount = voteCount,
     )
 
 private fun BelongsToCollectionResponse.mapToLocalBelongsToCollection() =
@@ -61,25 +61,27 @@ private fun BelongsToCollectionResponse.mapToLocalBelongsToCollection() =
 
 private fun List<GenreResponse>.mapToLocalGenreList(): List<Genre> = map { Genre(id = it.id, name = it.name) }
 
-private fun List<ProductionCompanyResponse>.mapToLocalProductionCompaniesList(): List<ProductionCompany> = map {
-    ProductionCompany(
-        id = it.id,
-        logoPath = it.logoPath,
-        name = it.name,
-        originCountry = it.originCountry
-    )
-}
+private fun List<ProductionCompanyResponse>.mapToLocalProductionCompaniesList(): List<ProductionCompany> =
+    map {
+        ProductionCompany(
+            id = it.id,
+            logoPath = it.logoPath,
+            name = it.name,
+            originCountry = it.originCountry,
+        )
+    }
 
 private fun List<ProductionCountryResponse>.mapToLocalProductionCountriesList(): List<ProductionCountry> =
     map { ProductionCountry(iso_3166_1 = it.iso_3166_1, name = it.name) }
 
-private fun List<SpokenLanguageResponse>.mapToLocalSpokenLanguagesList(): List<SpokenLanguage> = map {
-    SpokenLanguage(
-        englishName = it.englishName,
-        iso_639_1 = it.iso_639_1,
-        name = it.name
-    )
-}
+private fun List<SpokenLanguageResponse>.mapToLocalSpokenLanguagesList(): List<SpokenLanguage> =
+    map {
+        SpokenLanguage(
+            englishName = it.englishName,
+            iso_639_1 = it.iso_639_1,
+            name = it.name,
+        )
+    }
 
 fun MovieDetail.mapToDataBaseMovieDetail() =
     MovieDetailEntity(
@@ -103,7 +105,7 @@ fun MovieDetail.mapToDataBaseMovieDetail() =
         title = title,
         video = video,
         voteAverage = voteAverage,
-        voteCount = voteCount
+        voteCount = voteCount,
     )
 
 fun BelongsToCollection.mapToDataBaseMovieDetailBelongsToCollection(movieDetailId: Int): MovieDetailBelongsToCollectionEntity =
@@ -119,7 +121,7 @@ fun Genre.mapToDataBaseMovieDetailGenre(movieDetailId: Int): MovieDetailGenreEnt
     MovieDetailGenreEntity(
         id = id,
         movieId = movieDetailId,
-        name = name
+        name = name,
     )
 
 fun ProductionCompany.mapToDataBaseMovieDetailProductionCompany(movieDetailId: Int): MovieDetailProductionCompanyEntity =
@@ -128,15 +130,14 @@ fun ProductionCompany.mapToDataBaseMovieDetailProductionCompany(movieDetailId: I
         movieId = movieDetailId,
         logoPath = logoPath,
         name = name,
-        originCountry = originCountry
+        originCountry = originCountry,
     )
-
 
 fun ProductionCountry.mapToDataBaseMovieDetailProductionCountry(movieDetailId: Int): MovieDetailProductionCountryEntity =
     MovieDetailProductionCountryEntity(
         movieId = movieDetailId,
         isoCode = iso_3166_1,
-        name = name
+        name = name,
     )
 
 fun SpokenLanguage.mapToDataBaseMovieDetailSpokenLanguage(movieDetailId: Int): MovieDetailSpokenLanguageEntity =
@@ -144,7 +145,7 @@ fun SpokenLanguage.mapToDataBaseMovieDetailSpokenLanguage(movieDetailId: Int): M
         movieId = movieDetailId,
         isoCode = iso_639_1,
         name = name,
-        englishName = englishName
+        englishName = englishName,
     )
 
 fun MovieDetailWithRelations.mapToLocalMovieDetail() =
@@ -152,12 +153,13 @@ fun MovieDetailWithRelations.mapToLocalMovieDetail() =
         id = movieDetail.id,
         adult = movieDetail.adult,
         backdropPath = movieDetail.backdropPath,
-        belongsToCollection = BelongsToCollection(
-            id = belongsToCollection.id,
-            name = belongsToCollection.name,
-            posterPath = belongsToCollection.posterPath,
-            backdropPath = belongsToCollection.backdropPath,
-        ),
+        belongsToCollection =
+            BelongsToCollection(
+                id = belongsToCollection.id,
+                name = belongsToCollection.name,
+                posterPath = belongsToCollection.posterPath,
+                backdropPath = belongsToCollection.backdropPath,
+            ),
         budget = movieDetail.budget,
         genres = genres.map { Genre(id = it.id, name = it.name) },
         homepage = movieDetail.homepage,
@@ -168,25 +170,27 @@ fun MovieDetailWithRelations.mapToLocalMovieDetail() =
         overview = movieDetail.overview,
         popularity = movieDetail.popularity,
         posterPath = movieDetail.posterPath,
-        productionCompanies = productionCompanies.map {
-            ProductionCompany(
-                id = it.id,
-                logoPath = it.logoPath ?: EMPTY_STRING,
-                name = it.name,
-                originCountry = it.originCountry
-            )
-        },
+        productionCompanies =
+            productionCompanies.map {
+                ProductionCompany(
+                    id = it.id,
+                    logoPath = it.logoPath ?: EMPTY_STRING,
+                    name = it.name,
+                    originCountry = it.originCountry,
+                )
+            },
         productionCountries = productionCountries.map { ProductionCountry(iso_3166_1 = it.isoCode, name = it.name) },
         releaseDate = movieDetail.releaseDate,
         revenue = movieDetail.revenue,
         runtime = movieDetail.runtime,
-        spokenLanguages = spokenLanguages.map {
-            SpokenLanguage(
-                englishName = it.englishName,
-                iso_639_1 = it.isoCode,
-                name = it.name
-            )
-        },
+        spokenLanguages =
+            spokenLanguages.map {
+                SpokenLanguage(
+                    englishName = it.englishName,
+                    iso_639_1 = it.isoCode,
+                    name = it.name,
+                )
+            },
         status = movieDetail.status,
         tagline = movieDetail.tagline,
         title = movieDetail.title,

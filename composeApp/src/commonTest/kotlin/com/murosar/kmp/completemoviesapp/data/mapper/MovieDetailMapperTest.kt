@@ -28,48 +28,52 @@ import com.murosar.kmp.completemoviesapp.domain.model.SpokenLanguage
 import kotlin.test.Test
 
 class MovieDetailMapperTest {
-
     @Test
     fun `mapToLocalMovieDetail should map all fields correctly from MovieDetailResponse`() {
-        val response = MovieDetailResponse(
-            adult = false,
-            backdropPath = "backdrop_path.jpg",
-            belongsToCollection = BelongsToCollectionResponse(
-                id = 10,
-                name = "Collection Name",
-                posterPath = "collection_poster.jpg",
-                backdropPath = "collection_backdrop.jpg"
-            ),
-            budget = 150000000,
-            genres = listOf(GenreResponse(1, "Action")),
-            homepage = "https://movie.homepage",
-            id = 123,
-            imdbId = "tt987654",
-            originCountry = listOf("US"),
-            originalLanguage = "en",
-            originalTitle = "Original Title",
-            overview = "An awesome movie",
-            popularity = 10.5,
-            posterPath = "poster.jpg",
-            productionCompanies = listOf(
-                ProductionCompanyResponse(1, "logo_path.png", "Company Name", "US")
-            ),
-            productionCountries = listOf(
-                ProductionCountryResponse("US", "United States")
-            ),
-            releaseDate = "2025-12-25",
-            revenue = 500000000,
-            runtime = 120,
-            spokenLanguages = listOf(
-                SpokenLanguageResponse("English", "en", "English")
-            ),
-            status = "Released",
-            tagline = "Epic Adventure",
-            title = "Movie Title",
-            video = true,
-            voteAverage = 8.7,
-            voteCount = 4500
-        )
+        val response =
+            MovieDetailResponse(
+                adult = false,
+                backdropPath = "backdrop_path.jpg",
+                belongsToCollection =
+                    BelongsToCollectionResponse(
+                        id = 10,
+                        name = "Collection Name",
+                        posterPath = "collection_poster.jpg",
+                        backdropPath = "collection_backdrop.jpg",
+                    ),
+                budget = 150000000,
+                genres = listOf(GenreResponse(1, "Action")),
+                homepage = "https://movie.homepage",
+                id = 123,
+                imdbId = "tt987654",
+                originCountry = listOf("US"),
+                originalLanguage = "en",
+                originalTitle = "Original Title",
+                overview = "An awesome movie",
+                popularity = 10.5,
+                posterPath = "poster.jpg",
+                productionCompanies =
+                    listOf(
+                        ProductionCompanyResponse(1, "logo_path.png", "Company Name", "US"),
+                    ),
+                productionCountries =
+                    listOf(
+                        ProductionCountryResponse("US", "United States"),
+                    ),
+                releaseDate = "2025-12-25",
+                revenue = 500000000,
+                runtime = 120,
+                spokenLanguages =
+                    listOf(
+                        SpokenLanguageResponse("English", "en", "English"),
+                    ),
+                status = "Released",
+                tagline = "Epic Adventure",
+                title = "Movie Title",
+                video = true,
+                voteAverage = 8.7,
+                voteCount = 4500,
+            )
 
         val result = response.mapToLocalMovieDetail()
 
@@ -118,34 +122,35 @@ class MovieDetailMapperTest {
 
     @Test
     fun `mapToDataBaseMovieDetail should map all fields correctly`() {
-        val movieDetail = MovieDetail(
-            adult = true,
-            backdropPath = "backdrop.jpg",
-            belongsToCollection = null,
-            budget = 200000000,
-            genres = emptyList(),
-            homepage = "https://homepage.com",
-            id = 456,
-            imdbId = "tt555666",
-            originCountry = "US",
-            originalLanguage = "en",
-            originalTitle = "Original Movie Title",
-            overview = "Movie overview",
-            popularity = 7.2,
-            posterPath = "poster_path.jpg",
-            productionCompanies = emptyList(),
-            productionCountries = emptyList(),
-            releaseDate = "2024-10-10",
-            revenue = 800000000,
-            runtime = 130,
-            spokenLanguages = emptyList(),
-            status = "In Production",
-            tagline = "The Next Big Thing",
-            title = "Upcoming Movie",
-            video = false,
-            voteAverage = 9.1,
-            voteCount = 1200
-        )
+        val movieDetail =
+            MovieDetail(
+                adult = true,
+                backdropPath = "backdrop.jpg",
+                belongsToCollection = null,
+                budget = 200000000,
+                genres = emptyList(),
+                homepage = "https://homepage.com",
+                id = 456,
+                imdbId = "tt555666",
+                originCountry = "US",
+                originalLanguage = "en",
+                originalTitle = "Original Movie Title",
+                overview = "Movie overview",
+                popularity = 7.2,
+                posterPath = "poster_path.jpg",
+                productionCompanies = emptyList(),
+                productionCountries = emptyList(),
+                releaseDate = "2024-10-10",
+                revenue = 800000000,
+                runtime = 130,
+                spokenLanguages = emptyList(),
+                status = "In Production",
+                tagline = "The Next Big Thing",
+                title = "Upcoming Movie",
+                video = false,
+                voteAverage = 9.1,
+                voteCount = 1200,
+            )
 
         val entity = movieDetail.mapToDataBaseMovieDetail()
 
@@ -174,12 +179,13 @@ class MovieDetailMapperTest {
 
     @Test
     fun `mapToDataBaseMovieDetailBelongsToCollection should map all fields correctly`() {
-        val belongsToCollection = BelongsToCollection(
-            id = 5,
-            name = "Marvel Collection",
-            posterPath = "poster_path.jpg",
-            backdropPath = "backdrop_path.jpg"
-        )
+        val belongsToCollection =
+            BelongsToCollection(
+                id = 5,
+                name = "Marvel Collection",
+                posterPath = "poster_path.jpg",
+                backdropPath = "backdrop_path.jpg",
+            )
 
         val result = belongsToCollection.mapToDataBaseMovieDetailBelongsToCollection(movieDetailId = 100)
 
@@ -192,10 +198,11 @@ class MovieDetailMapperTest {
 
     @Test
     fun `mapToDataBaseMovieDetailGenre should map all fields correctly`() {
-        val genre = Genre(
-            id = 7,
-            name = "Adventure"
-        )
+        val genre =
+            Genre(
+                id = 7,
+                name = "Adventure",
+            )
 
         val result = genre.mapToDataBaseMovieDetailGenre(movieDetailId = 101)
 
@@ -206,12 +213,13 @@ class MovieDetailMapperTest {
 
     @Test
     fun `mapToDataBaseMovieDetailProductionCompany should map all fields correctly`() {
-        val productionCompany = ProductionCompany(
-            id = 9,
-            logoPath = "company_logo.png",
-            name = "Pixar Animation Studios",
-            originCountry = "US"
-        )
+        val productionCompany =
+            ProductionCompany(
+                id = 9,
+                logoPath = "company_logo.png",
+                name = "Pixar Animation Studios",
+                originCountry = "US",
+            )
 
         val result = productionCompany.mapToDataBaseMovieDetailProductionCompany(movieDetailId = 102)
 
@@ -224,10 +232,11 @@ class MovieDetailMapperTest {
 
     @Test
     fun `mapToDataBaseMovieDetailProductionCountry should map all fields correctly`() {
-        val productionCountry = ProductionCountry(
-            iso_3166_1 = "JP",
-            name = "Japan"
-        )
+        val productionCountry =
+            ProductionCountry(
+                iso_3166_1 = "JP",
+                name = "Japan",
+            )
 
         val result = productionCountry.mapToDataBaseMovieDetailProductionCountry(movieDetailId = 103)
 
@@ -238,11 +247,12 @@ class MovieDetailMapperTest {
 
     @Test
     fun `mapToDataBaseMovieDetailSpokenLanguage should map all fields correctly`() {
-        val spokenLanguage = SpokenLanguage(
-            iso_639_1 = "fr",
-            name = "Français",
-            englishName = "French"
-        )
+        val spokenLanguage =
+            SpokenLanguage(
+                iso_639_1 = "fr",
+                name = "Français",
+                englishName = "French",
+            )
 
         val result = spokenLanguage.mapToDataBaseMovieDetailSpokenLanguage(movieDetailId = 104)
 
@@ -254,42 +264,62 @@ class MovieDetailMapperTest {
 
     @Test
     fun `mapToLocalMovieDetail should map all fields correctly from MovieDetailWithRelations`() {
-        val withRelations = MovieDetailWithRelations(
-            movieDetail = MovieDetailEntity(
-                id = 789,
-                adult = false,
-                backdropPath = "relation_backdrop.jpg",
-                budget = 50000000,
-                homepage = "https://relation.homepage",
-                imdbId = "tt112233",
-                originCountry = "GB",
-                originalLanguage = "en",
-                originalTitle = "Related Original Title",
-                overview = "Relation overview",
-                popularity = 6.4,
-                posterPath = "relation_poster.jpg",
-                releaseDate = "2026-05-20",
-                revenue = 90000000,
-                runtime = 110,
-                status = "Released",
-                tagline = "Relation Tagline",
-                title = "Related Movie",
-                video = false,
-                voteAverage = 7.5,
-                voteCount = 300
-            ),
-            belongsToCollection = MovieDetailBelongsToCollectionEntity(
-                id = 2,
-                movieId = 789,
-                name = "Related Collection",
-                posterPath = "collection_poster_path.jpg",
-                backdropPath = "collection_backdrop_path.jpg"
-            ),
-            genres = listOf(MovieDetailGenreEntity(id = 2, movieId = 789, name = "Drama")),
-            productionCompanies = listOf(MovieDetailProductionCompanyEntity(id = 2, movieId = 789, logoPath = "logo_relation.png", name = "Relation Company", originCountry = "GB")),
-            productionCountries = listOf(MovieDetailProductionCountryEntity(movieId = 789, isoCode = "GB", name = "United Kingdom")),
-            spokenLanguages = listOf(MovieDetailSpokenLanguageEntity(movieId = 789, isoCode = "en", name = "English", englishName = "English"))
-        )
+        val withRelations =
+            MovieDetailWithRelations(
+                movieDetail =
+                    MovieDetailEntity(
+                        id = 789,
+                        adult = false,
+                        backdropPath = "relation_backdrop.jpg",
+                        budget = 50000000,
+                        homepage = "https://relation.homepage",
+                        imdbId = "tt112233",
+                        originCountry = "GB",
+                        originalLanguage = "en",
+                        originalTitle = "Related Original Title",
+                        overview = "Relation overview",
+                        popularity = 6.4,
+                        posterPath = "relation_poster.jpg",
+                        releaseDate = "2026-05-20",
+                        revenue = 90000000,
+                        runtime = 110,
+                        status = "Released",
+                        tagline = "Relation Tagline",
+                        title = "Related Movie",
+                        video = false,
+                        voteAverage = 7.5,
+                        voteCount = 300,
+                    ),
+                belongsToCollection =
+                    MovieDetailBelongsToCollectionEntity(
+                        id = 2,
+                        movieId = 789,
+                        name = "Related Collection",
+                        posterPath = "collection_poster_path.jpg",
+                        backdropPath = "collection_backdrop_path.jpg",
+                    ),
+                genres = listOf(MovieDetailGenreEntity(id = 2, movieId = 789, name = "Drama")),
+                productionCompanies =
+                    listOf(
+                        MovieDetailProductionCompanyEntity(
+                            id = 2,
+                            movieId = 789,
+                            logoPath = "logo_relation.png",
+                            name = "Relation Company",
+                            originCountry = "GB",
+                        ),
+                    ),
+                productionCountries = listOf(MovieDetailProductionCountryEntity(movieId = 789, isoCode = "GB", name = "United Kingdom")),
+                spokenLanguages =
+                    listOf(
+                        MovieDetailSpokenLanguageEntity(
+                            movieId = 789,
+                            isoCode = "en",
+                            name = "English",
+                            englishName = "English",
+                        ),
+                    ),
+            )
 
         val movieDetail = withRelations.mapToLocalMovieDetail()
 
@@ -335,5 +365,4 @@ class MovieDetailMapperTest {
         assertThat(movieDetail.voteAverage).isEqualTo(7.5)
         assertThat(movieDetail.voteCount).isEqualTo(300)
     }
-
 }

@@ -56,7 +56,6 @@ class TheMovieDBDatabaseImpl(
     private val movieDetailSpokenLanguageDao: MovieDetailSpokenLanguageDao,
     private val movieCollectionDao: MovieCollectionDao,
 ) : TheMovieDBDatabase {
-
     override suspend fun insertPopularPersons(popularPersons: List<PopularPerson>) {
         popularPersons.forEach { popularPerson ->
             popularPersonDao.insertPopularPerson(popularPerson.mapToDataBasePopularPerson())
@@ -134,7 +133,10 @@ class TheMovieDBDatabaseImpl(
             }
         }
 
-    override suspend fun insertRecommendedMovies(movieId: Int, movies: List<Movie>) {
+    override suspend fun insertRecommendedMovies(
+        movieId: Int,
+        movies: List<Movie>,
+    ) {
         movies.forEach { movie ->
             recommendedMovieDao.insertRecommendedMovie(movie.mapToDataBaseRecommendedMovie(movieId))
         }
@@ -155,7 +157,8 @@ class TheMovieDBDatabaseImpl(
     override suspend fun insertMovieDetail(movieDetail: MovieDetail) {
         movieDetailDao.insertMovieDetail(movieDetail.mapToDataBaseMovieDetail())
 
-        movieDetail.belongsToCollection?.mapToDataBaseMovieDetailBelongsToCollection(movieDetail.id)
+        movieDetail.belongsToCollection
+            ?.mapToDataBaseMovieDetailBelongsToCollection(movieDetail.id)
             .takeIf { belongsToCollectionEntity -> belongsToCollectionEntity != null }
             ?.let { belongsToCollectionEntity ->
                 movieDetailBelongsToCollectionDao.insertMovieDetailBelongsToCollection(belongsToCollectionEntity)

@@ -9,9 +9,14 @@ import io.mockative.Mockable
 @Mockable
 interface MovieRepository {
     suspend fun getPopularMovieList(): CoroutineResult<List<Movie>>
+
     suspend fun getTopRatedMovieList(): CoroutineResult<List<Movie>>
+
     suspend fun getUpcomingMovieList(): CoroutineResult<List<Movie>>
+
     suspend fun getRecommendedMoviesListById(movieId: Int): CoroutineResult<List<Movie>>
+
     suspend fun getMovieDetailById(movieId: Int): CoroutineResult<MovieDetail>
+
     suspend fun getMovieCollectionByName(collectionName: String): CoroutineResult<MovieCollection>
 }

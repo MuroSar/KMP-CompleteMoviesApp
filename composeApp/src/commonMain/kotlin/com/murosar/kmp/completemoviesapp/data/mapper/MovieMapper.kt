@@ -29,88 +29,92 @@ fun MovieResponse.mapToLocalMovie() =
         title = title,
         video = video,
         voteAverage = voteAverage,
-        voteCount = voteCount
+        voteCount = voteCount,
     )
 
 fun Movie.mapToDataBasePopularMovie() =
     PopularMovieEntity(
         popularMovieId = id,
-        movieEntity = MovieEntity(
-            id = id,
-            adult = adult,
-            backdropPath = backdropPath,
-            originalLanguage = originalLanguage,
-            originalTitle = originalTitle,
-            overview = overview,
-            popularity = popularity,
-            posterPath = posterPath,
-            releaseDate = releaseDate,
-            title = title,
-            video = video,
-            voteAverage = voteAverage,
-            voteCount = voteCount
-        )
+        movieEntity =
+            MovieEntity(
+                id = id,
+                adult = adult,
+                backdropPath = backdropPath,
+                originalLanguage = originalLanguage,
+                originalTitle = originalTitle,
+                overview = overview,
+                popularity = popularity,
+                posterPath = posterPath,
+                releaseDate = releaseDate,
+                title = title,
+                video = video,
+                voteAverage = voteAverage,
+                voteCount = voteCount,
+            ),
     )
 
 fun Movie.mapToDataBaseTopRatedMovie() =
     TopRatedMovieEntity(
         topRatedMovieId = id,
-        movieEntity = MovieEntity(
-            id = id,
-            adult = adult,
-            backdropPath = backdropPath,
-            originalLanguage = originalLanguage,
-            originalTitle = originalTitle,
-            overview = overview,
-            popularity = popularity,
-            posterPath = posterPath,
-            releaseDate = releaseDate,
-            title = title,
-            video = video,
-            voteAverage = voteAverage,
-            voteCount = voteCount
-        )
+        movieEntity =
+            MovieEntity(
+                id = id,
+                adult = adult,
+                backdropPath = backdropPath,
+                originalLanguage = originalLanguage,
+                originalTitle = originalTitle,
+                overview = overview,
+                popularity = popularity,
+                posterPath = posterPath,
+                releaseDate = releaseDate,
+                title = title,
+                video = video,
+                voteAverage = voteAverage,
+                voteCount = voteCount,
+            ),
     )
 
 fun Movie.mapToDataBaseUpcomingMovie() =
     UpcomingMovieEntity(
         upcomingMovieId = id,
-        movieEntity = MovieEntity(
-            id = id,
-            adult = adult,
-            backdropPath = backdropPath,
-            originalLanguage = originalLanguage,
-            originalTitle = originalTitle,
-            overview = overview,
-            popularity = popularity,
-            posterPath = posterPath,
-            releaseDate = releaseDate,
-            title = title,
-            video = video,
-            voteAverage = voteAverage,
-            voteCount = voteCount
-        )
+        movieEntity =
+            MovieEntity(
+                id = id,
+                adult = adult,
+                backdropPath = backdropPath,
+                originalLanguage = originalLanguage,
+                originalTitle = originalTitle,
+                overview = overview,
+                popularity = popularity,
+                posterPath = posterPath,
+                releaseDate = releaseDate,
+                title = title,
+                video = video,
+                voteAverage = voteAverage,
+                voteCount = voteCount,
+            ),
     )
 
 fun Movie.mapToDataBaseRecommendedMovie(movieId: Int) =
     RecommendedMovieEntity(
         recommendedMovieId = id,
         originalMovieId = movieId,
-        movieEntity = MovieEntity(
-            id = id,
-            adult = adult,
-            backdropPath = backdropPath,
-            originalLanguage = originalLanguage,
-            originalTitle = originalTitle,
-            overview = overview,
-            popularity = popularity,
-            posterPath = posterPath,
-            releaseDate = releaseDate,
-            title = title,
-            video = video,
-            voteAverage = voteAverage,
-            voteCount = voteCount
-        )
+        movieEntity =
+            MovieEntity(
+                id = id,
+                adult = adult,
+                backdropPath = backdropPath,
+                originalLanguage = originalLanguage,
+                originalTitle = originalTitle,
+                overview = overview,
+                popularity = popularity,
+                posterPath = posterPath,
+                releaseDate = releaseDate,
+                title = title,
+                video = video,
+                voteAverage = voteAverage,
+                voteCount = voteCount,
+            ),
     )
 
 fun List<PopularMovieEntityComplete>.mapToLocalPopularMovieList(): List<Movie> = this.map { it.mapToLocalMovie() }
@@ -129,7 +133,7 @@ private fun PopularMovieEntityComplete.mapToLocalMovie() =
         title = movieEntity.title,
         video = movieEntity.video,
         voteAverage = movieEntity.voteAverage,
-        voteCount = movieEntity.voteCount
+        voteCount = movieEntity.voteCount,
     )
 
 fun List<TopRatedMovieEntityComplete>.mapToLocalTopRatedMovieList(): List<Movie> = this.map { it.mapToLocalMovie() }
@@ -148,7 +152,7 @@ private fun TopRatedMovieEntityComplete.mapToLocalMovie() =
         title = movieEntity.title,
         video = movieEntity.video,
         voteAverage = movieEntity.voteAverage,
-        voteCount = movieEntity.voteCount
+        voteCount = movieEntity.voteCount,
     )
 
 fun List<UpcomingMovieEntityComplete>.mapToLocalUpcomingMovieList(): List<Movie> = this.map { it.mapToLocalMovie() }
@@ -167,7 +171,7 @@ private fun UpcomingMovieEntityComplete.mapToLocalMovie() =
         title = movieEntity.title,
         video = movieEntity.video,
         voteAverage = movieEntity.voteAverage,
-        voteCount = movieEntity.voteCount
+        voteCount = movieEntity.voteCount,
     )
 
 fun List<RecommendedMovieEntityComplete>.mapToLocalRecommendedMovieList(): List<Movie> = this.map { it.mapToLocalMovie() }
@@ -186,5 +190,5 @@ private fun RecommendedMovieEntityComplete.mapToLocalMovie() =
         title = movieEntity.title,
         video = movieEntity.video,
         voteAverage = movieEntity.voteAverage,
-        voteCount = movieEntity.voteCount
+        voteCount = movieEntity.voteCount,
     )

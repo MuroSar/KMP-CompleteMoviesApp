@@ -212,6 +212,6 @@ ktlint {
     }
 
     // To execute ktlint you can run:
-    // ./gradlew :app:ktlintCheck
-    // ./gradlew :app:ktlintFormat
+    // ./gradlew ktlintCheck
+    // ./gradlew ktlintFormat
 }

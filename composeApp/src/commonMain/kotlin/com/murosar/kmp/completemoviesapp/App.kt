@@ -19,7 +19,8 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 fun App() {
     // Coil configuration
     setSingletonImageLoaderFactory { context ->
-        ImageLoader.Builder(context)
+        ImageLoader
+            .Builder(context)
             .crossfade(true)
             .logger(DebugLogger())
             .build()

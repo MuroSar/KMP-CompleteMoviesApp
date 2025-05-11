@@ -11,11 +11,12 @@ import com.murosar.kmp.completemoviesapp.ui.component.GenrePills
 fun GenrePillsPreview() {
     MaterialTheme {
         GenrePills(
-            genres = listOf(
-                Genre(id = 7450, name = "Rowena Woodward"),
-                Genre(id = 3394, name = "Glenn Petty"),
-                Genre(id = 6818, name = "Sonia Melendez"),
-            )
+            genres =
+                listOf(
+                    Genre(id = 7450, name = "Rowena Woodward"),
+                    Genre(id = 3394, name = "Glenn Petty"),
+                    Genre(id = 6818, name = "Sonia Melendez"),
+                ),
         )
     }
 }

@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.murosar.kmp.completemoviesapp.domain.model.Movie
 import com.murosar.kmp.completemoviesapp.domain.model.MovieError
 import com.murosar.kmp.completemoviesapp.domain.usecase.GetPopularMovieListUseCase
-
 import com.murosar.kmp.completemoviesapp.domain.usecase.GetTopRatedMovieListUseCase
 import com.murosar.kmp.completemoviesapp.domain.usecase.GetUpcomingMovieListUseCase
 import com.murosar.kmp.completemoviesapp.domain.utils.CoroutineResult
@@ -24,78 +23,88 @@ class MovieListViewModel(
     private val getTopRatedMovieListUseCase: GetTopRatedMovieListUseCase,
     private val getUpcomingMovieListUseCase: GetUpcomingMovieListUseCase,
 ) : ViewModel() {
-
     private val _uiState = MutableStateFlow<MovieListState>(MovieListState.Idle)
     val uiState: StateFlow<MovieListState> = _uiState
 
-    fun fetchMovies() = viewModelScope.launch {
-        withContext(dispatcher) {
-            _uiState.update { MovieListState.Loading }
+    fun fetchMovies() =
+        viewModelScope.launch {
+            withContext(dispatcher) {
+                _uiState.update { MovieListState.Loading }
 
-            coroutineScope {
-                val popularMoviesDeferred = async { getPopularMovieListUseCase() }
-                val topRatedMoviesDeferred = async { getTopRatedMovieListUseCase() }
-                val upcomingMoviesDeferred = async { getUpcomingMovieListUseCase() }
+                coroutineScope {
+                    val popularMoviesDeferred = async { getPopularMovieListUseCase() }
+                    val topRatedMoviesDeferred = async { getTopRatedMovieListUseCase() }
+                    val upcomingMoviesDeferred = async { getUpcomingMovieListUseCase() }
 
-                val errors = mutableListOf<MovieError>()
+                    val errors = mutableListOf<MovieError>()
 
-                val popularMovies = when (val result = popularMoviesDeferred.await()) {
-                    is CoroutineResult.Success -> result.data
-                    is CoroutineResult.Failure -> {
-                        logError("Popular Movies", result.error)
-                        errors.add(result.error)
-                        emptyList()
-                    }
-                }
+                    val popularMovies =
+                        when (val result = popularMoviesDeferred.await()) {
+                            is CoroutineResult.Success -> result.data
+                            is CoroutineResult.Failure -> {
+                                logError("Popular Movies", result.error)
+                                errors.add(result.error)
+                                emptyList()
+                            }
+                        }
 
-                val topRatedMovies = when (val result = topRatedMoviesDeferred.await()) {
-                    is CoroutineResult.Success -> result.data
-                    is CoroutineResult.Failure -> {
-                        logError("Top Rated Movies", result.error)
-                        errors.add(result.error)
-                        emptyList()
-                    }
-                }
+                    val topRatedMovies =
+                        when (val result = topRatedMoviesDeferred.await()) {
+                            is CoroutineResult.Success -> result.data
+                            is CoroutineResult.Failure -> {
+                                logError("Top Rated Movies", result.error)
+                                errors.add(result.error)
+                                emptyList()
+                            }
+                        }
 
-                val upcomingMovies = when (val result = upcomingMoviesDeferred.await()) {
-                    is CoroutineResult.Success -> result.data
-                    is CoroutineResult.Failure -> {
-                        logError("Upcoming Movies", result.error)
-                        errors.add(result.error)
-                        emptyList()
-                    }
-                }
+                    val upcomingMovies =
+                        when (val result = upcomingMoviesDeferred.await()) {
+                            is CoroutineResult.Success -> result.data
+                            is CoroutineResult.Failure -> {
+                                logError("Upcoming Movies", result.error)
+                                errors.add(result.error)
+                                emptyList()
+                            }
+                        }
 
-                // If all errors are of the same type (i.e. No Internet), we return the error
-                val commonError = errors.takeIf { it.size == 3 }?.distinct()?.singleOrNull()
-                if (commonError != null) {
-                    _uiState.update { MovieListState.Error(commonError) }
-                } else {
-                    _uiState.update {
-                        MovieListState.ShowMovieLists(
-                            popularMovieList = popularMovies,
-                            topRatedMovieList = topRatedMovies,
-                            upcomingMovieList = upcomingMovies
-                        )
+                    // If all errors are of the same type (i.e. No Internet), we return the error
+                    val commonError = errors.takeIf { it.size == 3 }?.distinct()?.singleOrNull()
+                    if (commonError != null) {
+                        _uiState.update { MovieListState.Error(commonError) }
+                    } else {
+                        _uiState.update {
+                            MovieListState.ShowMovieLists(
+                                popularMovieList = popularMovies,
+                                topRatedMovieList = topRatedMovies,
+                                upcomingMovieList = upcomingMovies,
+                            )
+                        }
                     }
                 }
             }
         }
-    }
 
-    private fun logError(category: String, error: MovieError) {
+    private fun logError(
+        category: String,
+        error: MovieError,
+    ) {
         println("❌ Error fetching $category: ${error.message} (Code: ${error.code})")
     }
 
     sealed class MovieListState {
         data object Idle : MovieListState()
+
         data object Loading : MovieListState()
+
         data class ShowMovieLists(
             val popularMovieList: List<Movie>,
             val topRatedMovieList: List<Movie>,
             val upcomingMovieList: List<Movie>,
         ) : MovieListState()
 
-        data class Error(val movieError: MovieError) : MovieListState()
+        data class Error(
+            val movieError: MovieError,
+        ) : MovieListState()
     }
 }

@@ -12,7 +12,7 @@ fun AppButtonPrimaryPreview() {
         CustomButton(
             text = "Button",
             usePrimaryColor = true,
-            onClick = { }
+            onClick = { },
         )
     }
 }
@@ -24,7 +24,7 @@ fun AppButtonSecondaryPreview() {
         CustomButton(
             text = "Button",
             usePrimaryColor = false,
-            onClick = { }
+            onClick = { },
         )
     }
 }

@@ -23,8 +23,8 @@ import io.ktor.client.request.parameter
 class TheMovieDBDataSourceImpl(
     private val httpClient: HttpClient,
 ) : TheMovieDBDataSource {
-    override suspend fun getPopularPersonList(): CoroutineResult<List<PopularPerson>> {
-        return try {
+    override suspend fun getPopularPersonList(): CoroutineResult<List<PopularPerson>> =
+        try {
             val response = httpClient.get(urlString = "person/popular")
 
             when (response.status.value) {
@@ -38,10 +38,9 @@ class TheMovieDBDataSourceImpl(
         } catch (e: Exception) {
             ErrorHandler.handleException(e)
         }
-    }
 
-    override suspend fun getPopularMovieList(): CoroutineResult<List<Movie>> {
-        return try {
+    override suspend fun getPopularMovieList(): CoroutineResult<List<Movie>> =
+        try {
             val response = httpClient.get(urlString = "movie/popular")
 
             when (response.status.value) {
@@ -55,10 +54,9 @@ class TheMovieDBDataSourceImpl(
         } catch (e: Exception) {
             ErrorHandler.handleException(e)
         }
-    }
 
-    override suspend fun getTopRatedMovieList(): CoroutineResult<List<Movie>> {
-        return try {
+    override suspend fun getTopRatedMovieList(): CoroutineResult<List<Movie>> =
+        try {
             val response = httpClient.get(urlString = "movie/top_rated")
 
             when (response.status.value) {
@@ -72,10 +70,9 @@ class TheMovieDBDataSourceImpl(
         } catch (e: Exception) {
             ErrorHandler.handleException(e)
         }
-    }
 
-    override suspend fun getRecommendedMoviesListById(movieId: Int): CoroutineResult<List<Movie>> {
-        return try {
+    override suspend fun getRecommendedMoviesListById(movieId: Int): CoroutineResult<List<Movie>> =
+        try {
             val response = httpClient.get(urlString = "movie/$movieId/recommendations")
 
             when (response.status.value) {
@@ -89,10 +86,9 @@ class TheMovieDBDataSourceImpl(
         } catch (e: Exception) {
             ErrorHandler.handleException(e)
         }
-    }
 
-    override suspend fun getMovieDetailById(movieId: Int): CoroutineResult<MovieDetail> {
-        return try {
+    override suspend fun getMovieDetailById(movieId: Int): CoroutineResult<MovieDetail> =
+        try {
             val response = httpClient.get(urlString = "movie/$movieId")
 
             when (response.status.value) {
@@ -106,15 +102,15 @@ class TheMovieDBDataSourceImpl(
         } catch (e: Exception) {
             ErrorHandler.handleException(e)
         }
-    }
 
-    override suspend fun getMovieCollectionByName(collectionName: String): CoroutineResult<MovieCollection> {
-        return try {
-            val response = httpClient.get(urlString = "search/collection"){
-                url {
-                    parameter("query", collectionName)
+    override suspend fun getMovieCollectionByName(collectionName: String): CoroutineResult<MovieCollection> =
+        try {
+            val response =
+                httpClient.get(urlString = "search/collection") {
+                    url {
+                        parameter("query", collectionName)
+                    }
                 }
-            }
 
             when (response.status.value) {
                 in 200..299 -> {
@@ -127,10 +123,9 @@ class TheMovieDBDataSourceImpl(
         } catch (e: Exception) {
             ErrorHandler.handleException(e)
         }
-    }
 
-    override suspend fun getUpcomingMovieList(): CoroutineResult<List<Movie>> {
-        return try {
+    override suspend fun getUpcomingMovieList(): CoroutineResult<List<Movie>> =
+        try {
             val response = httpClient.get(urlString = "movie/upcoming")
 
             when (response.status.value) {
@@ -144,5 +139,4 @@ class TheMovieDBDataSourceImpl(
         } catch (e: Exception) {
             ErrorHandler.handleException(e)
         }
-    }
 }

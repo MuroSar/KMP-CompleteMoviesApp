@@ -52,15 +52,15 @@ fun MovieListScreen(
         topBar = {
             CustomTopAppBar(
                 title = stringResource(Res.string.movie_list_title),
-                onBackClick = { navigateBack() }
+                onBackClick = { navigateBack() },
             )
         },
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
     ) { paddingValues ->
         MovieListContent(
             modifier = Modifier.padding(paddingValues),
             uiState = viewModel.uiState.collectAsStateWithLifecycle().value,
-            navigateToMovieDetail = { movie -> navigateToMovieDetail(movie) }
+            navigateToMovieDetail = { movie -> navigateToMovieDetail(movie) },
         )
     }
 }
@@ -72,11 +72,12 @@ fun MovieListContent(
     navigateToMovieDetail: (movie: Movie) -> Unit,
 ) {
     Column(
-        modifier = modifier
-            .fillMaxSize()
-            .background(backgroundBrush)
-            .padding(padding_16)
-            .verticalScroll(rememberScrollState()),
+        modifier =
+            modifier
+                .fillMaxSize()
+                .background(backgroundBrush)
+                .padding(padding_16)
+                .verticalScroll(rememberScrollState()),
     ) {
         // Upcoming Movies
         MovieListSection(
@@ -89,7 +90,7 @@ fun MovieListContent(
                 } else {
                     LazyRow(
                         horizontalArrangement = Arrangement.spacedBy(padding_16),
-                        contentPadding = PaddingValues(horizontal = padding_8)
+                        contentPadding = PaddingValues(horizontal = padding_8),
                     ) {
                         items(showMovieListsState.upcomingMovieList.size) { index ->
                             UpcomingMovieCard(
@@ -97,12 +98,12 @@ fun MovieListContent(
                                 posterUrl = showMovieListsState.upcomingMovieList[index].posterPath,
                                 onClick = {
                                     navigateToMovieDetail(showMovieListsState.upcomingMovieList[index])
-                                }
+                                },
                             )
                         }
                     }
                 }
-            }
+            },
         )
 
         // Top Rated Movies
@@ -116,7 +117,7 @@ fun MovieListContent(
                 } else {
                     LazyRow(
                         horizontalArrangement = Arrangement.spacedBy(padding_16),
-                        contentPadding = PaddingValues(horizontal = padding_8)
+                        contentPadding = PaddingValues(horizontal = padding_8),
                     ) {
                         items(showMovieListsState.topRatedMovieList.size) { index ->
                             TopRatedMovieCard(
@@ -124,12 +125,12 @@ fun MovieListContent(
                                 posterUrl = showMovieListsState.topRatedMovieList[index].posterPath,
                                 onClick = {
                                     navigateToMovieDetail(showMovieListsState.topRatedMovieList[index])
-                                }
+                                },
                             )
                         }
                     }
                 }
-            }
+            },
         )
 
         // Most Popular Movies
@@ -143,7 +144,7 @@ fun MovieListContent(
                 } else {
                     LazyRow(
                         horizontalArrangement = Arrangement.spacedBy(padding_16),
-                        contentPadding = PaddingValues(horizontal = padding_8)
+                        contentPadding = PaddingValues(horizontal = padding_8),
                     ) {
                         items(showMovieListsState.popularMovieList.size) { index ->
                             MostPopularMovieCard(
@@ -151,12 +152,12 @@ fun MovieListContent(
                                 posterUrl = showMovieListsState.popularMovieList[index].posterPath,
                                 onClick = {
                                     navigateToMovieDetail(showMovieListsState.popularMovieList[index])
-                                }
+                                },
                             )
                         }
                     }
                 }
-            }
+            },
         )
     }
 }
@@ -169,12 +170,12 @@ fun MovieListSection(
     content: @Composable (showMovieListsState: MovieListState.ShowMovieLists) -> Unit,
 ) {
     Column(
-        modifier = modifier
+        modifier = modifier,
     ) {
         Text(
             text = title,
             style = movieListSectionTextStyle,
-            modifier = Modifier.padding(bottom = padding_8)
+            modifier = Modifier.padding(bottom = padding_8),
         )
         when (uiState) {
             MovieListState.Idle -> {}

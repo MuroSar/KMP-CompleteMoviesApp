@@ -38,9 +38,10 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun MovieImageHeader(movieDetail: MovieDetail) {
     Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(height_200)
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .height(height_200),
     ) {
         AsyncImage(
             modifier = Modifier.fillMaxSize(),
@@ -51,53 +52,56 @@ fun MovieImageHeader(movieDetail: MovieDetail) {
             error = painterResource(resource = Res.drawable.movie_error),
         )
         Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(
-                    Brush.verticalGradient(
-                        colors = listOf(Color.Transparent, charcoal_black),
-                        startY = 0f,
-                        endY = with(LocalDensity.current) { height_200.toPx() }
-                    )
-                )
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .background(
+                        Brush.verticalGradient(
+                            colors = listOf(Color.Transparent, charcoal_black),
+                            startY = 0f,
+                            endY = with(LocalDensity.current) { height_200.toPx() },
+                        ),
+                    ),
         )
         Text(
-            modifier = Modifier
-                .padding(top = padding_8, end = padding_8)
-                .align(Alignment.TopEnd),
+            modifier =
+                Modifier
+                    .padding(top = padding_8, end = padding_8)
+                    .align(Alignment.TopEnd),
             text = stringResource(Res.string.movie_detail_header_id, movieDetail.id.toString()),
             style = infoTextStyle,
-            color = burnt_sienna
+            color = burnt_sienna,
         )
 
         Column(
-            modifier = Modifier
-                .align(Alignment.BottomStart)
-                .padding(padding_16)
+            modifier =
+                Modifier
+                    .align(Alignment.BottomStart)
+                    .padding(padding_16),
         ) {
             Text(
                 text = movieDetail.title,
                 style = movieListSectionTextStyle,
-                color = Color.White
+                color = Color.White,
             )
             Text(
                 modifier = Modifier.padding(top = padding_4),
                 text = movieDetail.tagline,
                 style = infoTextStyle,
-                color = burnt_sienna
+                color = burnt_sienna,
             )
             Row(
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 StarRatingBar(
                     modifier = Modifier.padding(top = padding_4),
-                    rating = movieDetail.voteAverage / TWO_INT
+                    rating = movieDetail.voteAverage / TWO_INT,
                 )
                 Text(
                     modifier = Modifier.padding(start = padding_8, top = padding_4),
                     text = stringResource(Res.string.movie_detail_header_vote_average, movieDetail.voteAverage.toString()),
                     style = infoTextStyle,
-                    color = burnt_sienna
+                    color = burnt_sienna,
                 )
             }
         }

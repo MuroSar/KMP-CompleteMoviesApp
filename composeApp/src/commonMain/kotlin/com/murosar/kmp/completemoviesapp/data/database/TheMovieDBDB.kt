@@ -51,22 +51,34 @@ const val DATABASE_NAME = "TMDB_DB.db"
         MovieDetailSpokenLanguageEntity::class,
         MovieCollectionEntity::class,
     ],
-    version = 1
+    version = 1,
 )
 @ConstructedBy(MyDatabaseCtor::class)
 abstract class TheMovieDBDB : RoomDatabase() {
     abstract fun popularPersonDao(): PopularPersonDao
+
     abstract fun knownForDao(): KnownForDao
+
     abstract fun popularMovieDao(): PopularMovieDao
+
     abstract fun topRatedMovieDao(): TopRatedMovieDao
+
     abstract fun upcomingMovieDao(): UpcomingMovieDao
+
     abstract fun recommendedMovieDao(): RecommendedMovieDao
+
     abstract fun movieDetailDao(): MovieDetailDao
+
     abstract fun movieDetailBelongsToCollectionDao(): MovieDetailBelongsToCollectionDao
+
     abstract fun movieDetailGenreDao(): MovieDetailGenreDao
+
     abstract fun movieDetailProductionCompanyDao(): MovieDetailProductionCompanyDao
+
     abstract fun movieDetailProductionCountryDao(): MovieDetailProductionCountryDao
+
     abstract fun movieDetailSpokenLanguageDao(): MovieDetailSpokenLanguageDao
+
     abstract fun movieCollectionDao(): MovieCollectionDao
 }
 

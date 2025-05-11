@@ -5,7 +5,6 @@ import assertk.assertions.isEqualTo
 import kotlin.test.Test
 
 class MoneyFormatUtilsTest {
-
     @Test
     fun `should format properly`() {
         assertThat(10.toAmountFormat()).isEqualTo("10")

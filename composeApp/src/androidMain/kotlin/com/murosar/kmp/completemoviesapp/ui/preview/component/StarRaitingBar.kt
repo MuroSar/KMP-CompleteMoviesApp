@@ -10,7 +10,7 @@ import com.murosar.kmp.completemoviesapp.ui.component.StarRatingBar
 fun StarRatingBarPreview() {
     MaterialTheme {
         StarRatingBar(
-            rating = 3.5
+            rating = 3.5,
         )
     }
 }
