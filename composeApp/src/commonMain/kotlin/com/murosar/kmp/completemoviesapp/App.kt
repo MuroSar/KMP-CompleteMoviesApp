@@ -34,7 +34,7 @@ fun App() {
 @Composable
 fun MoviesApp() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = NavRoutes.MainNavScreen) {
+    NavHost(navController = navController, startDestination = NavRoutes.SplashNavScreen) {
         addMoviesScreenGraph(navController)
     }
 }

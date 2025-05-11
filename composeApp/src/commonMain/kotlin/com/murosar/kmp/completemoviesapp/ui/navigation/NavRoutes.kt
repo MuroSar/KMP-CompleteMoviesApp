@@ -6,6 +6,9 @@ import kotlinx.serialization.Serializable
 
 sealed class NavRoutes {
     @Serializable
+    data object SplashNavScreen : NavRoutes()
+
+    @Serializable
     data object MainNavScreen : NavRoutes()
 
     @Serializable
