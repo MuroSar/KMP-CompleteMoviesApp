@@ -93,6 +93,9 @@ kotlin {
             // Room
             implementation(libs.room.runtime)
             implementation(libs.sqlite.bundled)
+
+            // Compottie (Lottie KMP lib) --> https://github.com/alexzhirkevich/compottie/tree/standalone-main
+            implementation(libs.compottie)
         }
         commonTest.dependencies {
             // Unit testing

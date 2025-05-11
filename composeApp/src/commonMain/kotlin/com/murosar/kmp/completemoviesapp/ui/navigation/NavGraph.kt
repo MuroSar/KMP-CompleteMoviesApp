@@ -9,9 +9,23 @@ import com.murosar.kmp.completemoviesapp.ui.screens.main.MainScreen
 import com.murosar.kmp.completemoviesapp.ui.screens.moviedetail.MovieDetailScreen
 import com.murosar.kmp.completemoviesapp.ui.screens.movielist.MovieListScreen
 import com.murosar.kmp.completemoviesapp.ui.screens.popularpersonlist.PopularPersonListScreen
+import com.murosar.kmp.completemoviesapp.ui.screens.splash.Splashcreen
 import kotlinx.serialization.json.Json
 
 fun NavGraphBuilder.addMoviesScreenGraph(navController: NavController) {
+    composable<NavRoutes.SplashNavScreen> {
+        Splashcreen(
+            navigateToMainScreen = {
+                navController.navigate(NavRoutes.MainNavScreen) {
+                    popUpTo(NavRoutes.SplashNavScreen) {
+                        // Indicates how far up the backstack should be cleared
+                        inclusive = true // Includes the SplashScreen in the backstack removal
+                    }
+                    launchSingleTop = true // Prevents multiple instances of the MainScreen if it's already on top.
+                }
+            },
+        )
+    }
     composable<NavRoutes.MainNavScreen> {
         MainScreen(
             navigateToMovieList = { navController.navigate(NavRoutes.MovieListNavScreen) },
