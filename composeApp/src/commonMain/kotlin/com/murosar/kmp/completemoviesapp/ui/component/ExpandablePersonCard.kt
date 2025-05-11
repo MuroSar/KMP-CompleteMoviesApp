@@ -52,19 +52,21 @@ fun ExpandablePersonCard(
     navigateToMovieDetail: (movieId: Int) -> Unit,
 ) {
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(rounded_corners_12))
-            .background(deep_slate_gray)
-            .clickable { onExpandToggle() }
-            .padding(padding_16)
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(rounded_corners_12))
+                .background(deep_slate_gray)
+                .clickable { onExpandToggle() }
+                .padding(padding_16),
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             AsyncImage(
-                modifier = Modifier
-                    .size(80.dp)
-                    .clip(CircleShape)
-                    .border(width_2, burnt_sienna, CircleShape),
+                modifier =
+                    Modifier
+                        .size(80.dp)
+                        .clip(CircleShape)
+                        .border(width_2, burnt_sienna, CircleShape),
                 model = "https://image.tmdb.org/t/p/w500${person.profilePath}",
                 contentDescription = person.name,
                 contentScale = ContentScale.Crop,
@@ -75,15 +77,15 @@ fun ExpandablePersonCard(
             Column {
                 Text(
                     text = person.name,
-                    style = movieCardTextStyle
+                    style = movieCardTextStyle,
                 )
                 Text(
                     text = stringResource(Res.string.popular_person_popularity, person.popularity.toString()),
-                    style = infoTextStyle
+                    style = infoTextStyle,
                 )
                 Text(
                     text = stringResource(Res.string.popular_person_department, person.knownForDepartment),
-                    style = infoTextStyle
+                    style = infoTextStyle,
                 )
             }
         }
@@ -92,19 +94,19 @@ fun ExpandablePersonCard(
             Column(modifier = Modifier.padding(top = padding_8)) {
                 Text(
                     text = stringResource(Res.string.popular_person_id, person.id.toString()),
-                    style = infoTextStyle
+                    style = infoTextStyle,
                 )
                 Text(
                     modifier = Modifier.padding(top = padding_8),
                     text = stringResource(Res.string.popular_person_known_for),
-                    style = movieListSectionTextStyle
+                    style = movieListSectionTextStyle,
                 )
                 LazyRow(horizontalArrangement = Arrangement.spacedBy(padding_8)) {
                     items(person.knownFor) { knownForMovie ->
                         MostPopularMovieCard(
                             movieTitle = knownForMovie.title.ifEmpty { knownForMovie.name },
                             posterUrl = knownForMovie.posterPath,
-                            onClick = { navigateToMovieDetail(knownForMovie.id) }
+                            onClick = { navigateToMovieDetail(knownForMovie.id) },
                         )
                     }
                 }

@@ -22,18 +22,19 @@ import com.murosar.kmp.completemoviesapp.ui.theme.rounded_corners_16
 fun GenrePills(genres: List<Genre>) {
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(padding_8),
-        contentPadding = PaddingValues(top = padding_8)
+        contentPadding = PaddingValues(top = padding_8),
     ) {
         items(genres.size) { index ->
             Box(
-                modifier = Modifier
-                    .background(deep_slate_gray, RoundedCornerShape(rounded_corners_16))
-                    .padding(horizontal = padding_16, vertical = padding_8)
+                modifier =
+                    Modifier
+                        .background(deep_slate_gray, RoundedCornerShape(rounded_corners_16))
+                        .padding(horizontal = padding_16, vertical = padding_8),
             ) {
                 Text(
                     text = genres[index].name,
                     style = infoTextStyle,
-                    color = Color.White
+                    color = Color.White,
                 )
             }
         }

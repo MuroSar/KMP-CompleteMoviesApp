@@ -13,7 +13,7 @@ class PopularPersonEntity(
     val knownForDepartment: String,
     val name: String,
     val popularity: Double,
-    val profilePath: String
+    val profilePath: String,
 )
 
 @Entity(
@@ -46,14 +46,14 @@ data class KnownForEntity(
     val title: String,
     val video: Boolean,
     val voteAverage: Double,
-    val voteCount: Int
+    val voteCount: Int,
 )
 
 data class PopularPersonEntityWithKnownForEntity(
     @Embedded val popularPersonEntity: PopularPersonEntity,
     @Relation(
         parentColumn = "id",
-        entityColumn = "userId"
+        entityColumn = "userId",
     )
-    val knownForEntity: List<KnownForEntity>
+    val knownForEntity: List<KnownForEntity>,
 )

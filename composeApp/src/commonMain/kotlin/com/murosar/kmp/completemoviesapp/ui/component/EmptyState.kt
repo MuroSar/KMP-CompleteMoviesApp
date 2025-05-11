@@ -24,29 +24,37 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun EmptyState(
-    isMovieEmptyState: Boolean = true,
-) {
+fun EmptyState(isMovieEmptyState: Boolean = true) {
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(padding_16),
-        contentAlignment = Alignment.Center
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .padding(padding_16),
+        contentAlignment = Alignment.Center,
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Image(
                 painter = painterResource(resource = Res.drawable.empty),
-                contentDescription = if (isMovieEmptyState) stringResource(Res.string.movie_empty_state_content_description) else
-                    stringResource(Res.string.popular_person_empty_state_content_description),
-                modifier = Modifier
-                    .size(size_100)
-                    .padding(bottom = padding_8)
+                contentDescription =
+                    if (isMovieEmptyState) {
+                        stringResource(Res.string.movie_empty_state_content_description)
+                    } else {
+                        stringResource(Res.string.popular_person_empty_state_content_description)
+                    },
+                modifier =
+                    Modifier
+                        .size(size_100)
+                        .padding(bottom = padding_8),
             )
             Text(
-                text = if (isMovieEmptyState) stringResource(Res.string.movie_empty_state_message) else
-                    stringResource(Res.string.popular_person_empty_state_message),
+                text =
+                    if (isMovieEmptyState) {
+                        stringResource(Res.string.movie_empty_state_message)
+                    } else {
+                        stringResource(Res.string.popular_person_empty_state_message)
+                    },
                 style = emptyTextStyle,
-                modifier = Modifier.padding(top = padding_8)
+                modifier = Modifier.padding(top = padding_8),
             )
         }
     }

@@ -13,19 +13,18 @@ import com.murosar.kmp.completemoviesapp.domain.utils.CoroutineResult
 import io.mockative.coEvery
 import io.mockative.coVerify
 import io.mockative.mock
-import kotlin.test.AfterTest
-import kotlin.test.BeforeTest
-import kotlin.test.Test
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
+import kotlin.test.AfterTest
+import kotlin.test.BeforeTest
+import kotlin.test.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class MovieListViewModelTest {
-
     private val testDispatcher = StandardTestDispatcher()
 
     private val getPopularMovieListUseCase = mock(GetPopularMovieListUseCase::class)
@@ -37,12 +36,13 @@ class MovieListViewModelTest {
     @BeforeTest
     fun setup() {
         Dispatchers.setMain(testDispatcher)
-        viewModel = MovieListViewModel(
-            dispatcher = testDispatcher,
-            getPopularMovieListUseCase = getPopularMovieListUseCase,
-            getTopRatedMovieListUseCase = getTopRatedMovieListUseCase,
-            getUpcomingMovieListUseCase = getUpcomingMovieListUseCase,
-        )
+        viewModel =
+            MovieListViewModel(
+                dispatcher = testDispatcher,
+                getPopularMovieListUseCase = getPopularMovieListUseCase,
+                getTopRatedMovieListUseCase = getTopRatedMovieListUseCase,
+                getUpcomingMovieListUseCase = getUpcomingMovieListUseCase,
+            )
     }
 
     @AfterTest
@@ -51,171 +51,177 @@ class MovieListViewModelTest {
     }
 
     @Test
-    fun `fetchMovies should return ShowMovieLists when all use cases return Success`() = runTest {
-        val popularMovies = listOf<Movie>()
-        val topRatedMovies = listOf<Movie>()
-        val upcomingMovies = listOf<Movie>()
-        coEvery { getPopularMovieListUseCase() } returns CoroutineResult.Success(popularMovies)
-        coEvery { getTopRatedMovieListUseCase() } returns CoroutineResult.Success(topRatedMovies)
-        coEvery { getUpcomingMovieListUseCase() } returns CoroutineResult.Success(upcomingMovies)
+    fun `fetchMovies should return ShowMovieLists when all use cases return Success`() =
+        runTest {
+            val popularMovies = listOf<Movie>()
+            val topRatedMovies = listOf<Movie>()
+            val upcomingMovies = listOf<Movie>()
+            coEvery { getPopularMovieListUseCase() } returns CoroutineResult.Success(popularMovies)
+            coEvery { getTopRatedMovieListUseCase() } returns CoroutineResult.Success(topRatedMovies)
+            coEvery { getUpcomingMovieListUseCase() } returns CoroutineResult.Success(upcomingMovies)
 
-        viewModel.uiState.test {
-            viewModel.fetchMovies()
+            viewModel.uiState.test {
+                viewModel.fetchMovies()
 
-            assertThat(awaitItem()).isInstanceOf<MovieListViewModel.MovieListState.Idle>()
-            assertThat(awaitItem()).isInstanceOf<MovieListViewModel.MovieListState.Loading>()
-            assertThat(awaitItem()).isEqualTo(
-                MovieListViewModel.MovieListState.ShowMovieLists(
-                    popularMovieList = popularMovies,
-                    topRatedMovieList = topRatedMovies,
-                    upcomingMovieList = upcomingMovies
+                assertThat(awaitItem()).isInstanceOf<MovieListViewModel.MovieListState.Idle>()
+                assertThat(awaitItem()).isInstanceOf<MovieListViewModel.MovieListState.Loading>()
+                assertThat(awaitItem()).isEqualTo(
+                    MovieListViewModel.MovieListState.ShowMovieLists(
+                        popularMovieList = popularMovies,
+                        topRatedMovieList = topRatedMovies,
+                        upcomingMovieList = upcomingMovies,
+                    ),
                 )
-            )
 
-            cancelAndIgnoreRemainingEvents()
+                cancelAndIgnoreRemainingEvents()
+            }
+
+            coVerify { getPopularMovieListUseCase() }.wasInvoked(exactly = 1)
+            coVerify { getTopRatedMovieListUseCase() }.wasInvoked(exactly = 1)
+            coVerify { getUpcomingMovieListUseCase() }.wasInvoked(exactly = 1)
         }
-
-        coVerify { getPopularMovieListUseCase() }.wasInvoked(exactly = 1)
-        coVerify { getTopRatedMovieListUseCase() }.wasInvoked(exactly = 1)
-        coVerify { getUpcomingMovieListUseCase() }.wasInvoked(exactly = 1)
-    }
 
     @Test
-    fun `fetchMovies should return Error when all use cases return the same error`() = runTest {
-        coEvery { getPopularMovieListUseCase() } returns CoroutineResult.Failure(MovieError.SerializationError)
-        coEvery { getTopRatedMovieListUseCase() } returns CoroutineResult.Failure(MovieError.SerializationError)
-        coEvery { getUpcomingMovieListUseCase() } returns CoroutineResult.Failure(MovieError.SerializationError)
+    fun `fetchMovies should return Error when all use cases return the same error`() =
+        runTest {
+            coEvery { getPopularMovieListUseCase() } returns CoroutineResult.Failure(MovieError.SerializationError)
+            coEvery { getTopRatedMovieListUseCase() } returns CoroutineResult.Failure(MovieError.SerializationError)
+            coEvery { getUpcomingMovieListUseCase() } returns CoroutineResult.Failure(MovieError.SerializationError)
 
-        viewModel.uiState.test {
-            viewModel.fetchMovies()
+            viewModel.uiState.test {
+                viewModel.fetchMovies()
 
-            assertThat(awaitItem()).isInstanceOf<MovieListViewModel.MovieListState.Idle>()
-            assertThat(awaitItem()).isInstanceOf<MovieListViewModel.MovieListState.Loading>()
-            assertThat(awaitItem()).isEqualTo(
-                MovieListViewModel.MovieListState.Error(MovieError.SerializationError)
-            )
+                assertThat(awaitItem()).isInstanceOf<MovieListViewModel.MovieListState.Idle>()
+                assertThat(awaitItem()).isInstanceOf<MovieListViewModel.MovieListState.Loading>()
+                assertThat(awaitItem()).isEqualTo(
+                    MovieListViewModel.MovieListState.Error(MovieError.SerializationError),
+                )
 
-            cancelAndIgnoreRemainingEvents()
+                cancelAndIgnoreRemainingEvents()
+            }
+
+            coVerify { getPopularMovieListUseCase() }.wasInvoked(exactly = 1)
+            coVerify { getTopRatedMovieListUseCase() }.wasInvoked(exactly = 1)
+            coVerify { getUpcomingMovieListUseCase() }.wasInvoked(exactly = 1)
         }
-
-        coVerify { getPopularMovieListUseCase() }.wasInvoked(exactly = 1)
-        coVerify { getTopRatedMovieListUseCase() }.wasInvoked(exactly = 1)
-        coVerify { getUpcomingMovieListUseCase() }.wasInvoked(exactly = 1)
-    }
 
     @Test
-    fun `fetchMovies should return ShowMovieLists when all use cases return different errors`() = runTest {
-        coEvery { getPopularMovieListUseCase() } returns CoroutineResult.Failure(MovieError.SerializationError)
-        coEvery { getTopRatedMovieListUseCase() } returns CoroutineResult.Failure(MovieError.DataBaseError)
-        coEvery { getUpcomingMovieListUseCase() } returns CoroutineResult.Failure(MovieError.NoInternet)
+    fun `fetchMovies should return ShowMovieLists when all use cases return different errors`() =
+        runTest {
+            coEvery { getPopularMovieListUseCase() } returns CoroutineResult.Failure(MovieError.SerializationError)
+            coEvery { getTopRatedMovieListUseCase() } returns CoroutineResult.Failure(MovieError.DataBaseError)
+            coEvery { getUpcomingMovieListUseCase() } returns CoroutineResult.Failure(MovieError.NoInternet)
 
-        viewModel.uiState.test {
-            viewModel.fetchMovies()
+            viewModel.uiState.test {
+                viewModel.fetchMovies()
 
-            assertThat(awaitItem()).isInstanceOf<MovieListViewModel.MovieListState.Idle>()
-            assertThat(awaitItem()).isInstanceOf<MovieListViewModel.MovieListState.Loading>()
-            assertThat(awaitItem()).isEqualTo(
-                MovieListViewModel.MovieListState.ShowMovieLists(
-                    popularMovieList = emptyList(),
-                    topRatedMovieList = emptyList(),
-                    upcomingMovieList = emptyList(),
+                assertThat(awaitItem()).isInstanceOf<MovieListViewModel.MovieListState.Idle>()
+                assertThat(awaitItem()).isInstanceOf<MovieListViewModel.MovieListState.Loading>()
+                assertThat(awaitItem()).isEqualTo(
+                    MovieListViewModel.MovieListState.ShowMovieLists(
+                        popularMovieList = emptyList(),
+                        topRatedMovieList = emptyList(),
+                        upcomingMovieList = emptyList(),
+                    ),
                 )
-            )
 
-            cancelAndIgnoreRemainingEvents()
+                cancelAndIgnoreRemainingEvents()
+            }
+
+            coVerify { getPopularMovieListUseCase() }.wasInvoked(exactly = 1)
+            coVerify { getTopRatedMovieListUseCase() }.wasInvoked(exactly = 1)
+            coVerify { getUpcomingMovieListUseCase() }.wasInvoked(exactly = 1)
         }
-
-        coVerify { getPopularMovieListUseCase() }.wasInvoked(exactly = 1)
-        coVerify { getTopRatedMovieListUseCase() }.wasInvoked(exactly = 1)
-        coVerify { getUpcomingMovieListUseCase() }.wasInvoked(exactly = 1)
-    }
 
     @Test
-    fun `fetchMovies should return ShowMovieLists when getPopularMovieListUseCase returns error`() = runTest {
-        val topRatedMovies = listOf<Movie>()
-        val upcomingMovies = listOf<Movie>()
-        coEvery { getPopularMovieListUseCase() } returns CoroutineResult.Failure(MovieError.SerializationError)
-        coEvery { getTopRatedMovieListUseCase() } returns CoroutineResult.Success(topRatedMovies)
-        coEvery { getUpcomingMovieListUseCase() } returns CoroutineResult.Success(upcomingMovies)
+    fun `fetchMovies should return ShowMovieLists when getPopularMovieListUseCase returns error`() =
+        runTest {
+            val topRatedMovies = listOf<Movie>()
+            val upcomingMovies = listOf<Movie>()
+            coEvery { getPopularMovieListUseCase() } returns CoroutineResult.Failure(MovieError.SerializationError)
+            coEvery { getTopRatedMovieListUseCase() } returns CoroutineResult.Success(topRatedMovies)
+            coEvery { getUpcomingMovieListUseCase() } returns CoroutineResult.Success(upcomingMovies)
 
-        viewModel.uiState.test {
-            viewModel.fetchMovies()
+            viewModel.uiState.test {
+                viewModel.fetchMovies()
 
-            assertThat(awaitItem()).isInstanceOf<MovieListViewModel.MovieListState.Idle>()
-            assertThat(awaitItem()).isInstanceOf<MovieListViewModel.MovieListState.Loading>()
-            assertThat(awaitItem()).isEqualTo(
-                MovieListViewModel.MovieListState.ShowMovieLists(
-                    popularMovieList = emptyList(),
-                    topRatedMovieList = topRatedMovies,
-                    upcomingMovieList = upcomingMovies
+                assertThat(awaitItem()).isInstanceOf<MovieListViewModel.MovieListState.Idle>()
+                assertThat(awaitItem()).isInstanceOf<MovieListViewModel.MovieListState.Loading>()
+                assertThat(awaitItem()).isEqualTo(
+                    MovieListViewModel.MovieListState.ShowMovieLists(
+                        popularMovieList = emptyList(),
+                        topRatedMovieList = topRatedMovies,
+                        upcomingMovieList = upcomingMovies,
+                    ),
                 )
-            )
 
-            cancelAndIgnoreRemainingEvents()
+                cancelAndIgnoreRemainingEvents()
+            }
+
+            coVerify { getPopularMovieListUseCase() }.wasInvoked(exactly = 1)
+            coVerify { getTopRatedMovieListUseCase() }.wasInvoked(exactly = 1)
+            coVerify { getUpcomingMovieListUseCase() }.wasInvoked(exactly = 1)
         }
-
-        coVerify { getPopularMovieListUseCase() }.wasInvoked(exactly = 1)
-        coVerify { getTopRatedMovieListUseCase() }.wasInvoked(exactly = 1)
-        coVerify { getUpcomingMovieListUseCase() }.wasInvoked(exactly = 1)
-    }
 
     @Test
-    fun `fetchMovies should return ShowMovieLists when getTopRatedMovieListUseCase returns error`() = runTest {
-        val popularMovies = listOf<Movie>()
-        val upcomingMovies = listOf<Movie>()
-        coEvery { getPopularMovieListUseCase() } returns CoroutineResult.Success(popularMovies)
-        coEvery { getTopRatedMovieListUseCase() } returns CoroutineResult.Failure(MovieError.SerializationError)
-        coEvery { getUpcomingMovieListUseCase() } returns CoroutineResult.Success(upcomingMovies)
+    fun `fetchMovies should return ShowMovieLists when getTopRatedMovieListUseCase returns error`() =
+        runTest {
+            val popularMovies = listOf<Movie>()
+            val upcomingMovies = listOf<Movie>()
+            coEvery { getPopularMovieListUseCase() } returns CoroutineResult.Success(popularMovies)
+            coEvery { getTopRatedMovieListUseCase() } returns CoroutineResult.Failure(MovieError.SerializationError)
+            coEvery { getUpcomingMovieListUseCase() } returns CoroutineResult.Success(upcomingMovies)
 
-        viewModel.uiState.test {
-            viewModel.fetchMovies()
+            viewModel.uiState.test {
+                viewModel.fetchMovies()
 
-            assertThat(awaitItem()).isInstanceOf<MovieListViewModel.MovieListState.Idle>()
-            assertThat(awaitItem()).isInstanceOf<MovieListViewModel.MovieListState.Loading>()
-            assertThat(awaitItem()).isEqualTo(
-                MovieListViewModel.MovieListState.ShowMovieLists(
-                    popularMovieList = popularMovies,
-                    topRatedMovieList = emptyList(),
-                    upcomingMovieList = upcomingMovies
+                assertThat(awaitItem()).isInstanceOf<MovieListViewModel.MovieListState.Idle>()
+                assertThat(awaitItem()).isInstanceOf<MovieListViewModel.MovieListState.Loading>()
+                assertThat(awaitItem()).isEqualTo(
+                    MovieListViewModel.MovieListState.ShowMovieLists(
+                        popularMovieList = popularMovies,
+                        topRatedMovieList = emptyList(),
+                        upcomingMovieList = upcomingMovies,
+                    ),
                 )
-            )
 
-            cancelAndIgnoreRemainingEvents()
+                cancelAndIgnoreRemainingEvents()
+            }
+
+            coVerify { getPopularMovieListUseCase() }.wasInvoked(exactly = 1)
+            coVerify { getTopRatedMovieListUseCase() }.wasInvoked(exactly = 1)
+            coVerify { getUpcomingMovieListUseCase() }.wasInvoked(exactly = 1)
         }
-
-        coVerify { getPopularMovieListUseCase() }.wasInvoked(exactly = 1)
-        coVerify { getTopRatedMovieListUseCase() }.wasInvoked(exactly = 1)
-        coVerify { getUpcomingMovieListUseCase() }.wasInvoked(exactly = 1)
-    }
 
     @Test
-    fun `fetchMovies should return ShowMovieLists when getUpcomingMovieListUseCase returns error`() = runTest {
-        val popularMovies = listOf<Movie>()
-        val topRatedMovies = listOf<Movie>()
-        coEvery { getPopularMovieListUseCase() } returns CoroutineResult.Success(popularMovies)
-        coEvery { getTopRatedMovieListUseCase() } returns CoroutineResult.Success(topRatedMovies)
-        coEvery { getUpcomingMovieListUseCase() } returns CoroutineResult.Failure(MovieError.SerializationError)
+    fun `fetchMovies should return ShowMovieLists when getUpcomingMovieListUseCase returns error`() =
+        runTest {
+            val popularMovies = listOf<Movie>()
+            val topRatedMovies = listOf<Movie>()
+            coEvery { getPopularMovieListUseCase() } returns CoroutineResult.Success(popularMovies)
+            coEvery { getTopRatedMovieListUseCase() } returns CoroutineResult.Success(topRatedMovies)
+            coEvery { getUpcomingMovieListUseCase() } returns CoroutineResult.Failure(MovieError.SerializationError)
 
-        viewModel.uiState.test {
-            viewModel.fetchMovies()
+            viewModel.uiState.test {
+                viewModel.fetchMovies()
 
-            assertThat(awaitItem()).isInstanceOf<MovieListViewModel.MovieListState.Idle>()
-            assertThat(awaitItem()).isInstanceOf<MovieListViewModel.MovieListState.Loading>()
-            assertThat(awaitItem()).isEqualTo(
-                MovieListViewModel.MovieListState.ShowMovieLists(
-                    popularMovieList = popularMovies,
-                    topRatedMovieList = topRatedMovies,
-                    upcomingMovieList = emptyList()
+                assertThat(awaitItem()).isInstanceOf<MovieListViewModel.MovieListState.Idle>()
+                assertThat(awaitItem()).isInstanceOf<MovieListViewModel.MovieListState.Loading>()
+                assertThat(awaitItem()).isEqualTo(
+                    MovieListViewModel.MovieListState.ShowMovieLists(
+                        popularMovieList = popularMovies,
+                        topRatedMovieList = topRatedMovies,
+                        upcomingMovieList = emptyList(),
+                    ),
                 )
-            )
 
-            cancelAndIgnoreRemainingEvents()
+                cancelAndIgnoreRemainingEvents()
+            }
+
+            coVerify { getPopularMovieListUseCase() }.wasInvoked(exactly = 1)
+            coVerify { getTopRatedMovieListUseCase() }.wasInvoked(exactly = 1)
+            coVerify { getUpcomingMovieListUseCase() }.wasInvoked(exactly = 1)
         }
-
-        coVerify { getPopularMovieListUseCase() }.wasInvoked(exactly = 1)
-        coVerify { getTopRatedMovieListUseCase() }.wasInvoked(exactly = 1)
-        coVerify { getUpcomingMovieListUseCase() }.wasInvoked(exactly = 1)
-    }
 
     @Test
     fun `fetchMovies should return ShowMovieLists when getPopularMovieListUseCase and getTopRatedMovieListUseCase returns error`() =
@@ -234,8 +240,8 @@ class MovieListViewModelTest {
                     MovieListViewModel.MovieListState.ShowMovieLists(
                         popularMovieList = emptyList(),
                         topRatedMovieList = emptyList(),
-                        upcomingMovieList = upcomingMovies
-                    )
+                        upcomingMovieList = upcomingMovies,
+                    ),
                 )
 
                 cancelAndIgnoreRemainingEvents()
@@ -263,8 +269,8 @@ class MovieListViewModelTest {
                     MovieListViewModel.MovieListState.ShowMovieLists(
                         popularMovieList = emptyList(),
                         topRatedMovieList = topRatedMovies,
-                        upcomingMovieList = emptyList()
-                    )
+                        upcomingMovieList = emptyList(),
+                    ),
                 )
 
                 cancelAndIgnoreRemainingEvents()
@@ -292,8 +298,8 @@ class MovieListViewModelTest {
                     MovieListViewModel.MovieListState.ShowMovieLists(
                         popularMovieList = popularMovies,
                         topRatedMovieList = emptyList(),
-                        upcomingMovieList = emptyList()
-                    )
+                        upcomingMovieList = emptyList(),
+                    ),
                 )
 
                 cancelAndIgnoreRemainingEvents()

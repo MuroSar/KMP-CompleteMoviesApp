@@ -32,19 +32,21 @@ fun UpcomingMovieCard(
     onClick: () -> Unit,
 ) {
     Column(
-        modifier = Modifier
-            .wrapContentSize()
-            .clickable { onClick() }
+        modifier =
+            Modifier
+                .wrapContentSize()
+                .clickable { onClick() },
     ) {
         AsyncImage(
-            modifier = Modifier.size(size_100)
-                .clip(CircleShape)
-                .border(
-                    width = width_2,
-                    color = burnt_sienna,
-                    shape = CircleShape
-                )
-                .padding(padding_8),
+            modifier =
+                Modifier
+                    .size(size_100)
+                    .clip(CircleShape)
+                    .border(
+                        width = width_2,
+                        color = burnt_sienna,
+                        shape = CircleShape,
+                    ).padding(padding_8),
             model = "https://image.tmdb.org/t/p/w500$posterUrl",
             contentDescription = movieTitle,
             contentScale = ContentScale.Crop,
@@ -52,12 +54,13 @@ fun UpcomingMovieCard(
             error = painterResource(resource = Res.drawable.movie_error),
         )
         Text(
-            modifier = Modifier
-                .width(width_100)
-                .padding(top = padding_8),
+            modifier =
+                Modifier
+                    .width(width_100)
+                    .padding(top = padding_8),
             text = movieTitle,
             style = movieCardTextStyle,
-            maxLines = 2
+            maxLines = 2,
         )
     }
 }

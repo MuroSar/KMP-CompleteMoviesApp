@@ -19,30 +19,31 @@ import com.murosar.kmp.completemoviesapp.domain.model.Movie
 import kotlin.test.Test
 
 class MovieMapperTest {
-
     @Test
     fun `mapToLocalMovieList should map all MovieResponse fields correctly`() {
-        val movieResponse = MovieResponse(
-            id = 1,
-            adult = false,
-            backdropPath = "backdrop.jpg",
-            originalLanguage = "en",
-            originalTitle = "Original Title",
-            overview = "Overview of the movie",
-            popularity = 99.9,
-            posterPath = "poster.jpg",
-            releaseDate = "2025-01-01",
-            title = "Movie Title",
-            video = false,
-            voteAverage = 8.5,
-            voteCount = 1234
-        )
-        val moviePagingResponse = MoviePagingResponse(
-            page = 2689,
-            results = listOf(movieResponse),
-            totalPages = 8263,
-            totalResults = 8538
-        )
+        val movieResponse =
+            MovieResponse(
+                id = 1,
+                adult = false,
+                backdropPath = "backdrop.jpg",
+                originalLanguage = "en",
+                originalTitle = "Original Title",
+                overview = "Overview of the movie",
+                popularity = 99.9,
+                posterPath = "poster.jpg",
+                releaseDate = "2025-01-01",
+                title = "Movie Title",
+                video = false,
+                voteAverage = 8.5,
+                voteCount = 1234,
+            )
+        val moviePagingResponse =
+            MoviePagingResponse(
+                page = 2689,
+                results = listOf(movieResponse),
+                totalPages = 8263,
+                totalResults = 8538,
+            )
 
         val result = moviePagingResponse.mapToLocalMovieList()
 
@@ -129,74 +130,86 @@ class MovieMapperTest {
         assertThatMovieMatchesEntity(result[0], recommendedMovieEntityComplete)
     }
 
-
     companion object {
-        private val movie = Movie(
-            id = 1,
-            adult = false,
-            backdropPath = "backdrop.jpg",
-            originalLanguage = "en",
-            originalTitle = "Original Title",
-            overview = "Overview",
-            popularity = 99.9,
-            posterPath = "poster.jpg",
-            releaseDate = "2025-01-01",
-            title = "Movie Title",
-            video = false,
-            voteAverage = 8.5,
-            voteCount = 1234
-        )
+        private val movie =
+            Movie(
+                id = 1,
+                adult = false,
+                backdropPath = "backdrop.jpg",
+                originalLanguage = "en",
+                originalTitle = "Original Title",
+                overview = "Overview",
+                popularity = 99.9,
+                posterPath = "poster.jpg",
+                releaseDate = "2025-01-01",
+                title = "Movie Title",
+                video = false,
+                voteAverage = 8.5,
+                voteCount = 1234,
+            )
 
-        private val movieEntity = MovieEntity(
-            id = 1,
-            adult = false,
-            backdropPath = "backdrop.jpg",
-            originalLanguage = "en",
-            originalTitle = "Original Title",
-            overview = "Overview",
-            popularity = 99.9,
-            posterPath = "poster.jpg",
-            releaseDate = "2025-01-01",
-            title = "Movie Title",
-            video = false,
-            voteAverage = 8.5,
-            voteCount = 1234
-        )
+        private val movieEntity =
+            MovieEntity(
+                id = 1,
+                adult = false,
+                backdropPath = "backdrop.jpg",
+                originalLanguage = "en",
+                originalTitle = "Original Title",
+                overview = "Overview",
+                popularity = 99.9,
+                posterPath = "poster.jpg",
+                releaseDate = "2025-01-01",
+                title = "Movie Title",
+                video = false,
+                voteAverage = 8.5,
+                voteCount = 1234,
+            )
 
-        private val popularMovieEntityComplete = PopularMovieEntityComplete(
-            popularMovieEntity = PopularMovieEntity(
-                popularMovieId = 1,
-                movieEntity = movieEntity
-            ),
-            movieEntity = movieEntity
-        )
+        private val popularMovieEntityComplete =
+            PopularMovieEntityComplete(
+                popularMovieEntity =
+                    PopularMovieEntity(
+                        popularMovieId = 1,
+                        movieEntity = movieEntity,
+                    ),
+                movieEntity = movieEntity,
+            )
 
-        private val topRatedMovieEntityComplete = TopRatedMovieEntityComplete(
-            topRatedMovieEntity = TopRatedMovieEntity(
-                topRatedMovieId = 1,
-                movieEntity = movieEntity
-            ),
-            movieEntity = movieEntity
-        )
+        private val topRatedMovieEntityComplete =
+            TopRatedMovieEntityComplete(
+                topRatedMovieEntity =
+                    TopRatedMovieEntity(
+                        topRatedMovieId = 1,
+                        movieEntity = movieEntity,
+                    ),
+                movieEntity = movieEntity,
+            )
 
-        private val upcomingMovieEntityComplete = UpcomingMovieEntityComplete(
-            upcomingMovieEntity = UpcomingMovieEntity(
-                upcomingMovieId = 1,
-                movieEntity = movieEntity
-            ),
-            movieEntity = movieEntity
-        )
+        private val upcomingMovieEntityComplete =
+            UpcomingMovieEntityComplete(
+                upcomingMovieEntity =
+                    UpcomingMovieEntity(
+                        upcomingMovieId = 1,
+                        movieEntity = movieEntity,
+                    ),
+                movieEntity = movieEntity,
+            )
 
-        private val recommendedMovieEntityComplete = RecommendedMovieEntityComplete(
-            recommendedMovieEntity = RecommendedMovieEntity(
-                recommendedMovieId = 1,
-                originalMovieId = 99,
-                movieEntity = movieEntity
-            ),
-            movieEntity = movieEntity
-        )
+        private val recommendedMovieEntityComplete =
+            RecommendedMovieEntityComplete(
+                recommendedMovieEntity =
+                    RecommendedMovieEntity(
+                        recommendedMovieId = 1,
+                        originalMovieId = 99,
+                        movieEntity = movieEntity,
+                    ),
+                movieEntity = movieEntity,
+            )
 
-        private fun assertThatMovieEntityMatches(movie: Movie, entity: MovieEntity) {
+        private fun assertThatMovieEntityMatches(
+            movie: Movie,
+            entity: MovieEntity,
+        ) {
             assertThat(entity.id).isEqualTo(movie.id)
             assertThat(entity.adult).isEqualTo(movie.adult)
             assertThat(entity.backdropPath).isEqualTo(movie.backdropPath)
@@ -212,22 +225,34 @@ class MovieMapperTest {
             assertThat(entity.voteCount).isEqualTo(movie.voteCount)
         }
 
-        private fun assertThatMovieMatchesEntity(movie: Movie, entity: PopularMovieEntityComplete) {
+        private fun assertThatMovieMatchesEntity(
+            movie: Movie,
+            entity: PopularMovieEntityComplete,
+        ) {
             assertThat(movie.id).isEqualTo(entity.popularMovieEntity.popularMovieId)
             assertThatMovieEntityMatches(movie, entity.movieEntity)
         }
 
-        private fun assertThatMovieMatchesEntity(movie: Movie, entity: TopRatedMovieEntityComplete) {
+        private fun assertThatMovieMatchesEntity(
+            movie: Movie,
+            entity: TopRatedMovieEntityComplete,
+        ) {
             assertThat(movie.id).isEqualTo(entity.topRatedMovieEntity.topRatedMovieId)
             assertThatMovieEntityMatches(movie, entity.movieEntity)
         }
 
-        private fun assertThatMovieMatchesEntity(movie: Movie, entity: UpcomingMovieEntityComplete) {
+        private fun assertThatMovieMatchesEntity(
+            movie: Movie,
+            entity: UpcomingMovieEntityComplete,
+        ) {
             assertThat(movie.id).isEqualTo(entity.upcomingMovieEntity.upcomingMovieId)
             assertThatMovieEntityMatches(movie, entity.movieEntity)
         }
 
-        private fun assertThatMovieMatchesEntity(movie: Movie, entity: RecommendedMovieEntityComplete) {
+        private fun assertThatMovieMatchesEntity(
+            movie: Movie,
+            entity: RecommendedMovieEntityComplete,
+        ) {
             assertThat(movie.id).isEqualTo(entity.recommendedMovieEntity.recommendedMovieId)
             assertThatMovieEntityMatches(movie, entity.movieEntity)
         }

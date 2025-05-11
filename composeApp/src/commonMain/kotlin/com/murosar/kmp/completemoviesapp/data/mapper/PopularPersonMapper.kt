@@ -20,7 +20,7 @@ private fun PopularPersonResponse.mapToLocalPopularPerson() =
         knownForDepartment = knownForDepartment,
         name = name,
         popularity = popularity,
-        profilePath = profilePath
+        profilePath = profilePath,
     )
 
 private fun KnownForResponse.mapToLocalKnownFor() =
@@ -41,9 +41,8 @@ private fun KnownForResponse.mapToLocalKnownFor() =
         title = title,
         video = video,
         voteAverage = voteAverage,
-        voteCount = voteCount
+        voteCount = voteCount,
     )
-
 
 fun PopularPerson.mapToDataBasePopularPerson() =
     PopularPersonEntity(
@@ -53,7 +52,7 @@ fun PopularPerson.mapToDataBasePopularPerson() =
         knownForDepartment = knownForDepartment,
         name = name,
         popularity = popularity,
-        profilePath = profilePath
+        profilePath = profilePath,
     )
 
 fun KnownFor.mapToDataBaseKnownFor(userId: Int) =
@@ -75,10 +74,11 @@ fun KnownFor.mapToDataBaseKnownFor(userId: Int) =
         title = title,
         video = video,
         voteAverage = voteAverage,
-        voteCount = voteCount
+        voteCount = voteCount,
     )
 
-fun List<PopularPersonEntityWithKnownForEntity>.mapToLocalPopularPersonList(): List<PopularPerson> = this.map { it.mapToLocalPopularPerson() }
+fun List<PopularPersonEntityWithKnownForEntity>.mapToLocalPopularPersonList(): List<PopularPerson> =
+    this.map { it.mapToLocalPopularPerson() }
 
 private fun PopularPersonEntityWithKnownForEntity.mapToLocalPopularPerson() =
     PopularPerson(
@@ -89,7 +89,7 @@ private fun PopularPersonEntityWithKnownForEntity.mapToLocalPopularPerson() =
         knownForDepartment = popularPersonEntity.knownForDepartment,
         name = popularPersonEntity.name,
         popularity = popularPersonEntity.popularity,
-        profilePath = popularPersonEntity.profilePath
+        profilePath = popularPersonEntity.profilePath,
     )
 
 private fun KnownForEntity.mapToLocalKnownFor() =
@@ -110,5 +110,5 @@ private fun KnownForEntity.mapToLocalKnownFor() =
         title = title,
         video = video,
         voteAverage = voteAverage,
-        voteCount = voteCount
+        voteCount = voteCount,
     )

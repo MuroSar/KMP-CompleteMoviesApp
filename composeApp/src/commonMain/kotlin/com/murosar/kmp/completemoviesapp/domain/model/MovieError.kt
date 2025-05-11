@@ -10,72 +10,74 @@ sealed class MovieError(
         override val message: String,
         override val errorBody: String?,
     ) : MovieError(
-        code = code,
-        message = message,
-        errorBody = errorBody
-    )
+            code = code,
+            message = message,
+            errorBody = errorBody,
+        )
 
     data class Unauthorized(
         override val code: Int,
         override val message: String,
         override val errorBody: String?,
     ) : MovieError(
-        code = code,
-        message = message,
-        errorBody = errorBody
-    )
+            code = code,
+            message = message,
+            errorBody = errorBody,
+        )
 
     data class Conflict(
         override val code: Int,
         override val message: String,
         override val errorBody: String?,
     ) : MovieError(
-        code = code,
-        message = message,
-        errorBody = errorBody
-    )
+            code = code,
+            message = message,
+            errorBody = errorBody,
+        )
 
     data object NoInternet : MovieError()
+
     data class PayloadTooLarge(
         override val code: Int,
         override val message: String,
         override val errorBody: String?,
     ) : MovieError(
-        code = code,
-        message = message,
-        errorBody = errorBody
-    )
+            code = code,
+            message = message,
+            errorBody = errorBody,
+        )
 
     data class ClientError(
         override val code: Int,
         override val message: String,
         override val errorBody: String?,
     ) : MovieError(
-        code = code,
-        message = message,
-        errorBody = errorBody
-    )
+            code = code,
+            message = message,
+            errorBody = errorBody,
+        )
 
     data class ServerError(
         override val code: Int,
         override val message: String,
         override val errorBody: String?,
     ) : MovieError(
-        code = code,
-        message = message,
-        errorBody = errorBody
-    )
+            code = code,
+            message = message,
+            errorBody = errorBody,
+        )
 
     data object SerializationError : MovieError()
+
     data class UnknownError(
         override val code: Int = ERROR_CODE_UNKNOWN,
         override val message: String = ERROR_MESSAGE_UNKNOWN,
         override val errorBody: String? = null,
     ) : MovieError(
-        code = code,
-        message = message,
-        errorBody = errorBody
-    )
+            code = code,
+            message = message,
+            errorBody = errorBody,
+        )
 
     data object DataBaseError : MovieError()
 

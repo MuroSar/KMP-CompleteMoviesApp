@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -24,7 +23,6 @@ import com.murosar.kmp.completemoviesapp.ui.theme.golden_amber
 import com.murosar.kmp.completemoviesapp.ui.theme.topAppBarTextStyle
 import completemoviesapp.composeapp.generated.resources.Res
 import completemoviesapp.composeapp.generated.resources.back_content_description
-import completemoviesapp.composeapp.generated.resources.error_state_content_description
 import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -37,7 +35,7 @@ fun CustomTopAppBar(
         title = {
             Box(
                 modifier = Modifier.fillMaxWidth(),
-                contentAlignment = Alignment.Center
+                contentAlignment = Alignment.Center,
             ) {
                 Text(
                     modifier = Modifier.fillMaxWidth().wrapContentHeight(),
@@ -51,7 +49,7 @@ fun CustomTopAppBar(
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = stringResource(Res.string.back_content_description),
-                    tint = golden_amber
+                    tint = golden_amber,
                 )
             }
         },
@@ -60,19 +58,21 @@ fun CustomTopAppBar(
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                 contentDescription = null,
-                tint = Color.Transparent
+                tint = Color.Transparent,
             )
         },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = charcoal_black
-        ),
-        modifier = Modifier
-            .fillMaxWidth()
-            .shadow(
-                elevation = elevation_4,
-                shape = RectangleShape,
-                ambientColor = golden_amber,
-                spotColor = golden_amber
-            )
+        colors =
+            TopAppBarDefaults.topAppBarColors(
+                containerColor = charcoal_black,
+            ),
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .shadow(
+                    elevation = elevation_4,
+                    shape = RectangleShape,
+                    ambientColor = golden_amber,
+                    spotColor = golden_amber,
+                ),
     )
 }

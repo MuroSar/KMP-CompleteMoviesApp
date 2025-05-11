@@ -10,7 +10,7 @@ import com.murosar.kmp.completemoviesapp.ui.component.EmptyState
 fun MovieEmptyStatePreview() {
     MaterialTheme {
         EmptyState(
-            isMovieEmptyState = true
+            isMovieEmptyState = true,
         )
     }
 }
@@ -20,7 +20,7 @@ fun MovieEmptyStatePreview() {
 fun PopularPersonEmptyStatePreview() {
     MaterialTheme {
         EmptyState(
-            isMovieEmptyState = false
+            isMovieEmptyState = false,
         )
     }
 }

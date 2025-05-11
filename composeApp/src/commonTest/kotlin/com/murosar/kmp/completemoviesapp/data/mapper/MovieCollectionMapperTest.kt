@@ -10,26 +10,27 @@ import com.murosar.kmp.completemoviesapp.domain.model.MovieCollection
 import kotlin.test.Test
 
 class MovieCollectionMapperTest {
-
     @Test
     fun `mapToLocalMovieCollection should map first result to MovieCollection`() {
-        val response = MovieCollectionPagingResponse(
-            page = 1,
-            results = listOf(
-                MovieCollectionResponse(
-                    id = 1,
-                    adult = false,
-                    backdropPath = "backdrop.jpg",
-                    name = "Collection Name",
-                    originalLanguage = "en",
-                    originalName = "Original Collection Name",
-                    overview = "Some overview",
-                    posterPath = "poster.jpg"
-                )
-            ),
-            totalPages = 10,
-            totalResults = 3307
-        )
+        val response =
+            MovieCollectionPagingResponse(
+                page = 1,
+                results =
+                    listOf(
+                        MovieCollectionResponse(
+                            id = 1,
+                            adult = false,
+                            backdropPath = "backdrop.jpg",
+                            name = "Collection Name",
+                            originalLanguage = "en",
+                            originalName = "Original Collection Name",
+                            overview = "Some overview",
+                            posterPath = "poster.jpg",
+                        ),
+                    ),
+                totalPages = 10,
+                totalResults = 3307,
+            )
 
         val movieCollection = response.mapToLocalMovieCollection()
 
@@ -45,16 +46,17 @@ class MovieCollectionMapperTest {
 
     @Test
     fun `mapToDataBaseMovieCollection should map MovieCollection to MovieCollectionEntity`() {
-        val movieCollection = MovieCollection(
-            id = 1,
-            adult = false,
-            backdropPath = "backdrop.jpg",
-            name = "Collection Name",
-            originalLanguage = "en",
-            originalName = "Original Collection Name",
-            overview = "Some overview",
-            posterPath = "poster.jpg"
-        )
+        val movieCollection =
+            MovieCollection(
+                id = 1,
+                adult = false,
+                backdropPath = "backdrop.jpg",
+                name = "Collection Name",
+                originalLanguage = "en",
+                originalName = "Original Collection Name",
+                overview = "Some overview",
+                posterPath = "poster.jpg",
+            )
 
         val entity = movieCollection.mapToDataBaseMovieCollection()
 
@@ -70,16 +72,17 @@ class MovieCollectionMapperTest {
 
     @Test
     fun `mapToLocalMovieCollection should map MovieCollectionEntity to MovieCollection`() {
-        val entity = MovieCollectionEntity(
-            id = 1,
-            adult = false,
-            backdropPath = "backdrop.jpg",
-            name = "Collection Name",
-            originalLanguage = "en",
-            originalName = "Original Collection Name",
-            overview = "Some overview",
-            posterPath = "poster.jpg"
-        )
+        val entity =
+            MovieCollectionEntity(
+                id = 1,
+                adult = false,
+                backdropPath = "backdrop.jpg",
+                name = "Collection Name",
+                originalLanguage = "en",
+                originalName = "Original Collection Name",
+                overview = "Some overview",
+                posterPath = "poster.jpg",
+            )
 
         val movieCollection = entity.mapToLocalMovieCollection()
 
@@ -92,5 +95,4 @@ class MovieCollectionMapperTest {
         assertThat(movieCollection.overview).isEqualTo("Some overview")
         assertThat(movieCollection.posterPath).isEqualTo("poster.jpg")
     }
-
 }

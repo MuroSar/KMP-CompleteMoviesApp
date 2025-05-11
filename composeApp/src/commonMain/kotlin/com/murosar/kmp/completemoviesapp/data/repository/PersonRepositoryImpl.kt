@@ -10,8 +10,8 @@ class PersonRepositoryImpl(
     private val theMovieDBDataSource: TheMovieDBDataSource,
     private val theMovieDBDatabase: TheMovieDBDatabase,
 ) : PersonRepository {
-    override suspend fun getPopularPersonList(): CoroutineResult<List<PopularPerson>> {
-        return when (val serviceResult = theMovieDBDataSource.getPopularPersonList()) {
+    override suspend fun getPopularPersonList(): CoroutineResult<List<PopularPerson>> =
+        when (val serviceResult = theMovieDBDataSource.getPopularPersonList()) {
             is CoroutineResult.Success -> {
                 println("✅ getPopularPersonList SUCCESS, inserting into database")
                 theMovieDBDatabase.insertPopularPersons(serviceResult.data)
@@ -23,5 +23,4 @@ class PersonRepositoryImpl(
                 theMovieDBDatabase.getPopularPersons()
             }
         }
-    }
 }

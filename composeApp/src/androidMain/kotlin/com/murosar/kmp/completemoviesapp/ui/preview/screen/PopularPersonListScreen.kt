@@ -13,45 +13,45 @@ import com.murosar.kmp.completemoviesapp.ui.screens.popularpersonlist.PopularPer
 fun PopularPersonListScreenPreview() {
     MaterialTheme {
         PopularPeopleContent(
-            uiState = PopularPersonListViewModel.PopularPersonListState.ShowPopularPersonList(
-                listOf(
-                    PopularPerson(
-                        id = 3874,
-                        adult = false,
-                        gender = 8425,
-                        knownFor = listOf(),
-                        knownForDepartment = "qualisque",
-                        name = "Melody Yang",
-                        popularity = 10.11,
-                        profilePath = "esse"
+            uiState =
+                PopularPersonListViewModel.PopularPersonListState.ShowPopularPersonList(
+                    listOf(
+                        PopularPerson(
+                            id = 3874,
+                            adult = false,
+                            gender = 8425,
+                            knownFor = listOf(),
+                            knownForDepartment = "qualisque",
+                            name = "Melody Yang",
+                            popularity = 10.11,
+                            profilePath = "esse",
+                        ),
+                        PopularPerson(
+                            id = 4631,
+                            adult = false,
+                            gender = 9954,
+                            knownFor = listOf(),
+                            knownForDepartment = "dolores",
+                            name = "Tamika Sanders",
+                            popularity = 14.15,
+                            profilePath = "gubergren",
+                        ),
+                        PopularPerson(
+                            id = 1840,
+                            adult = false,
+                            gender = 9843,
+                            knownFor = listOf(),
+                            knownForDepartment = "pretium",
+                            name = "Viola Justice",
+                            popularity = 6.7,
+                            profilePath = "est",
+                        ),
                     ),
-                    PopularPerson(
-                        id = 4631,
-                        adult = false,
-                        gender = 9954,
-                        knownFor = listOf(),
-                        knownForDepartment = "dolores",
-                        name = "Tamika Sanders",
-                        popularity = 14.15,
-                        profilePath = "gubergren"
-                    ),
-                    PopularPerson(
-                        id = 1840,
-                        adult = false,
-                        gender = 9843,
-                        knownFor = listOf(),
-                        knownForDepartment = "pretium",
-                        name = "Viola Justice",
-                        popularity = 6.7,
-                        profilePath = "est"
-                    )
-                )
-            ),
+                ),
             navigateToMovieDetail = { _ -> },
         )
     }
 }
-
 
 @Preview
 @Composable

@@ -26,7 +26,7 @@ data class MovieDetail(
     val title: String,
     val video: Boolean,
     val voteAverage: Double,
-    val voteCount: Int
+    val voteCount: Int,
 )
 
 data class BelongsToCollection(
@@ -38,23 +38,23 @@ data class BelongsToCollection(
 
 data class Genre(
     val id: Int,
-    val name: String
+    val name: String,
 )
 
 data class ProductionCompany(
     val id: Int,
     val logoPath: String,
     val name: String,
-    val originCountry: String
+    val originCountry: String,
 )
 
 data class ProductionCountry(
     val iso_3166_1: String,
-    val name: String
+    val name: String,
 )
 
 data class SpokenLanguage(
     val englishName: String,
     val iso_639_1: String,
-    val name: String
+    val name: String,
 )

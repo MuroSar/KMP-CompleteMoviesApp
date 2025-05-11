@@ -6,7 +6,9 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import com.murosar.kmp.completemoviesapp.data.database.entity.MovieCollectionEntity
+import io.mockative.Mockable
 
+@Mockable
 @Dao
 interface MovieCollectionDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)

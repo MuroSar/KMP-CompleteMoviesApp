@@ -17,29 +17,36 @@ class PopularPersonListViewModel(
     private val dispatcher: CoroutineDispatcher,
     private val getPopularPersonListUseCase: GetPopularPersonListUseCase,
 ) : ViewModel() {
-
     private val _uiState = MutableStateFlow<PopularPersonListState>(PopularPersonListState.Idle)
     val uiState: StateFlow<PopularPersonListState> = _uiState
 
-    fun getPopularPeople() = viewModelScope.launch {
-        withContext(dispatcher) {
-            _uiState.update { PopularPersonListState.Loading }
-            when (val result = getPopularPersonListUseCase()) {
-                is CoroutineResult.Success -> {
-                    _uiState.update { PopularPersonListState.ShowPopularPersonList(result.data) }
-                }
+    fun getPopularPeople() =
+        viewModelScope.launch {
+            withContext(dispatcher) {
+                _uiState.update { PopularPersonListState.Loading }
+                when (val result = getPopularPersonListUseCase()) {
+                    is CoroutineResult.Success -> {
+                        _uiState.update { PopularPersonListState.ShowPopularPersonList(result.data) }
+                    }
 
-                is CoroutineResult.Failure -> {
-                    _uiState.update { PopularPersonListState.Error(result.error) }
+                    is CoroutineResult.Failure -> {
+                        _uiState.update { PopularPersonListState.Error(result.error) }
+                    }
                 }
             }
         }
-    }
 
     sealed class PopularPersonListState {
         data object Idle : PopularPersonListState()
+
         data object Loading : PopularPersonListState()
-        data class ShowPopularPersonList(val popularPersonList: List<PopularPerson>) : PopularPersonListState()
-        data class Error(val movieError: MovieError) : PopularPersonListState()
+
+        data class ShowPopularPersonList(
+            val popularPersonList: List<PopularPerson>,
+        ) : PopularPersonListState()
+
+        data class Error(
+            val movieError: MovieError,
+        ) : PopularPersonListState()
     }
 }
